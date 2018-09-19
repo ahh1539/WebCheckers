@@ -6,7 +6,7 @@ a web micro-framework.
 
 ## Team
 
-- MEMBER1
+- Lillian Kuhn
 - MEMBER2
 - MEMBER3
 - MEMBER4
