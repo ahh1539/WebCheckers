@@ -7,7 +7,7 @@ a web micro-framework.
 ## Team
 
 - Lillian Kuhn
-- MEMBER2
+- Daria Chaplin
 - MEMBER3
 - MEMBER4
 
