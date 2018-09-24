@@ -8,7 +8,7 @@ a web micro-framework.
 
 - Lillian Kuhn
 - Daria Chaplin
-- MEMBER3
+- Alex Hurley
 - MEMBER4
 
 
