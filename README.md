@@ -10,6 +10,7 @@ a web micro-framework.
 - Daria Chaplin
 - Alex Hurley
 - Elijah Parrish
+- Paula Register 
 
 
 ## Prerequisites
