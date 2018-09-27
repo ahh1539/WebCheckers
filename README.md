@@ -9,7 +9,7 @@ a web micro-framework.
 - Lillian Kuhn
 - Daria Chaplin
 - Alex Hurley
-- MEMBER4
+- Elijah Parrish
 
 
 ## Prerequisites
