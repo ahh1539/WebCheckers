@@ -54,6 +54,8 @@ public class WebServer {
    */
   public static final String HOME_URL = "/";
 
+  public static final String SIGN_IN_URL = "/signin";
+
   //
   // Attributes
   //
@@ -141,6 +143,10 @@ public class WebServer {
 
     //
     LOG.config("WebServer is initialized.");
+
+    // Shows the Sign In page.
+    get(SIGN_IN_URL, new GetSignInRoute(templateEngine));
+
   }
 
 }
