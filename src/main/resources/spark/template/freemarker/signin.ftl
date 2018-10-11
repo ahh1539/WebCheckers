@@ -3,12 +3,19 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"></meta>
     <meta http-equiv="refresh" content="10">
+    <link rel="stylesheet" type="text/css" href="/css/style.css">
+
     <title>${title} | Web Checkers</title>
 </head>
 <body>
   <div class="page">
 
     <h1>Web Checkers Sign In</h1>
+
+    <div>
+        <label for="uname">Userame</label>
+        <input type="text" id="uname" name="username" placeholder="Username..">
+    </div>
 
     <div class="navigation">
       <a href="/">Back home</a>
