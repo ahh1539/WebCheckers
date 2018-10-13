@@ -15,6 +15,7 @@
     <div>
         <label for="uname">Userame</label>
         <input type="text" id="uname" name="username" placeholder="Username..">
+        <input type="submit" value="Sign In">
     </div>
 
     <div class="navigation">
