@@ -8,6 +8,8 @@ public class Space {
     private Piece piece;
     private boolean isValid;
     private int cellIdx;
+    private Color color;
+    public enum Color{ RED, WHITE}
 
     /**
      * Create a Space object
@@ -19,6 +21,7 @@ public class Space {
         this.piece = piece;
         this.cellIdx = cellIdx;
         this.isValid = isValid;
+        this.color = Color.RED;
     }
 
     /**
@@ -43,6 +46,10 @@ public class Space {
 
     public void putRedPiece() {
         this.piece = new Piece(Piece.Color.RED, Piece.Type.SINGLE);
+    }
+
+    public void makeSpaceWhite(){
+        this.color = Color.RED;
     }
 
     public void removePiece(){
