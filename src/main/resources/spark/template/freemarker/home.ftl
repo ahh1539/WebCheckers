@@ -24,7 +24,7 @@
             <p>${thingy}</p>
           </#if>
           <#list players as player>
-            <p>${player.username}</p>
+            <p><a href="/game">${player.username}</a></p>
           </#list>
        </#if>
 
