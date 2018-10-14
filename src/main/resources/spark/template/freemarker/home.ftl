@@ -11,8 +11,8 @@
     <h1>Web Checkers</h1>
     
     <div class="navigation">
-      <a href="/">my home</a>
-      <a href="/signin">Sign in here!</a>
+      <a href="/">Home</a>
+      <a href="/signin">Sign In</a>
     </div>
     
     <div class="body">
@@ -22,13 +22,16 @@
         <p>${errorMsg}</p>
       </#if>
 
-       <#if players??>
-          <h3>Current Players</h3>
+      <#if !currentPlayer??>
+        <p>There are currently ${(players?size)!0} players signed in.</p>
+      <#else>
+        <h3>Current Players</h3>
           <#list players as player>
-            <p><a href="/game">${player.username}</a></p>
+            <#if player.username != currentPlayer.username>
+              <p><a href="/game">${player.username}</a></p>
+            </#if>
           </#list>
-       </#if>
-
+      </#if>
 
     </div>
     
