@@ -18,14 +18,11 @@ public class Board {
 
     public int[][] updateBoard() {
         //TODO update the board from the ui tier
+        return null;
     }
 
     public int getOccupied(int length, int width)
     {
         return gameBoard[length][width];
     }
-
-
-
-
 }
