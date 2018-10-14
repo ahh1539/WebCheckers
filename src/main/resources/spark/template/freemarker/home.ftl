@@ -17,6 +17,7 @@
     
     <div class="body">
       <p>Welcome to the world of online Checkers.</p>
+
       <#if errorMsg??>
         <p>${errorMsg}</p>
       </#if>
