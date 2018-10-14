@@ -67,9 +67,7 @@ public class GetHomeRoute implements Route {
         vm.put("currentPlayer", session.attribute(PostSignInRoute.PLAYER));
         vm.put("players", playerLobby.getPlayerLobby());
     }
-    else{
-        vm.put("errorMsg", "Sign in to see the list of current players.");
-    }
+
     return templateEngine.render(new ModelAndView(vm, ROUTE_NAME));
   }
 
