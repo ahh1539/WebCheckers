@@ -11,11 +11,13 @@ public class Player {
     private String username;
     private int totalGames;
     private int wins;
+    private boolean inGame;
 
     public Player(String username){
         this.username = username;
         this.totalGames = 0;
         this.wins = 0;
+        this.inGame = false;
     }
 
     /**
@@ -28,7 +30,7 @@ public class Player {
 
     /**
      * get total number of games player has participated in
-     * @return
+     * @return totalGames
      */
     public int getTotalGames(){
         return totalGames;
@@ -36,11 +38,17 @@ public class Player {
 
     /**
      * get number of games player has won
-     * @return
+     * @return wins
      */
     public int getWins(){
         return wins;
     }
+
+    /**
+     * determine whether the player is currently in a game
+     * @return inGame
+     */
+    public boolean inGame() { return inGame; }
 
     /**
      * increment number of games by 1
@@ -61,12 +69,12 @@ public class Player {
      * @return avg. wins
      */
     public double getAverage(){
-        return wins/totalGames;
+        return wins/(float)totalGames;
     }
 
     /**
      * compares two players based on username
-     * @param obj
+     * @param obj given player
      * @return true if players have same username
      */
     @Override
