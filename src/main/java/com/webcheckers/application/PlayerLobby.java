@@ -5,17 +5,8 @@ import com.webcheckers.model.*;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-/*
-
-import java.util.HashMap;
-import java.util.Map;
-// Note from Paula: I was going to implement this as a hashMap but I found some useful resources for arrayLists. If
-we decide a hashMap is better, we can always change this implementation.
-*/
 
 public class PlayerLobby {
-    /*    Map<String, Player> playerLobby = new HashMap<String, Player>();
-    */
 
     // Private variables
 

@@ -10,11 +10,11 @@ public class GameLobby {
     private static ArrayList<Game> gameLobby;
 
     public GameLobby(){
-        this.gameLobby = new ArrayList<Game>();
+        gameLobby = new ArrayList<Game>();
     }
 
     public void addGame(Game game){
-        this.gameLobby.add(game);
+        gameLobby.add(game);
     }
 
     public boolean hasGame(Player player){
