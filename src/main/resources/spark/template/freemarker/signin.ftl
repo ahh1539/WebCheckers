@@ -1,4 +1,3 @@
-//alex is working on this file
 <!DOCTYPE html>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"></meta>
@@ -19,13 +18,14 @@
 
     <div class="body">
       <p>Welcome to the sign in page</p>
-
       <div>
-              <label for="uname">Userame</label>
-              <input type="text" id="uname" name="username" placeholder="Username..">
-              <input type="submit" value="Sign In">
-          </div>
-
+        <label for="uname">Username</label>
+        <input required type="text" id="uname" name="username" placeholder="Username...">
+        <input type="submit" value="Sign In">
+        <#if message??>
+            <p>${message}</p>
+        </#if>
+      </div>
     </div>
 
   </div>

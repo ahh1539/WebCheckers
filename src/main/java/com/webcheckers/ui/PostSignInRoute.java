@@ -42,15 +42,15 @@ public class PostSignInRoute implements Route {
     /**
      * Make an error message when the username is invalid.
      */
-    static String makeBadArgMessage(final String guessStr) {
-        return String.format("Usernames must be alphanumeric, spaces optional. %s is invalid.", guessStr);
+    static String makeBadArgMessage(final String usernameStr) {
+        return String.format("Usernames must be alphanumeric, spaces optional. %s is invalid.", usernameStr);
     }
 
     /**
      * Make an error message when the username is already in use.
      */
-    static String makeInvalidArgMessage(final String guessStr) {
-        return String.format("%s is already in use - try again.", guessStr);
+    static String makeInvalidArgMessage(final String usernameStr) {
+        return String.format("%s is already in use - try again.", usernameStr);
     }
 
     //
@@ -71,7 +71,7 @@ public class PostSignInRoute implements Route {
      * @param templateEngine template engine to use for rendering HTML page
      * @throws NullPointerException when the {@code gameCenter} or {@code templateEngine} parameter is null
      */
-    PostSignInRoute(PlayerLobby playerLobby, TemplateEngine templateEngine) {
+    public PostSignInRoute(PlayerLobby playerLobby, TemplateEngine templateEngine) {
         // validation
         Objects.requireNonNull(playerLobby, "playerLobby must not be null");
         Objects.requireNonNull(templateEngine, "templateEngine must not be null");
@@ -91,7 +91,6 @@ public class PostSignInRoute implements Route {
      */
     @Override
     public String handle(Request request, Response response) {
-
         Map<String, Object> vm = new HashMap<>();
         vm.put("title", "Welcome!");
 

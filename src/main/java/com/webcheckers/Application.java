@@ -8,6 +8,7 @@ import java.util.logging.LogManager;
 import java.util.logging.Logger;
 
 import com.google.gson.Gson;
+import com.webcheckers.application.PlayerLobby;
 import com.webcheckers.ui.WebServer;
 
 import spark.TemplateEngine;
@@ -58,8 +59,12 @@ public final class Application {
     // response to Ajax requests.
     final Gson gson = new Gson();
 
+    // The application will use the playerLobby to store information
+    // about all of the current players.
+    final PlayerLobby playerLobby = new PlayerLobby();
+
     // inject the game center and freemarker engine into web server
-    final WebServer webServer = new WebServer(templateEngine, gson);
+    final WebServer webServer = new WebServer(templateEngine, gson, playerLobby);
 
     // inject web server into application
     final Application app = new Application(webServer);
