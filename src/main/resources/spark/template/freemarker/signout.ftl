@@ -13,11 +13,13 @@
 
     <div class="navigation">
       <a href="/">Back home</a>
+
     </div>
 
 
     <div class="body">
-      <h3>Goodbye</h3>
+    <button type="button" onclick="alert('Hello world!')">Click to Sign out!</button>
+      <h3>Thanks for Playing, Goodbye</h3>
 
     </div>
 
