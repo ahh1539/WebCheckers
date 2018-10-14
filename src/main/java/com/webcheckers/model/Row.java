@@ -7,6 +7,9 @@ public class Row implements Iterable<Space>{
     private Space[] row;
     private int index;
 
+    private final int ROW_LENGTH = 8;
+
+
     public Row(int index){
 
     }
@@ -20,11 +23,11 @@ public class Row implements Iterable<Space>{
     }
 
     @Override
-    public Iterator<Row> iterator() {
+    public Iterator<Space> iterator() {
         return new RowIterator();
     }
 
-    private class RowIterator implements Iterator<Row> {
+    private class RowIterator implements Iterator<Space> {
         private int cursor;
 
         public RowIterator() {
@@ -32,14 +35,14 @@ public class Row implements Iterable<Space>{
         }
 
         public boolean hasNext() {
-            return this.cursor < 8;
+            return this.cursor < ROW_LENGTH;
         }
 
-        public Integer next() {
+        public Space next() {
             if(this.hasNext()) {
                 int current = cursor;
                 cursor ++;
-                return current;
+                return row[current];
             }
             throw new NoSuchElementException();
         }
