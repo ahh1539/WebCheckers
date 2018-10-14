@@ -35,4 +35,17 @@ public class GameLobby {
         return null;
     }
 
+    public Game getGame(Player player){
+        for(Game game : gameLobby){
+            if(game.hasGame(player)){
+                return game;
+            }
+        }
+        return null;
+    }
+
+    public void removeGame(Player player){
+        gameLobby.remove(getGame(player));
+    }
+
 }

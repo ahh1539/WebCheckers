@@ -41,7 +41,7 @@ public class GetStartGameRoute implements Route {
         // retrieve the HTTP session
         final Session session = request.session();
         Player player = session.attribute(PostSignInRoute.PLAYER);
-        //Game game = this.gameCenter.getGameLobby()
+        Game game = this.gameCenter.getGameLobby().getGame(player);
 
         Map<String, Object> vm = new HashMap<>();
         vm.put("title", "Start Game");
