@@ -5,11 +5,10 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.logging.Logger;
 
-import spark.ModelAndView;
-import spark.Request;
-import spark.Response;
-import spark.Route;
-import spark.TemplateEngine;
+import com.webcheckers.application.GameCenter;
+import com.webcheckers.application.PlayerLobby;
+import javafx.geometry.Pos;
+import spark.*;
 
 /**
  * The UI Controller to GET the Home page.
@@ -18,8 +17,9 @@ import spark.TemplateEngine;
  */
 public class GetHomeRoute implements Route {
   private static final Logger LOG = Logger.getLogger(GetHomeRoute.class.getName());
-
+  public static final String ROUTE_NAME = "home.ftl";
   private final TemplateEngine templateEngine;
+  private final GameCenter gameCenter;
 
   /**
    * Create the Spark Route (UI controller) for the
@@ -28,11 +28,13 @@ public class GetHomeRoute implements Route {
    * @param templateEngine
    *   the HTML template rendering engine
    */
-  public GetHomeRoute(final TemplateEngine templateEngine) {
+  public GetHomeRoute(final TemplateEngine templateEngine, GameCenter gameCenter) {
     // validation
     Objects.requireNonNull(templateEngine, "templateEngine must not be null");
+    Objects.requireNonNull(templateEngine, "gameCenter must not be null");
     //
     this.templateEngine = templateEngine;
+    this.gameCenter = gameCenter;
     //
     LOG.config("GetHomeRoute is initialized.");
   }
@@ -51,10 +53,22 @@ public class GetHomeRoute implements Route {
   @Override
   public Object handle(Request request, Response response) {
     LOG.finer("GetHomeRoute is invoked.");
+    Session session = request.session();
     //
     Map<String, Object> vm = new HashMap<>();
     vm.put("title", "Welcome!");
-    return templateEngine.render(new ModelAndView(vm , "home.ftl"));
+
+    PlayerLobby playerLobby = this.gameCenter.getPlayerLobby();
+    //vm.put("players", playerLobby.getPlayerLobby());
+
+    //this checks to see if current player is signed in or not
+    if(playerLobby.hasPlayer(session.attribute(PostSignInRoute.PLAYER))){
+        vm.put("players", playerLobby.getPlayerLobby());
+    }
+    else{
+        vm.put("thingy", "Sign in to see current players");
+    }
+    return templateEngine.render(new ModelAndView(vm, ROUTE_NAME));
   }
 
 }
