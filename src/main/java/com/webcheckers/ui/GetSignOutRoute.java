@@ -70,6 +70,8 @@ public class GetSignOutRoute implements Route {
         //
         Map<String, Object> vm = new HashMap<>();
         vm.put("title", "Signout");
+        vm.put(GetHomeRoute.NUM_PLAYERS, playerLobby.getNumberOfPlayers());
+        response.redirect(WebServer.HOME_URL);
         return templateEngine.render(new ModelAndView(vm , "signout.ftl"));
     }
 

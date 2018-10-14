@@ -19,6 +19,10 @@
     <div class="body">
       <p>Welcome to the world of online Checkers.</p>
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> 060c1c86a0128da08aec5e52e0312793eb34524e
       <#if !currentPlayer??>
         <p>There are currently ${numPlayers} players signed in.</p>
       <#else>

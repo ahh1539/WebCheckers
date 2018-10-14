@@ -18,8 +18,10 @@
 
 
     <div class="body">
-    <button type="button" onclick="alert('Hello world!')">Click to Sign out!</button>
-      <h3>Thanks for Playing, Goodbye</h3>
+    <form action="./signout" method="GET">
+        <button type="button" button type = "submit" value = "SIGNOUT ">Click to Sign out!</button>
+    </form>
+    <h3>Thanks for Playing, Goodbye</h3>
 
     </div>
 
