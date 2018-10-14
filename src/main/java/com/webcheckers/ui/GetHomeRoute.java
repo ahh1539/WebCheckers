@@ -60,7 +60,7 @@ public class GetHomeRoute implements Route {
     vm.put("title", "Welcome!");
 
     PlayerLobby playerLobby = this.gameCenter.getPlayerLobby();
-    //vm.put("players", playerLobby.getPlayerLobby());
+    vm.put("players", playerLobby.getPlayerLobby());
 
     //Allows player to see current players only if signed in
     if(playerLobby.hasPlayer(session.attribute(PostSignInRoute.PLAYER))){
@@ -68,7 +68,7 @@ public class GetHomeRoute implements Route {
         vm.put("players", playerLobby.getPlayerLobby());
     }
     else{
-        vm.put("errorMsg", "Sign in to see current players");
+        vm.put("errorMsg", "Sign in to see the list of current players.");
     }
     return templateEngine.render(new ModelAndView(vm, ROUTE_NAME));
   }
