@@ -11,7 +11,28 @@ public class Row implements Iterable<Space>{
 
 
     public Row(int index){
+        this.index = index;
+        if( index % 2 == 0){
+            for( int i = 0; i < ROW_LENGTH; i++){
+                if( i % 2 == 0){
+                    row[i].putRedPiece();
+                }
+                else{
+                    row[i].putWhitePiece();
+                }
+            }
 
+        }
+        else{
+            for( int i = 0; i < ROW_LENGTH; i++){
+                if( i % 2 == 0){
+                    row[i].putWhitePiece();
+                }
+                else{
+                    row[i].putRedPiece();
+                }
+            }
+        }
     }
 
     public Space[] getRow() {
