@@ -20,7 +20,6 @@
       <p>Welcome to the world of online Checkers.</p>
 
 
-
       <#if !currentPlayer??>
         <p>There are currently ${numPlayers} players signed in.</p>
       <#else>

@@ -49,8 +49,6 @@ public class PostStartGameRoute implements Route {
         player.joinGame();
         vm.put("currentPlayer", player);
 
-
-
         return null;
     }
 }
