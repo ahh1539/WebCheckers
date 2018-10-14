@@ -12,13 +12,16 @@ public class Space {
     }
 
     public Piece getPiece() {
-        return piece;
+        return this.piece;
     }
 
     public int getCellIdx() {
-        return cellIdx;
+        return this.cellIdx;
     }
 
+    public void putPiece(Piece piece) {
+        this.piece = piece;
+    }
     public void removePiece(){
         this.piece = null;
     }

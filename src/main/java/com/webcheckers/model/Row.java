@@ -1,6 +1,6 @@
 package com.webcheckers.model;
 
-public class Row {
+public class Row /*implements Iterable<Space>*/{
     private Space[] row;
     private int index;
 
