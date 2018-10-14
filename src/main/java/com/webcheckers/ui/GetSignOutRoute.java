@@ -1,6 +1,8 @@
 package com.webcheckers.ui;
 
 
+import com.webcheckers.application.GameCenter;
+import com.webcheckers.model.Player;
 import spark.*;
 
 import java.util.HashMap;
@@ -18,7 +20,7 @@ public class GetSignOutRoute implements Route {
 
     private static final Logger LOG = Logger.getLogger(GetStartGameRoute.class.getName());
     private final TemplateEngine templateEngine;
-
+    private final GameCenter gameCenter;
 
     /**
      * Create the Spark Route (UI controller) for the
@@ -27,11 +29,13 @@ public class GetSignOutRoute implements Route {
      * @param templateEngine
      *   the HTML template rendering engine
      */
-    public GetSignOutRoute(final TemplateEngine templateEngine) {
+    public GetSignOutRoute(final TemplateEngine templateEngine, final GameCenter gameCenter) {
         // Validation and configuration
         Objects.requireNonNull(templateEngine, "templateEngine must not be null");
+        Objects.requireNonNull(gameCenter, "gameCenter must not be null");
         //
         this.templateEngine = templateEngine;
+        this.gameCenter = gameCenter;
         LOG.config("GetSignOutRoute is initialized.");
     }
 
@@ -48,6 +52,15 @@ public class GetSignOutRoute implements Route {
     @Override
     public Object handle(Request request, Response response) {
         LOG.finer("GetSignInRoute is invoked.");
+        Session session = request.session();
+        Player player = session.attribute(PostSignInRoute.PLAYER);
+        session.removeAttribute(PostSignInRoute.PLAYER);
+        if(this.gameCenter.getGameLobby().hasGame(player)){
+
+        }
+        else {
+
+        }
         //
         Map<String, Object> vm = new HashMap<>();
         vm.put("title", "Signout");
