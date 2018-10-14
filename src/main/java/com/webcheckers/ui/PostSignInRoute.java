@@ -7,6 +7,7 @@ import java.util.Objects;
 import java.util.logging.Logger;
 import java.util.regex.Pattern;
 
+import com.webcheckers.application.GameCenter;
 import com.webcheckers.application.PlayerLobby;
 
 import com.webcheckers.model.Player;
@@ -32,7 +33,7 @@ public class PostSignInRoute implements Route {
     static final String MESSAGE_TYPE_ATTR = "messageType";
     public static final String TITLE_ATTR = "title";
     public static final String TITLE = "Sign-in";
-
+    public static final String PLAYER = "player";
     static final String ERROR_TYPE = "error";
     static final String VIEW_NAME = "signin.ftl";
 
@@ -58,7 +59,7 @@ public class PostSignInRoute implements Route {
     // Attributes
     //
 
-    private final PlayerLobby playerLobby;
+    private final GameCenter gameCenter;
     private final TemplateEngine templateEngine;
 
     //
@@ -68,16 +69,16 @@ public class PostSignInRoute implements Route {
     /**
      * The constructor for the {@code POST /signin} route handler.
      *
-     * @param PlayerLobby    {@Link PlayerLobby} that holds over statistics
+     * @param gameCenter
      * @param templateEngine template engine to use for rendering HTML page
      * @throws NullPointerException when the {@code gameCenter} or {@code templateEngine} parameter is null
      */
-    public PostSignInRoute(PlayerLobby playerLobby, TemplateEngine templateEngine) {
+    public PostSignInRoute(TemplateEngine templateEngine, GameCenter gameCenter) {
         // validation
-        Objects.requireNonNull(playerLobby, "playerLobby must not be null");
+        Objects.requireNonNull(gameCenter, "gameCenter must not be null");
         Objects.requireNonNull(templateEngine, "templateEngine must not be null");
         //
-        this.playerLobby = playerLobby;
+        this.gameCenter = gameCenter;
         this.templateEngine = templateEngine;
     }
 
@@ -115,12 +116,14 @@ public class PostSignInRoute implements Route {
 
         // Check if the player's name has been taken
         Player player = new Player(username);
+        PlayerLobby playerLobby = gameCenter.getPlayerLobby();
         if(playerLobby.hasPlayer(player)){
             return templateEngine.render(error(vm, makeInvalidArgMessage(username)));
         }
 
         // If it passed all the checks, add the player to the lobby
         playerLobby.addPlayer(player);
-        return templateEngine.render(new ModelAndView(vm , "home.ftl"));
+        session.attribute(PLAYER, player);
+        return templateEngine.render(new ModelAndView(vm, GetHomeRoute.ROUTE_NAME));
     }
 }

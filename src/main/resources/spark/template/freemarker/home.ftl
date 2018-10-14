@@ -17,7 +17,12 @@
     
     <div class="body">
       <p>Welcome to the world of online Checkers.</p>
-
+       <#if players??>
+          <h3>Current Players</h3>
+          <#list players as player>
+            <p>${player.username}</p>
+          </#list>
+       </#if>
       <h2>THINGS TO DO FOR SPRINT 1</h2>
       <ul>
         <li> Create state diagram for stories in sprint backlog </li>

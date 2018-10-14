@@ -3,6 +3,8 @@ package com.webcheckers.application;
 import com.webcheckers.model.*;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 /*
 
 import java.util.HashMap;
@@ -74,5 +76,9 @@ public class PlayerLobby {
         for(Player p : playerLobby){
             System.out.println(p.getUsername());
         }
+    }
+
+    public List<Player> getPlayerLobby(){
+        return Collections.unmodifiableList(playerLobby);
     }
 }
