@@ -17,8 +17,14 @@ import spark.*;
  */
 public class GetHomeRoute implements Route {
   private static final Logger LOG = Logger.getLogger(GetHomeRoute.class.getName());
+
   public static final String ROUTE_NAME = "home.ftl";
   public static final String LOBBY_ATTR = "lobby";
+
+  static final String PLAYER = "currentPlayer";
+  static final String PLAYER_LIST = "players";
+  static final String NUM_PLAYERS = "numPlayers";
+
   private final TemplateEngine templateEngine;
   private final GameCenter gameCenter;
 
@@ -62,10 +68,13 @@ public class GetHomeRoute implements Route {
     PlayerLobby playerLobby = this.gameCenter.getPlayerLobby();
     vm.put("players", playerLobby.getPlayerLobby());
 
-    //Allows player to see current players only if signed in
+    // Allows player to see current players only if signed in
+
     if(playerLobby.hasPlayer(session.attribute(PostSignInRoute.PLAYER))){
-        vm.put("currentPlayer", session.attribute(PostSignInRoute.PLAYER));
-        vm.put("players", playerLobby.getPlayerLobby());
+        vm.put(PLAYER, session.attribute(PostSignInRoute.PLAYER));
+        vm.put(PLAYER_LIST, playerLobby.getPlayerLobby());
+    } else {
+      vm.put(NUM_PLAYERS, playerLobby.getNumberOfPlayers());
     }
 
     return templateEngine.render(new ModelAndView(vm, ROUTE_NAME));
