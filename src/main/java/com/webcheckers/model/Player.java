@@ -8,16 +8,22 @@ package com.webcheckers.model;
 
 public class Player {
 
+    public enum Color {RED, WHITE}
+
+
     private String username;
     private int totalGames;
     private int wins;
     private boolean inGame;
+    private Color color;
+
 
     public Player(String username){
         this.username = username;
         this.totalGames = 0;
         this.wins = 0;
         this.inGame = false;
+        this.color = Color.RED;
     }
 
     /**
@@ -27,6 +33,23 @@ public class Player {
     public String getUsername(){
         return username;
     }
+
+    /**
+     * get this player's color
+     * @return either Color.RED or .WHITE
+     */
+    public Color getColor() {
+        return color;
+    }
+
+    /**
+     * update player's color
+     * @param color assigned to player
+     */
+    public void assignColor(Color color){
+        this.color = color;
+    }
+
 
     /**
      * get total number of games player has participated in

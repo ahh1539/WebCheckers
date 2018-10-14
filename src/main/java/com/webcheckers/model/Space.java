@@ -37,9 +37,14 @@ public class Space {
         return this.cellIdx;
     }
 
-    public void putPiece(Piece piece) {
-        this.piece = piece;
+    public void putWhitePiece() {
+        this.piece = new Piece(Piece.Color.WHITE, Piece.Type.SINGLE);
     }
+
+    public void putRedPiece() {
+        this.piece = new Piece(Piece.Color.RED, Piece.Type.SINGLE);
+    }
+
     public void removePiece(){
         this.piece = null;
     }
