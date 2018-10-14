@@ -64,6 +64,7 @@ public class GetHomeRoute implements Route {
 
     //this checks to see if current player is signed in or not
     if(playerLobby.hasPlayer(session.attribute(PostSignInRoute.PLAYER))){
+        vm.put("currentPlayer", session.attribute(PostSignInRoute.PLAYER));
         vm.put("players", playerLobby.getPlayerLobby());
     }
     else{
