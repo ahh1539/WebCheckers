@@ -2,6 +2,9 @@ package com.webcheckers.ui;
 
 
 import com.webcheckers.application.GameCenter;
+import com.webcheckers.application.GameLobby;
+import com.webcheckers.application.PlayerLobby;
+import com.webcheckers.model.Game;
 import com.webcheckers.model.Player;
 import spark.*;
 
@@ -55,11 +58,14 @@ public class GetSignOutRoute implements Route {
         Session session = request.session();
         Player player = session.attribute(PostSignInRoute.PLAYER);
         session.removeAttribute(PostSignInRoute.PLAYER);
-        if(this.gameCenter.getGameLobby().hasGame(player)){
-
+        GameLobby gameLobby = this.gameCenter.getGameLobby();
+        PlayerLobby playerLobby = this.gameCenter.getPlayerLobby();
+        if(gameLobby.hasGame(player)){
+            gameLobby.getGame(player).setLoser(player);
+            PlayerLobby.removePlayer(player);
         }
-        else {
-
+        else if(playerLobby.hasPlayer(player)){
+            PlayerLobby.removePlayer(player);
         }
         //
         Map<String, Object> vm = new HashMap<>();
