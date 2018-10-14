@@ -12,24 +12,29 @@ public class Row implements Iterable<Space>{
 
     public Row(int index){
         this.index = index;
+        int idx = ROW_LENGTH * index;
         if( index % 2 == 0){
             for( int i = 0; i < ROW_LENGTH; i++){
-                if( i % 2 == 0){
-                    row[i].putRedPiece();
+                if( i % 2 == 1){
+                    row[i] = new Space(null, false, idx);
+                    row[i].makeSpaceWhite();
+                    idx++;
                 }
                 else{
-                    row[i].putWhitePiece();
+                    row[i] = new Space(null, true, idx);
+                    idx++;
                 }
             }
-
         }
         else{
             for( int i = 0; i < ROW_LENGTH; i++){
                 if( i % 2 == 0){
-                    row[i].putWhitePiece();
+                    row[i] = new Space(null, false, idx);
+                    row[i].makeSpaceWhite();
                 }
                 else{
-                    row[i].putRedPiece();
+                    row[i] = new Space(null, true, idx);
+                    idx++;
                 }
             }
         }

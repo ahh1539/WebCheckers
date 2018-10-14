@@ -28,6 +28,8 @@
             <#list players as player>
               <#if player.username != currentPlayer.username>
                 <p><a href="/game">${player.username}</a></p>
+              <#else>
+                <p>${player.username}</p>
               </#if>
             </#list>
           </#if>

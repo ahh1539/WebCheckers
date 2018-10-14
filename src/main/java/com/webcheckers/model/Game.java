@@ -8,7 +8,7 @@ public class Game {
     private Player whitePlayer;
     private Player winner;
     private Piece.Color activeColor;
-    private Board board;
+    private BoardView board;
 
     public Game(Player redPlayer, Player whitePlayer){
         Objects.requireNonNull(redPlayer, "redPlayer must not be null");
@@ -18,7 +18,7 @@ public class Game {
         this.whitePlayer = whitePlayer;
         this.activeColor = Piece.Color.RED;
         this.winner = null;
-        this.board = new Board();
+        this.board = new BoardView();
     }
 
     public Player getRedPlayer() {
@@ -37,7 +37,7 @@ public class Game {
         return false;
     }
 
-    public Board getBoard(){
+    public BoardView getBoard(){
         return this.board;
     }
 
