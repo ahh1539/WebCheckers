@@ -64,6 +64,7 @@ public class GetHomeRoute implements Route {
 
     //Allows player to see current players only if signed in
     if(playerLobby.hasPlayer(session.attribute(PostSignInRoute.PLAYER))){
+        vm.put("currentPlayer", session.attribute(PostSignInRoute.PLAYER));
         vm.put("players", playerLobby.getPlayerLobby());
     }
     else{

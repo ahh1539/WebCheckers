@@ -21,10 +21,18 @@ public class Space {
         this.isValid = isValid;
     }
 
+    /**
+     * Returns the Piece that is on the Space
+     * @return the Piece on the Space
+     */
     public Piece getPiece() {
         return this.piece;
     }
 
+    /**
+     *
+     * @return
+     */
     public int getCellIdx() {
         return this.cellIdx;
     }
