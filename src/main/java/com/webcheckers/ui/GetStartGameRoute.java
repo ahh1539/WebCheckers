@@ -1,6 +1,8 @@
 package com.webcheckers.ui;
 
 import com.webcheckers.application.GameCenter;
+import com.webcheckers.model.Game;
+import com.webcheckers.model.Player;
 import spark.*;
 
 import java.util.HashMap;
@@ -36,10 +38,14 @@ public class GetStartGameRoute implements Route {
     @Override
     public Object handle(Request request, Response response) {
         LOG.finer("GetStartGameRoute is invoked.");
+        // retrieve the HTTP session
+        final Session session = request.session();
+        Player player = session.attribute(PostSignInRoute.PLAYER);
+        //Game game = this.gameCenter.getGameLobby()
 
         Map<String, Object> vm = new HashMap<>();
         vm.put("title", "Start Game");
-        // TODO: make correct ftl file for starting a game
-        return templateEngine.render(new ModelAndView(vm , "home.ftl"));
+
+        return templateEngine.render(new ModelAndView(vm , "game.ftl"));
     }
 }
