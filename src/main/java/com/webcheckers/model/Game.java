@@ -41,6 +41,16 @@ public class Game {
         return this.board;
     }
 
+    public Piece.Color getActiveColor(){
+        return this.activeColor;
+    }
+
+    public boolean isActive(Player player){
+        boolean isRedPlayer = player.equals(this.redPlayer) && this.activeColor.equals(Piece.Color.RED);
+        boolean isWhitePlayer = player.equals(this.whitePlayer) && this.activeColor.equals(Piece.Color.WHITE);
+        return isRedPlayer || isWhitePlayer;
+    }
+
     public void toggleActiveColor(){
         if(this.activeColor == Piece.Color.RED){
             this.activeColor = Piece.Color.WHITE;
@@ -48,5 +58,23 @@ public class Game {
         else{
             this.activeColor = Piece.Color.RED;
         }
+    }
+
+    public void setWinner(Player player){
+        if(this.redPlayer.equals(player)) this.winner = this.redPlayer;
+        else this.winner = this.whitePlayer;
+    }
+
+    public void setLoser(Player player){
+        if(this.redPlayer.equals(player)) this.winner = this.whitePlayer;
+        else this.winner = this.redPlayer;
+    }
+
+    public boolean hasWinner(){
+        return this.winner != null;
+    }
+
+    public Player getWinner() {
+        return this.winner;
     }
 }

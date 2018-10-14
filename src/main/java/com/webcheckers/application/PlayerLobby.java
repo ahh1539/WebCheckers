@@ -69,6 +69,10 @@ public class PlayerLobby {
         }
     }
 
+    public int getNumberOfPlayers(){
+        return playerLobby.size();
+    }
+
     public List<Player> getPlayerLobby(){
         return Collections.unmodifiableList(playerLobby);
     }
