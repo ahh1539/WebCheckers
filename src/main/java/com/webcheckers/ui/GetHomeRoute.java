@@ -18,6 +18,7 @@ import spark.*;
 public class GetHomeRoute implements Route {
   private static final Logger LOG = Logger.getLogger(GetHomeRoute.class.getName());
   public static final String ROUTE_NAME = "home.ftl";
+  public static final String LOBBY_ATTR = "lobby";
   private final TemplateEngine templateEngine;
   private final GameCenter gameCenter;
 

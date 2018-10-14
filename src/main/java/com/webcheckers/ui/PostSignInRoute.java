@@ -125,6 +125,8 @@ public class PostSignInRoute implements Route {
         //vm.put("Welcome to the lobby '%s' !", username);
         playerLobby.addPlayer(player);
         session.attribute(PLAYER, player);
+        vm.put(GetStartGameRoute.CURRENT_PLAYER_ATTR, player);
+        vm.put(GetHomeRoute.LOBBY_ATTR, playerLobby);
         return templateEngine.render(new ModelAndView(vm, GetHomeRoute.ROUTE_NAME));
     }
 }

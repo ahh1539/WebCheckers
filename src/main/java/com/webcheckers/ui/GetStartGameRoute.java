@@ -16,6 +16,14 @@ public class GetStartGameRoute implements Route {
     private final TemplateEngine templateEngine;
     private final GameCenter gameCenter;
 
+    static final String GAME_NAME = "game.ftl";
+    static final String TITLE_ATTR = "title";
+    static final String TITLE = "Game Page";
+    static final String CURRENT_PLAYER_ATTR = "currentPlayer";
+    static final String VIEW_MODE_ATTR = "viewMode";
+    static final String BOARD_ATTR = "board";
+
+
     public GetStartGameRoute(final TemplateEngine templateEngine, final GameCenter gameCenter) {
         // Validation and configuration
         Objects.requireNonNull(templateEngine, "templateEngine must not be null");
@@ -46,6 +54,14 @@ public class GetStartGameRoute implements Route {
         Map<String, Object> vm = new HashMap<>();
         vm.put("title", "Start Game");
 
+        if(game == null){
+            vm.put(GetStartGameRoute.TITLE_ATTR, GetStartGameRoute.TITLE);
+            vm.put(GetStartGameRoute.CURRENT_PLAYER_ATTR, player);
+            return templateEngine.render(new ModelAndView(vm, GetStartGameRoute.GAME_NAME));
+        }
+        vm.put(BOARD_ATTR, game.getBoard());
+        vm.put(CURRENT_PLAYER_ATTR, player);
+        vm.put(TITLE_ATTR, TITLE);
         return templateEngine.render(new ModelAndView(vm , "game.ftl"));
     }
 }
