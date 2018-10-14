@@ -30,7 +30,7 @@ public class GetStartGameRoute implements Route {
         Objects.requireNonNull(gameCenter, "gameCenter must not be null");
         this.templateEngine = templateEngine;
         this.gameCenter = gameCenter;
-        LOG.config("GetHomeRoute is initialized.");
+        LOG.config("GetStartGameRoute is initialized.");
     }
 
     /**
