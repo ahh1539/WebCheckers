@@ -23,7 +23,7 @@
         <input required type="text" id="uname" name="username" placeholder="Username...">
         <input type="submit" value="Sign In">
         <#if message??>
-            <p>${message}</p>
+            <p style="color:darkred">${message}</p>
         </#if>
       </form>
     </div>
