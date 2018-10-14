@@ -12,6 +12,10 @@ public class Piece {
         this.type = type;
     }
 
+    public Piece crownPiece(){
+        this.type = Type.KING;
+        return this;
+    }
     public Color getColor() {
         return color;
     }
