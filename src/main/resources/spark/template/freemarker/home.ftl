@@ -23,11 +23,7 @@
             <p>${player.username}</p>
           </#list>
        </#if>
-      <h2>THINGS TO DO FOR SPRINT 1</h2>
-      <ul>
-        <li> Create state diagram for stories in sprint backlog </li>
 
-      </ul>
 
     </div>
     
