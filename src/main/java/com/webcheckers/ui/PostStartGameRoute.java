@@ -44,6 +44,9 @@ public class PostStartGameRoute implements Route {
         final Session session = request.session();
         Map<String, Object> vm = new HashMap<>();
 
+        Player player = session.attribute(PostSignInRoute.PLAYER);
+        player.joinGame();
+
         return null;
     }
 }
