@@ -22,7 +22,7 @@
 
 
       <#if !currentPlayer??>
-        <p>There are currently ${(players?size)!0} players signed in.</p>
+        <p>There are currently ${numPlayers} players signed in.</p>
       <#else>
         <h3>Current Players</h3>
           <#list players as player>
