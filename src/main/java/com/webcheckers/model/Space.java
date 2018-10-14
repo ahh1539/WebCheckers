@@ -42,10 +42,12 @@ public class Space {
 
     public void putWhitePiece() {
         this.piece = new Piece(Piece.Color.WHITE, Piece.Type.SINGLE);
+        this.isValid = false;
     }
 
     public void putRedPiece() {
         this.piece = new Piece(Piece.Color.RED, Piece.Type.SINGLE);
+        this.isValid = false;
     }
 
     public void makeSpaceWhite(){
