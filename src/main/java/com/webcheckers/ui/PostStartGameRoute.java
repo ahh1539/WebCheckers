@@ -14,6 +14,19 @@ public class PostStartGameRoute implements Route {
     private static final Logger LOG = Logger.getLogger(PostStartGameRoute.class.getName());
 
     //
+    // Constants
+    //
+
+    // Values used to build the view model and display the game
+
+    static final String PLAYER = "currentPlayer";
+    static final String VIEW_MODE = "viewMode";
+    static final String MODE_OPTIONS = "modeOptionsAsJSON";
+    static final String RED_PLAYER = "redPlayer";
+    static final String WHITE_PLAYER = "whitePlayer";
+    static final String ACTIVE_COLOR = "activeColor";
+
+    //
     // Attributes
     //
 
@@ -47,8 +60,7 @@ public class PostStartGameRoute implements Route {
         //finds current player and sends to game.ftl
         Player player = session.attribute(PostSignInRoute.PLAYER);
         player.joinGame();
-        vm.put("currentPlayer", player);
-
+        vm.put(PLAYER, player);
 
 
         return null;
