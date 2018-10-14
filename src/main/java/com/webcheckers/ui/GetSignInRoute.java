@@ -31,11 +31,11 @@ public class GetSignInRoute implements Route {
         //
         this.templateEngine = templateEngine;
         //
-        LOG.config("GetHomeRoute is initialized.");
+        LOG.config("GetSignInRoute is initialized.");
     }
 
     /**
-     * Render the WebCheckers Home page.
+     * Render the WebCheckers SignIn page.
      *
      * @param request
      *   the HTTP request
@@ -43,14 +43,14 @@ public class GetSignInRoute implements Route {
      *   the HTTP response
      *
      * @return
-     *   the rendered HTML for the Home page
+     *   the rendered HTML for the Signin page
      */
     @Override
     public Object handle(Request request, Response response) {
-        LOG.finer("GetHomeRoute is invoked.");
+        LOG.finer("GetSignInRoute is invoked.");
         //
         Map<String, Object> vm = new HashMap<>();
-        vm.put("title", "Welcome!");
+        vm.put("title", "Sign In!");
         return templateEngine.render(new ModelAndView(vm , "signin.ftl"));
     }
 

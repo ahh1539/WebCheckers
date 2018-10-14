@@ -122,6 +122,7 @@ public class PostSignInRoute implements Route {
         }
 
         // If it passed all the checks, add the player to the lobby
+        //vm.put("Welcome to the lobby '%s' !", username);
         playerLobby.addPlayer(player);
         session.attribute(PLAYER, player);
         return templateEngine.render(new ModelAndView(vm, GetHomeRoute.ROUTE_NAME));
