@@ -67,8 +67,9 @@ public class GetHomeRoute implements Route {
         vm.put("players", playerLobby.getPlayerLobby());
     }
     else{
-        vm.put("thingy", "Sign in to see current players");
+        vm.put("errorMsg", "Sign in to see current players");
     }
+    //response.redirect(WebServer.HOME_URL);
     return templateEngine.render(new ModelAndView(vm, ROUTE_NAME));
   }
 
