@@ -17,12 +17,13 @@
     
     <div class="body">
       <p>Welcome to the world of online Checkers.</p>
+
+      <#if errorMsg??>
+        <p>${errorMsg}</p>
+      </#if>
+
        <#if players??>
           <h3>Current Players</h3>
-
-          <#if thingy??>
-            <p>${thingy}</p>
-          </#if>
           <#list players as player>
             <p><a href="/game">${player.username}</a></p>
           </#list>
