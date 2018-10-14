@@ -44,8 +44,12 @@ public class PostStartGameRoute implements Route {
         final Session session = request.session();
         Map<String, Object> vm = new HashMap<>();
 
+        //finds current player and sends to game.ftl
         Player player = session.attribute(PostSignInRoute.PLAYER);
         player.joinGame();
+        vm.put("currentPlayer", player);
+
+
 
         return null;
     }
