@@ -19,9 +19,7 @@
     <div class="body">
       <p>Welcome to the world of online Checkers.</p>
 
-      <#if errorMsg??>
-        <p>${errorMsg}</p>
-      </#if>
+
 
       <#if !currentPlayer??>
         <p>There are currently ${(players?size)!0} players signed in.</p>
