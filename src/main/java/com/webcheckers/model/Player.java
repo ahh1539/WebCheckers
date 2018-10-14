@@ -78,7 +78,7 @@ public class Player {
             return false;
         }
         Player p = (Player)obj;
-        return this.username.equals(p);
+        return this.username.equals(p.username);
     }
 
     /**

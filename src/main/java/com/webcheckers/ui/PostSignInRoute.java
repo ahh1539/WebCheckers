@@ -9,11 +9,8 @@ import java.util.regex.Pattern;
 
 import com.webcheckers.application.PlayerLobby;
 
-import spark.ModelAndView;
-import spark.Request;
-import spark.Response;
-import spark.Route;
-import spark.TemplateEngine;
+import com.webcheckers.model.Player;
+import spark.*;
 
 /**
  * The {@code POST /guess} route handler.
@@ -33,6 +30,8 @@ public class PostSignInRoute implements Route {
     static final String USERNAME = "username";
     static final String MESSAGE_ATTR = "message";
     static final String MESSAGE_TYPE_ATTR = "messageType";
+    public static final String TITLE_ATTR = "title";
+    public static final String TITLE = "Sign-in";
 
     static final String ERROR_TYPE = "error";
     static final String VIEW_NAME = "signin.ftl";
@@ -99,19 +98,29 @@ public class PostSignInRoute implements Route {
      */
     @Override
     public String handle(Request request, Response response) {
+        final Session session = request.session();
         Map<String, Object> vm = new HashMap<>();
-        vm.put("title", "Sign In");
+        vm.put(TITLE_ATTR, TITLE);
 
         // retrieve request parameter
         final String username = request.queryParams(USERNAME);
+
         // Check if the username is alphanumeric
         Pattern p = Pattern.compile("[^a-zA-Z0-9\\s]");
         boolean isAlphaNumeric = !p.matcher(username).find();
-        System.out.println(isAlphaNumeric);
+
         if(!isAlphaNumeric){
-            System.out.println(error(vm, makeBadArgMessage(username)));
             return templateEngine.render(error(vm, makeBadArgMessage(username)));
         }
+
+        // Check if the player's name has been taken
+        Player player = new Player(username);
+        if(playerLobby.hasPlayer(player)){
+            return templateEngine.render(error(vm, makeInvalidArgMessage(username)));
+        }
+
+        // If it passed all the checks, add the player to the lobby
+        playerLobby.addPlayer(player);
         return templateEngine.render(new ModelAndView(vm , "home.ftl"));
     }
 }
