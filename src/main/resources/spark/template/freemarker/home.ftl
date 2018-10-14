@@ -24,11 +24,15 @@
         <p>There are currently ${numPlayers} players signed in.</p>
       <#else>
         <h3>Current Players</h3>
-          <#list players as player>
-            <#if player.username != currentPlayer.username>
-              <p><a href="/game">${player.username}</a></p>
-            </#if>
-          </#list>
+          <#if players??>
+            <#list players as player>
+              <#if player.username != currentPlayer.username>
+                <p><a href="/game">${player.username}</a></p>
+              <#else>
+                <p>${player.username}</p>
+              </#if>
+            </#list>
+          </#if>
       </#if>
 
     </div>
