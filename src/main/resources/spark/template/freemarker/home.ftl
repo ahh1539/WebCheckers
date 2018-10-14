@@ -19,6 +19,10 @@
       <p>Welcome to the world of online Checkers.</p>
        <#if players??>
           <h3>Current Players</h3>
+
+          <#if thingy??>
+            <p>${thingy}</p>
+          </#if>
           <#list players as player>
             <p>${player.username}</p>
           </#list>

@@ -57,9 +57,16 @@ public class GetHomeRoute implements Route {
     //
     Map<String, Object> vm = new HashMap<>();
     vm.put("title", "Welcome!");
+
     PlayerLobby playerLobby = this.gameCenter.getPlayerLobby();
-    vm.put("players", playerLobby.getPlayerLobby());
+    //vm.put("players", playerLobby.getPlayerLobby());
+
+    //this checks to see if current player is signed in or not
     if(playerLobby.hasPlayer(session.attribute(PostSignInRoute.PLAYER))){
+        vm.put("players", playerLobby.getPlayerLobby());
+    }
+    else{
+        vm.put("thingy", "Sign in to see current players");
     }
     return templateEngine.render(new ModelAndView(vm, ROUTE_NAME));
   }
