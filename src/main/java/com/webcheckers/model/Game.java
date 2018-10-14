@@ -6,6 +6,7 @@ public class Game {
 
     private Player redPlayer;
     private Player whitePlayer;
+    private Board board;
 
     public Game(Player redPlayer, Player whitePlayer){
         Objects.requireNonNull(redPlayer, "redPlayer must not be null");
@@ -13,6 +14,7 @@ public class Game {
 
         this.redPlayer = redPlayer;
         this.whitePlayer = whitePlayer;
+        this.board = new Board();
     }
 
     public Player getRedPlayer() {
@@ -29,5 +31,9 @@ public class Game {
 
     public boolean hasMove(Player player){
         return false;
+    }
+
+    public Board getBoard(){
+        return this.board;
     }
 }

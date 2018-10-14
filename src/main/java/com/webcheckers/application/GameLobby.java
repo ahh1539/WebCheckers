@@ -1,5 +1,6 @@
 package com.webcheckers.application;
 
+import com.webcheckers.model.Board;
 import com.webcheckers.model.Game;
 import com.webcheckers.model.Player;
 
@@ -25,6 +26,13 @@ public class GameLobby {
         return false;
     }
 
-
+    public Board getGameBoard(Player player){
+        for(Game game : gameLobby){
+            if(game.hasGame(player)){
+                return game.getBoard();
+            }
+        }
+        return null;
+    }
 
 }
