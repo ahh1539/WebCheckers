@@ -56,6 +56,8 @@ public class WebServer {
 
   public static final String SIGN_IN_URL = "/signin";
 
+  public static final String GAME_START = "/game";
+
   //
   // Attributes
   //
@@ -146,6 +148,9 @@ public class WebServer {
 
     // Shows the Sign In page.
     get(SIGN_IN_URL, new GetSignInRoute(templateEngine));
+
+
+    //get(GAME_START, new GetStartGameRoute(templateEngine));
 
   }
 
