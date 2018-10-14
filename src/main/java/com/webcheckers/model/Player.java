@@ -45,6 +45,16 @@ public class Player {
     }
 
     /**
+     * joins the player by indicating they are in a game
+     */
+    public void joinGame() { inGame = true; }
+
+    /**
+     * player leaves game by indicating they are no longer in a game
+     */
+    public void leaveGame() { inGame = false; }
+
+    /**
      * determine whether the player is currently in a game
      * @return inGame
      */
