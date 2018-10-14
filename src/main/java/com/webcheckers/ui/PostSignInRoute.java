@@ -1,10 +1,12 @@
-package main.java.com.webcheckers.ui;
+package com.webcheckers.ui;
 
 import java.util.HashMap;
 import java.util.Map;
 import java.util.NoSuchElementException;
 import java.util.Objects;
 import java.util.logging.Logger;
+import java.util.regex.Pattern;
+
 import com.webcheckers.application.PlayerLobby;
 
 import spark.ModelAndView;
@@ -33,7 +35,7 @@ public class PostSignInRoute implements Route {
     static final String MESSAGE_TYPE_ATTR = "messageType";
 
     static final String ERROR_TYPE = "error";
-    static final String VIEW_NAME = "game_form.ftl";
+    static final String VIEW_NAME = "signin.ftl";
 
     //
     // Static methods
@@ -43,7 +45,7 @@ public class PostSignInRoute implements Route {
      * Make an error message when the username is invalid.
      */
     static String makeBadArgMessage(final String usernameStr) {
-        return String.format("Usernames must be alphanumeric, spaces optional. %s is invalid.", usernameStr);
+        return String.format("Usernames must be alphanumeric, spaces optional. '%s' is invalid.", usernameStr);
     }
 
     /**
@@ -80,6 +82,12 @@ public class PostSignInRoute implements Route {
         this.templateEngine = templateEngine;
     }
 
+    private ModelAndView error(final Map<String, Object> vm, final String message) {
+        vm.put(MESSAGE_ATTR, message);
+        vm.put(MESSAGE_TYPE_ATTR, ERROR_TYPE);
+        return new ModelAndView(vm, VIEW_NAME);
+    }
+
     //
     // TemplateViewRoute method
     //
@@ -92,11 +100,18 @@ public class PostSignInRoute implements Route {
     @Override
     public String handle(Request request, Response response) {
         Map<String, Object> vm = new HashMap<>();
-        vm.put("title", "Welcome!");
+        vm.put("title", "Sign In");
 
         // retrieve request parameter
         final String username = request.queryParams(USERNAME);
-
+        // Check if the username is alphanumeric
+        Pattern p = Pattern.compile("[^a-zA-Z0-9\\s]");
+        boolean isAlphaNumeric = !p.matcher(username).find();
+        System.out.println(isAlphaNumeric);
+        if(!isAlphaNumeric){
+            System.out.println(error(vm, makeBadArgMessage(username)));
+            return templateEngine.render(error(vm, makeBadArgMessage(username)));
+        }
         return templateEngine.render(new ModelAndView(vm , "home.ftl"));
     }
 }

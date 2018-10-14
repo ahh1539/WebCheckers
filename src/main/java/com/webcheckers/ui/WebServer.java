@@ -153,7 +153,7 @@ public class WebServer {
     // Shows the Sign In page.
     get(SIGN_IN_URL, new GetSignInRoute(templateEngine));
 
-    post(SIGN_IN_URL, new main.java.com.webcheckers.ui.PostSignInRoute(playerLobby, templateEngine));
+    post(SIGN_IN_URL, new PostSignInRoute(playerLobby, templateEngine));
     //get(GAME_START, new GetStartGameRoute(templateEngine));
 
   }

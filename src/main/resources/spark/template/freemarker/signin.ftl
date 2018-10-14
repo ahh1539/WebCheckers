@@ -18,14 +18,14 @@
 
     <div class="body">
       <p>Welcome to the sign in page</p>
-      <div>
+      <form action="./signin" method="POST">
         <label for="uname">Username</label>
         <input required type="text" id="uname" name="username" placeholder="Username...">
         <input type="submit" value="Sign In">
         <#if message??>
             <p>${message}</p>
         </#if>
-      </div>
+      </form>
     </div>
 
   </div>
