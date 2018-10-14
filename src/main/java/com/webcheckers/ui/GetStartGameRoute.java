@@ -1,5 +1,6 @@
 package com.webcheckers.ui;
 
+import com.webcheckers.application.GameCenter;
 import spark.*;
 
 import java.util.HashMap;
@@ -11,11 +12,14 @@ public class GetStartGameRoute implements Route {
 
     private static final Logger LOG = Logger.getLogger(GetStartGameRoute.class.getName());
     private final TemplateEngine templateEngine;
+    private final GameCenter gameCenter;
 
-    public GetStartGameRoute(final TemplateEngine templateEngine) {
+    public GetStartGameRoute(final TemplateEngine templateEngine, final GameCenter gameCenter) {
         // Validation and configuration
         Objects.requireNonNull(templateEngine, "templateEngine must not be null");
+        Objects.requireNonNull(gameCenter, "gameCenter must not be null");
         this.templateEngine = templateEngine;
+        this.gameCenter = gameCenter;
         LOG.config("GetHomeRoute is initialized.");
     }
 
