@@ -36,6 +36,7 @@ public class GetRequestGameRoute implements Route{
             playerLobby.addPlayer(player2);
         }*/
         Game game = new Game(player1, player2);
+        gameCenter.getGameLobby().addGame(game);
         return templateEngine.render(new ModelAndView(vm, GetStartGameRoute.GAME_NAME));
         }
 }
