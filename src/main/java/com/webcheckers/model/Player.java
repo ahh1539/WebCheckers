@@ -5,11 +5,11 @@ package com.webcheckers.model;
  * The Player entity to store info about players
  *
  */
-
 public class Player {
-
+    //
+    // Attributes
+    //
     public enum Color {RED, WHITE}
-
 
     private String username;
     private int totalGames;
@@ -17,7 +17,12 @@ public class Player {
     private boolean inGame;
     private Color color;
 
-
+    /**
+     * Create a Player with the provided username. 0 total games and wins, they are not
+     * currently in a game, and color defaults to RED
+     * @param username
+     *      Unique alphanumeric string representing the Player
+     */
     public Player(String username){
         this.username = username;
         this.totalGames = 0;
@@ -27,24 +32,27 @@ public class Player {
     }
 
     /**
-     * get username
-     * @return username
+     * Get the Player's username
+     * @return
+     *      String username of the Player
      */
     public String getUsername(){
         return username;
     }
 
     /**
-     * get this player's color
-     * @return either Color.RED or .WHITE
+     * Get the Player's color
+     * @return
+     *      The color of the Player, either Color.RED or .WHITE
      */
     public Color getColor() {
         return color;
     }
 
     /**
-     * update player's color
-     * @param color assigned to player
+     * Update player's color
+     * @param color
+     *      The Color {@link Color} assigned to the Player, RED or WHITE
      */
     public void assignColor(Color color){
         this.color = color;
@@ -52,8 +60,9 @@ public class Player {
 
 
     /**
-     * get total number of games player has participated in
+     * Get total number of games player has participated in
      * @return totalGames
+     *      The integer number of games the Player has participated in
      */
     public int getTotalGames(){
         return totalGames;
@@ -68,45 +77,47 @@ public class Player {
     }
 
     /**
-     * joins the player by indicating they are in a game
+     * Joins the player by indicating they are in a game
      */
     public void joinGame() { inGame = true; }
 
     /**
-     * player leaves game by indicating they are no longer in a game
+     * Player leaves game by indicating they are no longer in a game
      */
     public void leaveGame() { inGame = false; }
 
     /**
-     * determine whether the player is currently in a game
+     * Determine whether the player is currently in a game
      * @return inGame
+     *      Boolean representing whether the Player is in a game
      */
     public boolean inGame() { return inGame; }
 
     /**
-     * increment number of games by 1
+     * Increment number of games by 1
      */
     public void addGame(){
         totalGames++;
     }
 
     /**
-     * increments number of wins by 1
+     * Increments number of wins by 1
      */
     public void addWin(){
         wins++;
     }
 
     /**
-     * calculates the average number of wins a player has
-     * @return avg. wins
+     * Calculates the average number of wins a player has
+     * @return
+     *      A double representing the average number of wins
      */
     public double getAverage(){
         return wins/(float)totalGames;
     }
 
     /**
-     * compares two players based on username
+     * Compares two players based on username
      * @param obj given player
      * @return true if players have same username
      */

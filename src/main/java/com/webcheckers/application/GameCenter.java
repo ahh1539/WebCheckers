@@ -3,7 +3,6 @@ import java.util.Objects;
 
 /**
  * The object to coordinate the state of the Web Application.
- * @author Paula Register
  */
 public class GameCenter {
     private PlayerLobby playerLobby;
@@ -11,8 +10,10 @@ public class GameCenter {
 
     /**
      * Creates a GameCenter for coordinating the web app.
-     * @param playerLobby The PlayerLobby, a list of all of the current Players
-     * @param gameLobby The GameLobby, a list of all of the current Games.
+     * @param playerLobby
+     *      The PlayerLobby {@link PlayerLobby}, a list of all of the current Players
+     * @param gameLobby
+     *      The GameLobby {@link GameLobby}, a list of all of the current Games.
      */
     public GameCenter(PlayerLobby playerLobby, GameLobby gameLobby){
         Objects.requireNonNull(playerLobby, "playerLobby must not be null");
@@ -23,7 +24,8 @@ public class GameCenter {
 
     /**
      * Get the PlayerLobby object
-     * @return the list of current Players
+     * @return
+     *      The list of current Players
      */
     public PlayerLobby getPlayerLobby() {
         return playerLobby;
@@ -31,7 +33,8 @@ public class GameCenter {
 
     /**
      * Get the GameLobby object
-     * @return the list of current Games
+     * @return
+     *      The list of current Games
      */
     public GameLobby getGameLobby() {
         return gameLobby;

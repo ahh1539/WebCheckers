@@ -1,8 +1,7 @@
 package com.webcheckers.ui;
 
 import com.webcheckers.application.GameCenter;
-import com.webcheckers.application.GameLobby;
-import com.webcheckers.application.PlayerLobby;
+import com.webcheckers.model.Game;
 import com.webcheckers.model.Player;
 import spark.*;
 
@@ -27,6 +26,7 @@ public class PostStartGameRoute implements Route {
     static final String RED_PLAYER = "redPlayer";
     static final String WHITE_PLAYER = "whitePlayer";
     static final String ACTIVE_COLOR = "activeColor";
+    static final String MESSAGE = "message";
 
     //
     // Attributes
@@ -59,14 +59,17 @@ public class PostStartGameRoute implements Route {
         final Session session = request.session();
         Map<String, Object> vm = new HashMap<>();
 
-        GameLobby gLobby = gameCenter.getGameLobby();
-
         // Finds current player and sends to game.ftl
 
         Player player = session.attribute(PostSignInRoute.PLAYER);
         player.joinGame();
         vm.put(PLAYER, player);
 
-        return null;
+        // Sets up board and sets view mode to Play
+
+        // Game game = new Game(???);
+        vm.put(VIEW_MODE, Game.ViewMode.PLAY);
+
+        return templateEngine.render(new ModelAndView(vm , "game.ftl"));
     }
 }

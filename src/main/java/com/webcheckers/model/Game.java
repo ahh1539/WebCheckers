@@ -1,7 +1,5 @@
 package com.webcheckers.model;
 
-import com.webcheckers.application.PlayerLobby;
-
 import java.util.Objects;
 
 public class Game {
@@ -11,12 +9,24 @@ public class Game {
     private Player winner;
     private Piece.Color activeColor;
     private BoardView board;
-    private PlayerLobby pLobby;
 
+    public enum ViewMode { PLAY, SPECTATOR, REPLAY }
+
+    /**
+     * Create a Game with the red and white players, where the active color is
+     * red and the winner is null.
+     * @param redPlayer
+     *      Player {@link Player} representing the red Player
+     * @param whitePlayer
+     *      Player {@link Player} representing the white Player
+     */
+    public Game(Player redPlayer, Player whitePlayer){
+        Objects.requireNonNull(redPlayer, "redPlayer must not be null");
+        Objects.requireNonNull(whitePlayer, "whitePlayer must not be null");
     public Game(){
 
-        this.redPlayer = null;
-        this.whitePlayer = null;
+        this.redPlayer = redPlayer;
+        this.whitePlayer = whitePlayer;
         this.activeColor = Piece.Color.RED;
         this.winner = null;
         this.board = new BoardView();
@@ -34,6 +44,15 @@ public class Game {
         this.whitePlayer = new Player(username);
     }
 
+    /**
+     * Queries whether the provided player has a game - If they are either
+     * the red or the white player
+     * @param player
+     *      Player {@link Player} to check if they are in a game
+     * @return
+     *      True if the provided player is the red or white player.
+     *      False otherwise
+     */
     public boolean hasGame(Player player){
         return this.redPlayer.equals(player) | this.whitePlayer.equals(player);
     }
