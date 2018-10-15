@@ -34,7 +34,19 @@ public class GetRequestGameRoute implements Route{
         if(!playerLobby.hasPlayer(player2)){
             playerLobby.addPlayer(player2);
         }
+
+        if (PlayerLobby.getPlayer(player1.getName()).inGame()|| PlayerLobby.getPlayer(player2.getName()).inGame()){
+            vm.put("title", "Player already in game");
+            response.redirect(WebServer.HOME_URL);
+            return templateEngine.render(new ModelAndView(vm, GetHomeRoute.ROUTE_NAME));
+        }
+
         Game game = new Game(player1, player2);
+        PlayerLobby.getPlayer(player1.getName()).joinGame();
+        PlayerLobby.getPlayer(player2.getName()).joinGame();
+
+
+
         gameCenter.getGameLobby().addGame(game);
         Message message = new Message(Message.Type.ERROR, "Text");
         vm.put(GetStartGameRoute.MESSAGE, message);

@@ -1,6 +1,7 @@
 package com.webcheckers.ui;
 
 import com.webcheckers.application.GameCenter;
+import com.webcheckers.application.PlayerLobby;
 import com.webcheckers.model.Game;
 import com.webcheckers.model.Player;
 import spark.*;
@@ -54,6 +55,13 @@ public class GetStartGameRoute implements Route {
         // retrieve the HTTP session
         final Session session = request.session();
         Player player = session.attribute(PostSignInRoute.PLAYER);
+
+
+        PlayerLobby.getPlayer(player.getName()).joinGame();
+
+
+
+
         Game game = this.gameCenter.getGameLobby().getGame(player);
 
         Map<String, Object> vm = new HashMap<>();

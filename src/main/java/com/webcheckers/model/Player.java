@@ -17,6 +17,7 @@ public class Player {
     private boolean inGame;
     private Color color;
 
+
     /**
      * Create a Player with the provided username. 0 total games and wins, they are not
      * currently in a game, and color defaults to RED
@@ -79,7 +80,12 @@ public class Player {
     /**
      * Joins the player by indicating they are in a game
      */
-    public void joinGame() { inGame = true; }
+    public void joinGame() {
+        inGame = true;
+        System.out.println("its workin bois");
+    }
+
+
 
     /**
      * Player leaves game by indicating they are no longer in a game
@@ -92,6 +98,7 @@ public class Player {
      *      Boolean representing whether the Player is in a game
      */
     public boolean inGame() { return inGame; }
+
 
     /**
      * Increment number of games by 1

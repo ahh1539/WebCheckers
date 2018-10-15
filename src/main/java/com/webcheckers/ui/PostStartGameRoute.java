@@ -62,7 +62,7 @@ public class PostStartGameRoute implements Route {
         // Finds current player and sends to game.ftl
 
         Player player = session.attribute(PostSignInRoute.PLAYER);
-        player.joinGame();
+        //player.joinGame();
         vm.put(GetStartGameRoute.CURRENT_PLAYER_ATTR, player);
         // Sets up board and sets view mode to Play
         vm.put(VIEW_MODE, Game.ViewMode.PLAY);
