@@ -32,9 +32,24 @@ public class Game {
         this.activeColor = Piece.Color.RED;
         this.winner = null;
         this.board = new BoardView();
+        this.pieces = new ArrayList<>();
     }
 
+    /**
+     * add a piece to the ongoing list of pieces
+     * @param piece
+     */
+    public void addPiece(Piece piece){
+        pieces.add(piece);
+    }
 
+    /**
+     * remove piece from board once it has been defeated
+     * @param piece
+     */
+    public void removePiece(Piece piece){
+        pieces.remove(piece);
+    }
 
     public Player getRedPlayer() {
         return redPlayer;

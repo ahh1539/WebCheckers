@@ -11,6 +11,7 @@ public class Space {
     private boolean isValid;
     private int cellIdx;
     private Color color;
+
     public enum Color{ BLACK, WHITE}
 
     /**
@@ -46,15 +47,16 @@ public class Space {
     /**
      * Place a white piece on the Space. The Space is no longer a valid spot
      */
-    public void putWhitePiece() {
-        this.piece = new Piece(Piece.Color.WHITE, Piece.Type.SINGLE);
+    public Piece putWhitePiece() {
+        this.piece = new Piece(Piece.Color.WHITE, Piece.Type.SINGLE, cellIdx);
         this.isValid = false;
+        return piece;
     }
     /**
      * Place a red piece on the Space. The Space is no longer a valid spot
      */
     public void putRedPiece() {
-        this.piece = new Piece(Piece.Color.RED, Piece.Type.SINGLE);
+        this.piece = new Piece(Piece.Color.RED, Piece.Type.SINGLE, cellIdx);
         this.isValid = false;
     }
 
