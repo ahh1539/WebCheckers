@@ -61,6 +61,8 @@ public class WebServer {
 
   public static final String SIGN_OUT_URL = "/signout";
 
+  public static final String REQUEST_GAME_URL = "/requestGame";
+
   //
   // Attributes
   //
@@ -154,6 +156,7 @@ public class WebServer {
     // Shows the game page.
     get(GAME_START_URL, new GetStartGameRoute(templateEngine, gameCenter));
 
+    get(REQUEST_GAME_URL, new GetRequestGameRoute(templateEngine, gameCenter));
     //
     LOG.config("WebServer is initialized.");
 
