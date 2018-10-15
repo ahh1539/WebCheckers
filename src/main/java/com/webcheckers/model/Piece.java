@@ -12,6 +12,7 @@ public class Piece {
 
     private Color color;
     private Type type;
+    private int index;
 
     /**
      * Create a piece with the associated Color and Type
@@ -23,6 +24,21 @@ public class Piece {
     public Piece(Color color, Type type){
         this.color = color;
         this.type = type;
+    }
+
+    /**
+     * Create a piece with the associated Color and Type and index
+     * @param color
+     *      The Color {@link Color} of the piece, either RED or WHITE
+     * @param type
+     *      The Type {@link Type} of the piece, either SINGLE or KING
+     * @param idx
+     *      The index associated with the placement on the board
+     */
+    public Piece(Color color, Type type, int idx){
+        this.color = color;
+        this.type = type;
+        this.index = idx;
     }
 
     /**

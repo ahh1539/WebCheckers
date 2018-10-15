@@ -1,5 +1,6 @@
 package com.webcheckers.model;
 
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 
@@ -15,7 +16,35 @@ public class BoardView implements Iterable<Row>{
         for(int i = 0; i < BOARD_LENGTH; i++) {
             this.gameBoard[i] = new Row(i);
         }
+        placePieces();
     }
+
+    /**
+     * initialize all pieces on the board
+     *
+     */
+    public void placePieces(){
+        for(int i = 0; i < BOARD_LENGTH; i++ ){
+            if( i < 3){
+                for (Space space: gameBoard[i]) {
+                    if (space.getColor() == Space.Color.BLACK) {
+                        space.putRedPiece();
+                    }
+                }
+            }
+            if( i > 4){
+                for (Space space: gameBoard[i]) {
+                    if (space.getColor() == Space.Color.BLACK) {
+                        space.putWhitePiece();
+                    }
+                }
+            }
+        }
+    }
+
+    //TODO add functions to place pieces differently for different player
+
+
     private class BoardIterator implements Iterator<Row> {
         int curr = 0;
         @Override

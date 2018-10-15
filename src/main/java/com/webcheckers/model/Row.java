@@ -23,6 +23,7 @@ public class Row implements Iterable<Space>{
      */
     public Row(int index){
         this.index = index;
+
         int idx = ROW_LENGTH * index;
         if( index % 2 == 0){
             for( int i = 0; i < ROW_LENGTH; i++){

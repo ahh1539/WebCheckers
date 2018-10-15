@@ -1,22 +1,17 @@
 package com.webcheckers.model;
 
+import java.security.PublicKey;
+import java.util.ArrayList;
 import java.util.Objects;
 
-/**
- * A single Game, containing the information about the red and white players,
- * the winner, active color, and the board.
- */
 public class Game {
-
-    //
-    // Attributes
-    //
 
     private Player redPlayer;
     private Player whitePlayer;
     private Player winner;
     private Piece.Color activeColor;
     private BoardView board;
+    private ArrayList<Piece> pieces;
 
     public enum ViewMode { PLAY, SPECTATOR, REPLAY }
 
@@ -37,24 +32,35 @@ public class Game {
         this.activeColor = Piece.Color.RED;
         this.winner = null;
         this.board = new BoardView();
+        this.pieces = new ArrayList<>();
     }
 
     /**
-     * Gets the red player
-     * @return
-     *      Player {@link Player} representing the red Player
+     * add a piece to the ongoing list of pieces
+     * @param piece
      */
+    public void addPiece(Piece piece){
+        pieces.add(piece);
+    }
+
+    /**
+     * remove piece from board once it has been defeated
+     * @param piece
+     */
+    public void removePiece(Piece piece){
+        pieces.remove(piece);
+    }
+
     public Player getRedPlayer() {
         return redPlayer;
     }
 
-    /**
-     * Gets the white player
-     * @return
-     *      Player {@link Player} representing the white Player
-     */
     public Player getWhitePlayer() {
         return whitePlayer;
+    }
+
+    public void setWhitePlayer(String username){
+        this.whitePlayer = new Player(username);
     }
 
     /**
@@ -70,50 +76,24 @@ public class Game {
         return this.redPlayer.equals(player) | this.whitePlayer.equals(player);
     }
 
-    /**
-     * Checks if the player has a valid move. Will be implemented fully in later sprints.
-     * @param player
-     * @return
-     */
     public boolean hasMove(Player player){
         return false;
     }
 
-    /**
-     * Gets the board for the game
-     * @return
-     *      The Board {@link BoardView} for the current Game
-     */
     public BoardView getBoard(){
         return this.board;
     }
 
-    /**
-     * Gets the current active color
-     * @return
-     *      The activeColor, {@link Piece.Color} either Red or White
-     */
     public Piece.Color getActiveColor(){
         return this.activeColor;
     }
 
-    /**
-     * Checks if the given player is active in the Game.
-     * @param player
-     *      Player {@link Player} to check if they are active
-     * @return
-     *      True if the provided player is either the red or white player.
-     *      False otherwise.
-     */
     public boolean isActive(Player player){
         boolean isRedPlayer = player.equals(this.redPlayer) && this.activeColor.equals(Piece.Color.RED);
         boolean isWhitePlayer = player.equals(this.whitePlayer) && this.activeColor.equals(Piece.Color.WHITE);
         return isRedPlayer || isWhitePlayer;
     }
 
-    /**
-     * Toggles the active color to the opposite color
-     */
     public void toggleActiveColor(){
         if(this.activeColor == Piece.Color.RED){
             this.activeColor = Piece.Color.WHITE;
@@ -123,41 +103,20 @@ public class Game {
         }
     }
 
-    /**
-     * The player has won, so set this.winner equal to whichever player they are
-     * @param player
-     *      The Player who has won
-     */
     public void setWinner(Player player){
         if(this.redPlayer.equals(player)) this.winner = this.redPlayer;
         else this.winner = this.whitePlayer;
     }
 
-    /**
-     * The player has lost, so set this.winner equal to whichever player they are not
-     * @param player
-     *      The Player who has lost
-     */
     public void setLoser(Player player){
         if(this.redPlayer.equals(player)) this.winner = this.whitePlayer;
         else this.winner = this.redPlayer;
     }
 
-    /**
-     * Queries whether the current game has a winner
-     * @return
-     *      True if the winner variable is not null.
-     *      False otherwise
-     */
     public boolean hasWinner(){
         return this.winner != null;
     }
 
-    /**
-     * Returns the current game's winner
-     * @return
-     *      The player who is the winner, either the Red or White player.
-     */
     public Player getWinner() {
         return this.winner;
     }
