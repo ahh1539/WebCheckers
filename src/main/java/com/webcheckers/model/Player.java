@@ -82,7 +82,6 @@ public class Player {
      */
     public void joinGame() {
         inGame = true;
-        System.out.println("its workin bois");
     }
 
 
