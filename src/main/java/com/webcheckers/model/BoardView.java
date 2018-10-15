@@ -27,7 +27,7 @@ public class BoardView implements Iterable<Row>{
         for(int i = 0; i < BOARD_LENGTH; i++ ){
             if( i < 3){
                 for (Space space: gameBoard[i]) {
-                    if (space.getColor() == Space.Color.BLACK) {
+                    if (space.getColor() == Space.Color.WHITE) {
                         space.putRedPiece();
                     }
                 }
