@@ -156,15 +156,17 @@ public class WebServer {
     get(SIGN_IN_URL, new GetSignInRoute(templateEngine));
     // Shows the game page.
     get(GAME_START_URL, new GetStartGameRoute(templateEngine, gameCenter));
-
+    // Signs player out
+    get(SIGN_OUT_URL, new GetSignOutRoute(templateEngine, gameCenter));
+    // Request a game
     get(REQUEST_GAME_URL, new GetRequestGameRoute(templateEngine, gameCenter));
-    //
-    LOG.config("WebServer is initialized.");
 
+    // Posts the player username as they sign in
     post(SIGN_IN_URL, new PostSignInRoute(templateEngine, gameCenter));
+    // Post a move to validate
     post(VALIDATE_MOVE_URL, new PostValidateMoveRoute(templateEngine, gameCenter));
 
-    get(SIGN_OUT_URL, new GetSignOutRoute(templateEngine, gameCenter));
+    LOG.config("WebServer is initialized.");
 
   }
 

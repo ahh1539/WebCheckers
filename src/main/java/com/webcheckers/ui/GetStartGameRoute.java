@@ -61,7 +61,7 @@ public class GetStartGameRoute implements Route {
         Game game = this.gameCenter.getGameLobby().getGame(player);
 
         Map<String, Object> vm = new HashMap<>();
-        vm.put("title", "Start Game");
+        vm.put(TITLE_ATTR, TITLE);
 
         // Handles a null game object
 
@@ -69,7 +69,7 @@ public class GetStartGameRoute implements Route {
             vm.put(TITLE_ATTR, TITLE);
             vm.put(GetHomeRoute.NUM_PLAYERS, this.gameCenter.getPlayerLobby().getNumberOfPlayers());
             vm.put(CURRENT_PLAYER_ATTR, player);
-            vm.put("lobby", this.gameCenter.getPlayerLobby().getPlayerLobby());
+            vm.put(GetHomeRoute.LOBBY_ATTR, this.gameCenter.getPlayerLobby().getPlayerLobby());
             return templateEngine.render(new ModelAndView(vm, GetHomeRoute.ROUTE_NAME));
         }
 
@@ -82,6 +82,6 @@ public class GetStartGameRoute implements Route {
         vm.put(RED_PLAYER_ATTR, game.getRedPlayer());
         vm.put(WHITE_PLAYER_ATTR, game.getWhitePlayer());
         vm.put(ACTIVE_COLOR_ATTR, game.getActiveColor());
-        return templateEngine.render(new ModelAndView(vm , "game.ftl"));
+        return templateEngine.render(new ModelAndView(vm , GetStartGameRoute.GAME_NAME));
     }
 }

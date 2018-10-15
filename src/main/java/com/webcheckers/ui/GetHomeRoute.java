@@ -23,6 +23,8 @@ public class GetHomeRoute implements Route {
 
   public static final String ROUTE_NAME = "home.ftl";
   public static final String LOBBY_ATTR = "lobby";
+  public static final String TITLE_ATTR = "title";
+  public static final String TITLE = "Welcome!";
 
   static final String PLAYER = "currentPlayer";
   static final String PLAYER_LIST = "players";
@@ -66,48 +68,69 @@ public class GetHomeRoute implements Route {
     Session session = request.session();
     //
     Map<String, Object> vm = new HashMap<>();
-    vm.put("title", "Welcome!");
+    vm.put(TITLE_ATTR, TITLE);
 
     PlayerLobby playerLobby = this.gameCenter.getPlayerLobby();
+    GameLobby gameLobby = this.gameCenter.getGameLobby();
+
     vm.put(PLAYER_LIST, playerLobby.getPlayerLobby());
 
     // Allows player to see current players only if signed in
+    Player player = session.attribute(PostSignInRoute.PLAYER);
+    if(playerLobby.hasPlayer(player)){
 
-    if(playerLobby.hasPlayer(session.attribute(PostSignInRoute.PLAYER))){
-        Player player = session.attribute(PostSignInRoute.PLAYER);
         vm.put(GetStartGameRoute.CURRENT_PLAYER_ATTR, player);
         vm.put(PLAYER_LIST, playerLobby.getPlayerLobby());
-        GameLobby gameLobby = this.gameCenter.getGameLobby();
         final String username = request.queryParams("opponent");
+
+        // Check if the opponent is not null, then get the player from username
         if(username != null){
           Player opponent = PlayerLobby.getPlayer(username);
+
           if(!gameLobby.hasGame(opponent)){
+
+            // Add a new game if the opponent is free to play
             Game game = new Game(player, opponent);
             gameLobby.addGame(game);
+
+
             vm.put(GetStartGameRoute.VIEW_MODE_ATTR, Game.ViewMode.PLAY);
             vm.put(GetStartGameRoute.RED_PLAYER_ATTR, player);
             vm.put(GetStartGameRoute.WHITE_PLAYER_ATTR, opponent);
             vm.put(GetStartGameRoute.ACTIVE_COLOR_ATTR, game.getActiveColor());
             vm.put(GetStartGameRoute.BOARD_ATTR, gameLobby.getGameBoard(player));
+
             return templateEngine.render(new ModelAndView(vm, GetStartGameRoute.GAME_NAME));
+
           }
+
         }
+        // If the player is already in a Game
         if(gameLobby.hasGame(player)){
+
           Game game = gameLobby.getGame(player);
+
           if(!game.hasWinner()){
+
             vm.put(GetStartGameRoute.VIEW_MODE_ATTR, "PLAY");
             vm.put(GetStartGameRoute.RED_PLAYER_ATTR, game.getRedPlayer());
             vm.put(GetStartGameRoute.WHITE_PLAYER_ATTR, game.getWhitePlayer());
             vm.put(GetStartGameRoute.ACTIVE_COLOR_ATTR, game.getActiveColor());
             vm.put(GetStartGameRoute.BOARD_ATTR, gameLobby.getGameBoard(player));
+
             return templateEngine.render(new ModelAndView(vm, GetStartGameRoute.GAME_NAME));
+
           }
         }
-    } else {
+    }
+    // If the player is not logged in, they can only see the number of other players but not a list of them
+    else {
       vm.put(NUM_PLAYERS, playerLobby.getNumberOfPlayers());
       vm.put(LOBBY_ATTR, null);
     }
+
     return templateEngine.render(new ModelAndView(vm, ROUTE_NAME));
+
   }
 
 }

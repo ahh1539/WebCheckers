@@ -1,6 +1,7 @@
 package com.webcheckers.ui;
 
 import com.webcheckers.application.GameCenter;
+import com.webcheckers.application.GameLobby;
 import com.webcheckers.application.PlayerLobby;
 import com.webcheckers.model.Game;
 import com.webcheckers.model.Message;
@@ -14,13 +15,23 @@ public class GetRequestGameRoute implements Route{
     private final TemplateEngine templateEngine;
     private final GameCenter gameCenter;
 
+    public static final String TITLE_ATTR = "title";
+    public static final String TITLE = "Go!";
+
+    /**
+     * Create the Spark Route (UI controller) for the
+     * {@code GET /requestGame} HTTP request.
+     *
+     * @param templateEngine
+     *   the HTML template rendering engine
+     */
     public GetRequestGameRoute(final TemplateEngine templateEngine, final GameCenter gameCenter){
         this.gameCenter = gameCenter;
         this.templateEngine = templateEngine;
     }
 
     /**
-     *
+     * Handle the Request to start a game
      * @param request
      *      the HTTP request
      * @param response
@@ -31,13 +42,15 @@ public class GetRequestGameRoute implements Route{
     @Override
     public Object handle(Request request, Response response) {
         Map<String, Object> vm = new HashMap<>();
-        vm.put("title", "Go!");
+        vm.put(TITLE_ATTR, TITLE);
+        final Session session = request.session();
 
         // Sets up player and opponent player based on selection
 
-        final Session session = request.session();
         Player player1 =  session.attribute(PostSignInRoute.PLAYER);
         String secondPlayer = request.queryParams("opponent");
+
+        // Checks if the players are already in the lobby, if not it adds them.
         PlayerLobby playerLobby = gameCenter.getPlayerLobby();
         Player player2 = new Player(secondPlayer);
         if(!playerLobby.hasPlayer(player1)){
@@ -64,16 +77,18 @@ public class GetRequestGameRoute implements Route{
         PlayerLobby.getPlayer(player2.getName()).joinGame();
 
         // Configures view model for new game
-
-        gameCenter.getGameLobby().addGame(game);
+        GameLobby gameLobby = gameCenter.getGameLobby();
+        gameLobby.addGame(game);
         Message message = new Message(Message.Type.ERROR, "Text");
+
         vm.put(GetStartGameRoute.MESSAGE, message);
         vm.put(GetStartGameRoute.CURRENT_PLAYER_ATTR, player1);
         vm.put(GetStartGameRoute.VIEW_MODE_ATTR, Game.ViewMode.PLAY);
         vm.put(GetStartGameRoute.RED_PLAYER_ATTR, player1);
         vm.put(GetStartGameRoute.WHITE_PLAYER_ATTR, player2);
-        vm.put(GetStartGameRoute.ACTIVE_COLOR_ATTR, this.gameCenter.getGameLobby().getGame(player1).getActiveColor());
-        vm.put(GetStartGameRoute.BOARD_ATTR, this.gameCenter.getGameLobby().getGameBoard(player1));
+        vm.put(GetStartGameRoute.ACTIVE_COLOR_ATTR, gameLobby.getGame(player1).getActiveColor());
+        vm.put(GetStartGameRoute.BOARD_ATTR, gameLobby.getGameBoard(player1));
+
         return templateEngine.render(new ModelAndView(vm, GetStartGameRoute.GAME_NAME));
     }
 }

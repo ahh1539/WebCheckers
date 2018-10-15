@@ -67,6 +67,6 @@ public class PostStartGameRoute implements Route {
 
         vm.put(VIEW_MODE, Game.ViewMode.PLAY);
 
-        return templateEngine.render(new ModelAndView(vm , "game.ftl"));
+        return templateEngine.render(new ModelAndView(vm , GetStartGameRoute.GAME_NAME));
     }
 }

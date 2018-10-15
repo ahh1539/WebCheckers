@@ -25,6 +25,8 @@ public class GetSignOutRoute implements Route {
     private final TemplateEngine templateEngine;
     private final GameCenter gameCenter;
 
+    public static final String TITLE_ATTR = "title";
+    public static final String TITLE = "Signout";
     /**
      * Create the Spark Route (UI controller) for the
      * {@code GET /} HTTP request.
@@ -56,8 +58,12 @@ public class GetSignOutRoute implements Route {
     public Object handle(Request request, Response response) {
         LOG.finer("GetSignOutRoute is invoked.");
         Session session = request.session();
+
+        // Get the player and remove them from the attributes
         Player player = session.attribute(PostSignInRoute.PLAYER);
         session.removeAttribute(PostSignInRoute.PLAYER);
+
+        // Remove the player from a Game, if they are in one by setting them as the loser. Remove from playerLobby
         GameLobby gameLobby = this.gameCenter.getGameLobby();
         PlayerLobby playerLobby = this.gameCenter.getPlayerLobby();
         if(gameLobby.hasGame(player)){
@@ -67,12 +73,14 @@ public class GetSignOutRoute implements Route {
         else if(playerLobby.hasPlayer(player)){
             PlayerLobby.removePlayer(player);
         }
+
         //
         Map<String, Object> vm = new HashMap<>();
-        vm.put("title", "Signout");
+        vm.put(TITLE_ATTR, TITLE);
         vm.put(GetStartGameRoute.CURRENT_PLAYER_ATTR, null);
         vm.put(GetHomeRoute.NUM_PLAYERS, playerLobby.getNumberOfPlayers());
-        return templateEngine.render(new ModelAndView(vm, "home.ftl"));
+
+        return templateEngine.render(new ModelAndView(vm, GetHomeRoute.ROUTE_NAME));
     }
 
 }
