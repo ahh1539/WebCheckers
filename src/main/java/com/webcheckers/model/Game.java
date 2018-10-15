@@ -10,6 +10,8 @@ public class Game {
     private Piece.Color activeColor;
     private BoardView board;
 
+    public enum ViewMode { PLAY, SPECTATOR, REPLAY }
+
     public Game(Player redPlayer, Player whitePlayer){
         Objects.requireNonNull(redPlayer, "redPlayer must not be null");
         Objects.requireNonNull(whitePlayer, "whitePlayer must not be null");
