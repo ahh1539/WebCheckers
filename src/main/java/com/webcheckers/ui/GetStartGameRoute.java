@@ -19,9 +19,13 @@ public class GetStartGameRoute implements Route {
     static final String GAME_NAME = "game.ftl";
     static final String TITLE_ATTR = "title";
     static final String TITLE = "Game Page";
-    static final String CURRENT_PLAYER_ATTR = "currentPlayer";
-    static final String VIEW_MODE_ATTR = "viewMode";
     static final String BOARD_ATTR = "board";
+    static final String CURRENT_PLAYER_ATTR = "currentPlayer";
+    static final String RED_PLAYER_ATTR = "redPlayer";
+    static final String WHITE_PLAYER_ATTR = "whitePlayer";
+    static final String ACTIVE_COLOR_ATTR = "activeColor";
+    static final String VIEW_MODE_ATTR = "viewMode";
+
 
 
     public GetStartGameRoute(final TemplateEngine templateEngine, final GameCenter gameCenter) {
@@ -62,6 +66,10 @@ public class GetStartGameRoute implements Route {
         vm.put(BOARD_ATTR, game.getBoard());
         vm.put(CURRENT_PLAYER_ATTR, player);
         vm.put(TITLE_ATTR, TITLE);
+        vm.put(VIEW_MODE_ATTR, "PLAY");
+        vm.put(RED_PLAYER_ATTR, game.getRedPlayer());
+        vm.put(WHITE_PLAYER_ATTR, game.getWhitePlayer());
+        vm.put(ACTIVE_COLOR_ATTR, game.getActiveColor());
         return templateEngine.render(new ModelAndView(vm , "game.ftl"));
     }
 }

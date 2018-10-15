@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 <!DOCTYPE html>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"></meta>
@@ -26,7 +25,7 @@
           <#if players??>
             <#list players as player>
               <#if player.username != currentPlayer.username>
-                <p><a href="/game/${player.username}">${player.username}</a></p>
+                <p><a href="/game">${player.username}</a></p>
               <#else>
                 <p>${player.username}</p>
               </#if>
