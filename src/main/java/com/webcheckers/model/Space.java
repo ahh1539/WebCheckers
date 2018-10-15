@@ -47,10 +47,9 @@ public class Space {
     /**
      * Place a white piece on the Space. The Space is no longer a valid spot
      */
-    public Piece putWhitePiece() {
+    public void putWhitePiece() {
         this.piece = new Piece(Piece.Color.WHITE, Piece.Type.SINGLE, cellIdx);
         this.isValid = false;
-        return piece;
     }
     /**
      * Place a red piece on the Space. The Space is no longer a valid spot
