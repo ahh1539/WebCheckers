@@ -1,5 +1,7 @@
 package com.webcheckers.model;
 
+import java.security.PublicKey;
+import java.util.ArrayList;
 import java.util.Objects;
 
 public class Game {
@@ -9,6 +11,7 @@ public class Game {
     private Player winner;
     private Piece.Color activeColor;
     private BoardView board;
+    private ArrayList<Piece> pieces;
 
     public enum ViewMode { PLAY, SPECTATOR, REPLAY }
 
@@ -23,7 +26,6 @@ public class Game {
     public Game(Player redPlayer, Player whitePlayer){
         Objects.requireNonNull(redPlayer, "redPlayer must not be null");
         Objects.requireNonNull(whitePlayer, "whitePlayer must not be null");
-    public Game(){
 
         this.redPlayer = redPlayer;
         this.whitePlayer = whitePlayer;
@@ -31,6 +33,8 @@ public class Game {
         this.winner = null;
         this.board = new BoardView();
     }
+
+
 
     public Player getRedPlayer() {
         return redPlayer;

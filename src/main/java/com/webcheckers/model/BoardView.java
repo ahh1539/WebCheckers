@@ -16,6 +16,7 @@ public class BoardView implements Iterable<Row>{
             this.gameBoard[i] = new Row(i);
         }
     }
+
     private class BoardIterator implements Iterator<Row> {
         int curr = 0;
         @Override
