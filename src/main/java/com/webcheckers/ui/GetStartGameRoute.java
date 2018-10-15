@@ -69,7 +69,7 @@ public class GetStartGameRoute implements Route {
         vm.put(BOARD_ATTR, game.getBoard());
         vm.put(CURRENT_PLAYER_ATTR, player);
         vm.put(TITLE_ATTR, TITLE);
-        vm.put(VIEW_MODE_ATTR, "PLAY");
+        vm.put(VIEW_MODE_ATTR, Game.ViewMode.PLAY);
         vm.put(RED_PLAYER_ATTR, game.getRedPlayer());
         vm.put(WHITE_PLAYER_ATTR, game.getWhitePlayer());
         vm.put(ACTIVE_COLOR_ATTR, game.getActiveColor());
