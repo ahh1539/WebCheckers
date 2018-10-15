@@ -36,11 +36,7 @@ public class PostValidateMoveRoute implements Route {
 
     @Override
     public Object handle(Request request, Response response) {
-        // retrieve the HTTP session
-        final Session session = request.session();
-
         Message message = new Message(Message.Type.ERROR, "Invalid move");
-        Player player = session.attribute(PostSignInRoute.PLAYER);
         return message;
     }
 }

@@ -5,6 +5,10 @@ import java.util.Objects;
  * The object to coordinate the state of the Web Application.
  */
 public class GameCenter {
+
+    //
+    // Attributes
+    //
     private PlayerLobby playerLobby;
     private GameLobby gameLobby;
 

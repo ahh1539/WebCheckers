@@ -4,6 +4,7 @@ package com.webcheckers.model;
  * A Piece on the board, representing a Checkers piece
  */
 public class Piece {
+
     //
     // Attributes
     //

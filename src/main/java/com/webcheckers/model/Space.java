@@ -4,6 +4,7 @@ package com.webcheckers.model;
  * Represents a space on the board
  */
 public class Space {
+
     //
     // Attributes
     //
@@ -69,6 +70,7 @@ public class Space {
     /**
      * get the color of this space
      * @return color
+     *      The color {@link Color} of the space, either WHITE or BLACK
      */
     public Color getColor(){
         return this.color;
