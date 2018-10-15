@@ -19,9 +19,12 @@
     <div class="body">
       <p>Welcome to the world of online Checkers.</p>
       <#if !currentPlayer??>
-        <p>There are currently ${numPlayers} players signed in.</p>
+        <p>There are currently ${numPlayers!0} players signed in.</p>
       <#else>
         <h3>Current Players</h3>
+          <#if errorMsg??>
+            <p style="color:darkred">${errorMsg}</p>
+          </#if>
           <#if players??>
             <#list players as player>
               <#if player.name != currentPlayer.name>
