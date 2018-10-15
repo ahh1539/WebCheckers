@@ -25,7 +25,7 @@
           <#if players??>
             <#list players as player>
               <#if player.username != currentPlayer.username>
-                <p><a href="/game?opponent=${player.username}">${player.username}</button></p>
+                <p><a href="/requestGame?opponent=${player.username}">${player.username}</button></p>
               <#else>
                 <p>${player.username}</p>
               </#if>
