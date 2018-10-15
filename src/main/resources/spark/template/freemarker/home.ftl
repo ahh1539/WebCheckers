@@ -23,10 +23,9 @@
       <#else>
         <h3>Current Players</h3>
           <#if players??>
-          <form action="./game" method="GET">
             <#list players as player>
               <#if player.username != currentPlayer.username>
-                <p><button name="opponent" type="submit" href="/game">${player.username}</button></p>
+                <p><a href="/game?opponent=${player.username}">${player.username}</button></p>
               <#else>
                 <p>${player.username}</p>
               </#if>
