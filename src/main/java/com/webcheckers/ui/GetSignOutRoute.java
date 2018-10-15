@@ -66,8 +66,20 @@ public class GetSignOutRoute implements Route {
         // Remove the player from a Game, if they are in one by setting them as the loser. Remove from playerLobby
         GameLobby gameLobby = this.gameCenter.getGameLobby();
         PlayerLobby playerLobby = this.gameCenter.getPlayerLobby();
+        // If the player was in a game
         if(gameLobby.hasGame(player)){
-            gameLobby.getGame(player).setLoser(player);
+            Game game = gameLobby.getGame(player);
+
+            // The player loses and the opponent wins
+            game.setLoser(player);
+            Player opponent = game.getWhitePlayer();
+            game.setWinner(opponent);
+
+            // Both players leave the game
+            opponent.leaveGame();
+            player.leaveGame();
+
+            // The player leaves the playerLobby
             PlayerLobby.removePlayer(player);
         }
         else if(playerLobby.hasPlayer(player)){
