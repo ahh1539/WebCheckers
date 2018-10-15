@@ -4,7 +4,9 @@ package com.webcheckers.model;
  * Represents a space on the board
  */
 public class Space {
-    // private attributes
+    //
+    // Attributes
+    //
     private Piece piece;
     private boolean isValid;
     private int cellIdx;
@@ -33,27 +35,46 @@ public class Space {
     }
 
     /**
-     *
+     * Gets the cellID of the Space
      * @return
+     *      The integer representing the ID of the 'cell', the Space
      */
     public int getCellIdx() {
         return this.cellIdx;
     }
 
+    /**
+     * Place a white piece on the Space. The Space is no longer a valid spot
+     */
     public void putWhitePiece() {
         this.piece = new Piece(Piece.Color.WHITE, Piece.Type.SINGLE);
         this.isValid = false;
     }
-
+    /**
+     * Place a red piece on the Space. The Space is no longer a valid spot
+     */
     public void putRedPiece() {
         this.piece = new Piece(Piece.Color.RED, Piece.Type.SINGLE);
         this.isValid = false;
     }
 
+    /**
+     * Make the Space color WHITE
+     */
     public void makeSpaceWhite(){
+        this.color = Color.WHITE;
+    }
+
+    /**
+     * Make the Space color RED
+     */
+    public void makeSpaceRed(){
         this.color = Color.RED;
     }
 
+    /**
+     * Remove a piece from the Space by setting it to null
+     */
     public void removePiece(){
         this.piece = null;
     }
