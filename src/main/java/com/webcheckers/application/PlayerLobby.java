@@ -8,8 +8,9 @@ import java.util.List;
 
 public class PlayerLobby {
 
-    // Private variables
-
+    //
+    // Attributes
+    //
     private static ArrayList<Player> playerLobby;
 
     /**
@@ -69,10 +70,20 @@ public class PlayerLobby {
         }
     }
 
+    /**
+     * Gets the number of players currently in the player lobby
+     * @return
+     *      The integer number of players, I.E. the size of playerLobby
+     */
     public int getNumberOfPlayers(){
         return playerLobby.size();
     }
 
+    /**
+     * Gets an unchangeable copy of the current playerLobby
+     * @return
+     *      an unmodifiable list from the playerLobby.
+     */
     public List<Player> getPlayerLobby(){
         return Collections.unmodifiableList(playerLobby);
     }
