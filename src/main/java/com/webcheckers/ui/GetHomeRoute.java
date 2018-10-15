@@ -77,6 +77,8 @@ public class GetHomeRoute implements Route {
         vm.put(GetStartGameRoute.CURRENT_PLAYER_ATTR, player);
         vm.put(PLAYER_LIST, playerLobby.getPlayerLobby());
         final String username = request.queryParams("opponent");
+      System.out.println("Opp: " + request.queryParams("opponent"));
+      System.out.println("Player " + player.getUsername());
         if(username != null){
           Player opponent = PlayerLobby.getPlayer(username);
           if(!this.gameCenter.getGameLobby().hasGame(opponent)){
