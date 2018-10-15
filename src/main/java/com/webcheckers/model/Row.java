@@ -10,10 +10,11 @@ public class Row implements Iterable<Space>{
     //
     // Attributes
     //
-    private Space[] row;
+    private final int ROW_LENGTH = 8;
+    private Space[] row = new Space[ROW_LENGTH];
     private int index;
 
-    private final int ROW_LENGTH = 8;
+
 
     /**
      * Create a Row made of red and white Spaces
