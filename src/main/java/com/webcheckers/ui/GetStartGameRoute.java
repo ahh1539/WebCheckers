@@ -62,8 +62,8 @@ public class GetStartGameRoute implements Route {
         if(game == null){
             vm.put(TITLE_ATTR, TITLE);
             vm.put(GetHomeRoute.NUM_PLAYERS, this.gameCenter.getPlayerLobby().getNumberOfPlayers());
-            
             vm.put(CURRENT_PLAYER_ATTR, player);
+            vm.put("lobby", this.gameCenter.getPlayerLobby().getPlayerLobby());
             return templateEngine.render(new ModelAndView(vm, GetHomeRoute.ROUTE_NAME));
         }
         vm.put(BOARD_ATTR, game.getBoard());
