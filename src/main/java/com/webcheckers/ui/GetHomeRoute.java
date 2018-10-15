@@ -84,7 +84,7 @@ public class GetHomeRoute implements Route {
           Player opponent = PlayerLobby.getPlayer(username);
           if(!this.gameCenter.getGameLobby().hasGame(opponent)){
             this.gameCenter.getGameLobby().addGame(new Game(player, opponent));
-            vm.put(GetStartGameRoute.VIEW_MODE_ATTR, "PLAY");
+            vm.put(GetStartGameRoute.VIEW_MODE_ATTR, Game.ViewMode.PLAY);
             vm.put(GetStartGameRoute.RED_PLAYER_ATTR, player);
             vm.put(GetStartGameRoute.WHITE_PLAYER_ATTR, opponent);
             vm.put(GetStartGameRoute.ACTIVE_COLOR_ATTR, this.gameCenter.getGameLobby().getGame(player).getActiveColor());
