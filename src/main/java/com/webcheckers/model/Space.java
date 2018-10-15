@@ -9,7 +9,7 @@ public class Space {
     private boolean isValid;
     private int cellIdx;
     private Color color;
-    public enum Color{ RED, WHITE}
+    public enum Color{ BLACK, WHITE}
 
     /**
      * Create a Space object
@@ -21,7 +21,7 @@ public class Space {
         this.piece = piece;
         this.cellIdx = cellIdx;
         this.isValid = isValid;
-        this.color = Color.RED;
+        this.color = Color.BLACK;
     }
 
     /**
@@ -51,7 +51,7 @@ public class Space {
     }
 
     public void makeSpaceWhite(){
-        this.color = Color.RED;
+        this.color = Color.WHITE;
     }
 
     public void removePiece(){

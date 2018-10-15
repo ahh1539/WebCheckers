@@ -1,6 +1,8 @@
 package com.webcheckers.ui;
 
 import com.webcheckers.application.GameCenter;
+import com.webcheckers.application.GameLobby;
+import com.webcheckers.application.PlayerLobby;
 import com.webcheckers.model.Player;
 import spark.*;
 
@@ -56,6 +58,8 @@ public class PostStartGameRoute implements Route {
     public Object handle(Request request, Response response) {
         final Session session = request.session();
         Map<String, Object> vm = new HashMap<>();
+
+        GameLobby gLobby = gameCenter.getGameLobby();
 
         // Finds current player and sends to game.ftl
 

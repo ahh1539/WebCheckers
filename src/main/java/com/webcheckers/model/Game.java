@@ -1,5 +1,7 @@
 package com.webcheckers.model;
 
+import com.webcheckers.application.PlayerLobby;
+
 import java.util.Objects;
 
 public class Game {
@@ -9,13 +11,12 @@ public class Game {
     private Player winner;
     private Piece.Color activeColor;
     private BoardView board;
+    private PlayerLobby pLobby;
 
-    public Game(Player redPlayer, Player whitePlayer){
-        Objects.requireNonNull(redPlayer, "redPlayer must not be null");
-        Objects.requireNonNull(whitePlayer, "whitePlayer must not be null");
+    public Game(){
 
-        this.redPlayer = redPlayer;
-        this.whitePlayer = whitePlayer;
+        this.redPlayer = null;
+        this.whitePlayer = null;
         this.activeColor = Piece.Color.RED;
         this.winner = null;
         this.board = new BoardView();
@@ -27,6 +28,10 @@ public class Game {
 
     public Player getWhitePlayer() {
         return whitePlayer;
+    }
+
+    public void setWhitePlayer(String username){
+        this.whitePlayer = new Player(username);
     }
 
     public boolean hasGame(Player player){
