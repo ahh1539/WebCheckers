@@ -37,7 +37,7 @@ public class PlayerLobby {
      */
     public static Player getPlayer(String username) {
         for(Player p : playerLobby){
-            if(p.getUsername().equals(username)){
+            if(p.getName().equals(username)){
                 return p;
             }
         }
@@ -66,7 +66,7 @@ public class PlayerLobby {
      */
     public void printPlayerLobby(){
         for(Player p : playerLobby){
-            System.out.println(p.getUsername());
+            System.out.println(p.getName());
         }
     }
 

@@ -24,10 +24,10 @@
         <h3>Current Players</h3>
           <#if players??>
             <#list players as player>
-              <#if player.username != currentPlayer.username>
-                <p><a href="/requestGame?opponent=${player.username}">${player.username}</button></p>
+              <#if player.name != currentPlayer.name>
+                <p><a href="/requestGame?opponent=${player.name}">${player.name}</button></p>
               <#else>
-                <p>${player.username}</p>
+                <p>${player.name}</p>
               </#if>
             </#list>
           </#if>

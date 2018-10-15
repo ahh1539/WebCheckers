@@ -11,7 +11,7 @@ public class Player {
     //
     public enum Color {RED, WHITE}
 
-    private String username;
+    private String name;
     private int totalGames;
     private int wins;
     private boolean inGame;
@@ -20,11 +20,11 @@ public class Player {
     /**
      * Create a Player with the provided username. 0 total games and wins, they are not
      * currently in a game, and color defaults to RED
-     * @param username
+     * @param name
      *      Unique alphanumeric string representing the Player
      */
-    public Player(String username){
-        this.username = username;
+    public Player(String name){
+        this.name = name;
         this.totalGames = 0;
         this.wins = 0;
         this.inGame = false;
@@ -36,8 +36,8 @@ public class Player {
      * @return
      *      String username of the Player
      */
-    public String getUsername(){
-        return username;
+    public String getName(){
+        return name;
     }
 
     /**
@@ -130,7 +130,7 @@ public class Player {
             return false;
         }
         Player p = (Player)obj;
-        return this.username.equals(p.username);
+        return this.name.equals(p.name);
     }
 
     /**
@@ -139,7 +139,7 @@ public class Player {
      */
     @Override
     public int hashCode(){
-        return username.hashCode();
+        return name.hashCode();
     }
 
 }
