@@ -7,6 +7,8 @@ import java.util.logging.Logger;
 
 import com.webcheckers.application.GameCenter;
 import com.webcheckers.application.PlayerLobby;
+import com.webcheckers.model.Game;
+import com.webcheckers.model.Player;
 import javafx.geometry.Pos;
 import spark.*;
 
@@ -71,10 +73,35 @@ public class GetHomeRoute implements Route {
     // Allows player to see current players only if signed in
 
     if(playerLobby.hasPlayer(session.attribute(PostSignInRoute.PLAYER))){
-        vm.put(PLAYER, session.attribute(PostSignInRoute.PLAYER));
+        Player player = session.attribute(PostSignInRoute.PLAYER);
+        vm.put(GetStartGameRoute.CURRENT_PLAYER_ATTR, player);
         vm.put(PLAYER_LIST, playerLobby.getPlayerLobby());
+        final String username = request.queryParams("opponent");
+        if(username != null){
+          Player opponent = PlayerLobby.getPlayer(username);
+          if(!this.gameCenter.getGameLobby().hasGame(opponent)){
+            this.gameCenter.getGameLobby().addGame(new Game(player, opponent));
+            vm.put(GetStartGameRoute.VIEW_MODE_ATTR, "PLAY");
+            vm.put(GetStartGameRoute.RED_PLAYER_ATTR, player);
+            vm.put(GetStartGameRoute.WHITE_PLAYER_ATTR, opponent);
+            vm.put(GetStartGameRoute.ACTIVE_COLOR_ATTR, this.gameCenter.getGameLobby().getGame(player).getActiveColor());
+            vm.put(GetStartGameRoute.BOARD_ATTR, this.gameCenter.getGameLobby().getGameBoard(player));
+            return templateEngine.render(new ModelAndView(vm, GetStartGameRoute.GAME_NAME));
+          }
+        }
+        if(this.gameCenter.getGameLobby().hasGame(player)){
+          if(!this.gameCenter.getGameLobby().getGame(player).hasWinner()){
+            vm.put(GetStartGameRoute.VIEW_MODE_ATTR, "PLAY");
+            vm.put(GetStartGameRoute.RED_PLAYER_ATTR, this.gameCenter.getGameLobby().getGame(player).getRedPlayer());
+            vm.put(GetStartGameRoute.WHITE_PLAYER_ATTR, this.gameCenter.getGameLobby().getGame(player).getWhitePlayer());
+            vm.put(GetStartGameRoute.ACTIVE_COLOR_ATTR, this.gameCenter.getGameLobby().getGame(player).getActiveColor());
+            vm.put(GetStartGameRoute.BOARD_ATTR, this.gameCenter.getGameLobby().getGameBoard(player));
+            return templateEngine.render(new ModelAndView(vm, GetStartGameRoute.GAME_NAME));
+          }
+        }
     } else {
       vm.put(NUM_PLAYERS, playerLobby.getNumberOfPlayers());
+      vm.put(LOBBY_ATTR, null);
     }
 
     return templateEngine.render(new ModelAndView(vm, ROUTE_NAME));

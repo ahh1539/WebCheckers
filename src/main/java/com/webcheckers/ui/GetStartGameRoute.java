@@ -54,14 +54,17 @@ public class GetStartGameRoute implements Route {
         final Session session = request.session();
         Player player = session.attribute(PostSignInRoute.PLAYER);
         Game game = this.gameCenter.getGameLobby().getGame(player);
-
+        System.out.println(game);
+        System.out.println(player.getUsername());
         Map<String, Object> vm = new HashMap<>();
         vm.put("title", "Start Game");
 
         if(game == null){
-            vm.put(GetStartGameRoute.TITLE_ATTR, GetStartGameRoute.TITLE);
-            vm.put(GetStartGameRoute.CURRENT_PLAYER_ATTR, player);
-            return templateEngine.render(new ModelAndView(vm, GetStartGameRoute.GAME_NAME));
+            vm.put(TITLE_ATTR, TITLE);
+            vm.put(GetHomeRoute.NUM_PLAYERS, this.gameCenter.getPlayerLobby().getNumberOfPlayers());
+            
+            vm.put(CURRENT_PLAYER_ATTR, player);
+            return templateEngine.render(new ModelAndView(vm, GetHomeRoute.ROUTE_NAME));
         }
         vm.put(BOARD_ATTR, game.getBoard());
         vm.put(CURRENT_PLAYER_ATTR, player);
