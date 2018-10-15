@@ -44,7 +44,7 @@ public class BoardView implements Iterable<Row>{
 
     //TODO add functions to place pieces differently for different player
 
-
+    //iterates through all gameboard spaces
     private class BoardIterator implements Iterator<Row> {
         int curr = 0;
         @Override
@@ -59,13 +59,10 @@ public class BoardView implements Iterable<Row>{
         }
     }
 
+    //returns a gameboard with all spaces
     @Override
     public Iterator<Row> iterator() {
         return new BoardIterator();
     }
 
-    public int[][] updateBoard() {
-        //TODO update the board from the ui tier
-        return null;
-    }
 }
