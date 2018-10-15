@@ -33,8 +33,6 @@ public class GetRequestGameRoute implements Route{
         if(!playerLobby.hasPlayer(player2)){
             playerLobby.addPlayer(player2);
         }
-        System.out.println("First " + player1.getName());
-        System.out.println("Second " + player2.getName());
         Game game = new Game(player1, player2);
         gameCenter.getGameLobby().addGame(game);
         vm.put(GetStartGameRoute.CURRENT_PLAYER_ATTR, player1);
