@@ -11,11 +11,31 @@
     <h1>Web Checkers</h1>
     
     <div class="navigation">
-      <a href="/">my home</a>
+      <a href="/">Home</a>
+      <a href="/signin">Sign In</a>
+      <a href="/signout">Sign Out</a>
     </div>
     
     <div class="body">
       <p>Welcome to the world of online Checkers.</p>
+      <#if !currentPlayer??>
+        <p>There are currently ${numPlayers!0} players signed in.</p>
+      <#else>
+        <h3>Current Players</h3>
+          <#if errorMsg??>
+            <p style="color:darkred">${errorMsg.text}</p>
+          </#if>
+          <#if players??>
+            <#list players as player>
+              <#if player.name != currentPlayer.name>
+                <p><a href="/requestGame?opponent=${player.name}">${player.name}</a></p>
+              <#else>
+                <p>${player.name}</p>
+              </#if>
+            </#list>
+          </#if>
+      </#if>
+
     </div>
     
   </div>

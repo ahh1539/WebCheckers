@@ -7,6 +7,7 @@ import java.util.logging.Logger;
 
 import com.google.gson.Gson;
 
+import com.webcheckers.application.GameCenter;
 import spark.TemplateEngine;
 
 
@@ -54,11 +55,21 @@ public class WebServer {
    */
   public static final String HOME_URL = "/";
 
+  public static final String SIGN_IN_URL = "/signin";
+
+  public static final String GAME_START_URL = "/game";
+
+  public static final String SIGN_OUT_URL = "/signout";
+
+  public static final String REQUEST_GAME_URL = "/requestGame";
+
+  public static final String VALIDATE_MOVE_URL = "/validateMove";
   //
   // Attributes
   //
 
   private final TemplateEngine templateEngine;
+  private final GameCenter gameCenter;
   private final Gson gson;
 
   //
@@ -76,12 +87,14 @@ public class WebServer {
    * @throws NullPointerException
    *    If any of the parameters are {@code null}.
    */
-  public WebServer(final TemplateEngine templateEngine, final Gson gson) {
+  public WebServer(final TemplateEngine templateEngine, final Gson gson, final GameCenter gameCenter) {
     // validation
     Objects.requireNonNull(templateEngine, "templateEngine must not be null");
+    Objects.requireNonNull(gameCenter, "gameCenter must not be null");
     Objects.requireNonNull(gson, "gson must not be null");
     //
     this.templateEngine = templateEngine;
+    this.gameCenter = gameCenter;
     this.gson = gson;
   }
 
@@ -137,10 +150,24 @@ public class WebServer {
     //// code clean; using small classes.
 
     // Shows the Checkers game Home page.
-    get(HOME_URL, new GetHomeRoute(templateEngine));
+    get(HOME_URL, new GetHomeRoute(templateEngine, gameCenter));
 
-    //
+    // Shows the Sign In page.
+    get(SIGN_IN_URL, new GetSignInRoute(templateEngine));
+    // Shows the game page.
+    get(GAME_START_URL, new GetStartGameRoute(templateEngine, gameCenter));
+    // Signs player out
+    get(SIGN_OUT_URL, new GetSignOutRoute(templateEngine, gameCenter));
+    // Request a game
+    get(REQUEST_GAME_URL, new GetRequestGameRoute(templateEngine, gameCenter));
+
+    // Posts the player username as they sign in
+    post(SIGN_IN_URL, new PostSignInRoute(templateEngine, gameCenter));
+    // Post a move to validate
+    post(VALIDATE_MOVE_URL, new PostValidateMoveRoute(templateEngine, gameCenter));
+
     LOG.config("WebServer is initialized.");
+
   }
 
 }
