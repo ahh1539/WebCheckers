@@ -28,12 +28,12 @@ public class Row implements Iterable<Space>{
         if( index % 2 == 0){
             for( int i = 0; i < ROW_LENGTH; i++){
                 if( i % 2 == 1){
-                    row[i] = new Space(null, false, idx);
+                    row[i] = new Space(null, true, idx);
                     row[i].makeSpaceWhite();
                     idx++;
                 }
                 else{
-                    row[i] = new Space(null, true, idx);
+                    row[i] = new Space(null, false, idx);
                     idx++;
                 }
             }
@@ -41,11 +41,11 @@ public class Row implements Iterable<Space>{
         else{
             for( int i = 0; i < ROW_LENGTH; i++){
                 if( i % 2 == 0){
-                    row[i] = new Space(null, false, idx);
+                    row[i] = new Space(null, true, idx);
                     row[i].makeSpaceWhite();
                 }
                 else{
-                    row[i] = new Space(null, true, idx);
+                    row[i] = new Space(null, false, idx);
                     idx++;
                 }
             }
