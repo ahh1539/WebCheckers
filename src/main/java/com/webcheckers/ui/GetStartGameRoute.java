@@ -52,20 +52,18 @@ public class GetStartGameRoute implements Route {
     @Override
     public Object handle(Request request, Response response) {
         LOG.finer("GetStartGameRoute is invoked.");
-        // retrieve the HTTP session
+
+        // Retrieves the HTTP session and necessary player/game info
+
         final Session session = request.session();
         Player player = session.attribute(PostSignInRoute.PLAYER);
-
-
         PlayerLobby.getPlayer(player.getName()).joinGame();
-
-
-
-
         Game game = this.gameCenter.getGameLobby().getGame(player);
 
         Map<String, Object> vm = new HashMap<>();
         vm.put("title", "Start Game");
+
+        // Handles a null game object
 
         if(game == null){
             vm.put(TITLE_ATTR, TITLE);
@@ -74,6 +72,9 @@ public class GetStartGameRoute implements Route {
             vm.put("lobby", this.gameCenter.getPlayerLobby().getPlayerLobby());
             return templateEngine.render(new ModelAndView(vm, GetHomeRoute.ROUTE_NAME));
         }
+
+        // Configures view model to set up template based on player and opponent info
+
         vm.put(BOARD_ATTR, game.getBoard());
         vm.put(CURRENT_PLAYER_ATTR, player);
         vm.put(TITLE_ATTR, TITLE);
