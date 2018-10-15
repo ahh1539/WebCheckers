@@ -35,8 +35,10 @@ public class GetRequestGameRoute implements Route{
             playerLobby.addPlayer(player2);
         }
 
+        // Checks whether the opponent is already playing a game
+
         if (PlayerLobby.getPlayer(player1.getName()).inGame()|| PlayerLobby.getPlayer(player2.getName()).inGame()){
-            vm.put("title", "Player already in game");
+            vm.put("errorMsg", "The player you have selected is already in a game. Select another player.");
             response.redirect(WebServer.HOME_URL);
             return templateEngine.render(new ModelAndView(vm, GetHomeRoute.ROUTE_NAME));
         }
