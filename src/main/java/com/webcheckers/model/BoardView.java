@@ -28,14 +28,14 @@ public class BoardView implements Iterable<Row>{
             if( i < 3){
                 for (Space space: gameBoard[i]) {
                     if (space.getColor() == Space.Color.WHITE) {
-                        space.putRedPiece();
+                        space.putWhitePiece();
                     }
                 }
             }
             if( i > 4){
                 for (Space space: gameBoard[i]) {
                     if (space.getColor() == Space.Color.WHITE) {
-                        space.putWhitePiece();
+                        space.putRedPiece();
                     }
                 }
             }
