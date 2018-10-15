@@ -23,7 +23,7 @@
       <#else>
         <h3>Current Players</h3>
           <#if errorMsg??>
-            <p style="color:darkred">${errorMsg}</p>
+            <p style="color:darkred">${errorMsg.text}</p>
           </#if>
           <#if players??>
             <#list players as player>
