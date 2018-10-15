@@ -65,6 +65,13 @@ public class Space {
         this.color = Color.WHITE;
     }
 
+    /**
+     * get the color of this space
+     * @return color
+     */
+    public Color getColor(){
+        return this.color;
+    }
 
     /**
      * Remove a piece from the Space by setting it to null

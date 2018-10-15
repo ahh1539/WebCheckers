@@ -15,6 +15,27 @@ public class BoardView implements Iterable<Row>{
         for(int i = 0; i < BOARD_LENGTH; i++) {
             this.gameBoard[i] = new Row(i);
         }
+        placePieces();
+    }
+
+    public void placePieces(){
+        for(int i = 0; i < BOARD_LENGTH; i++){
+            if( i < 3){
+                for (Space space: gameBoard[i]) {
+                    if (space.getColor() == Space.Color.BLACK) {
+                        space.putRedPiece();
+                    }
+                }
+            }
+            if( i > 4){
+                for (Space space: gameBoard[i]) {
+                    if (space.getColor() == Space.Color.BLACK) {
+                        space.putWhitePiece();
+                    }
+                }
+            }
+
+        }
     }
 
     private class BoardIterator implements Iterator<Row> {
