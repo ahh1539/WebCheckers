@@ -50,11 +50,11 @@ public class GetSignOutRoute implements Route {
      * @param response
      *   the HTTP response
      * @return
-     *   the rendered HTML for the Signin page
+     *   the rendered HTML for the SignOut page
      */
     @Override
     public Object handle(Request request, Response response) {
-        LOG.finer("GetSignInRoute is invoked.");
+        LOG.finer("GetSignOutRoute is invoked.");
         Session session = request.session();
         Player player = session.attribute(PostSignInRoute.PLAYER);
         session.removeAttribute(PostSignInRoute.PLAYER);
