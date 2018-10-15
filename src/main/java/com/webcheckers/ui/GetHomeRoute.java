@@ -6,6 +6,7 @@ import java.util.Objects;
 import java.util.logging.Logger;
 
 import com.webcheckers.application.GameCenter;
+import com.webcheckers.application.GameLobby;
 import com.webcheckers.application.PlayerLobby;
 import com.webcheckers.model.Game;
 import com.webcheckers.model.Player;
@@ -68,7 +69,7 @@ public class GetHomeRoute implements Route {
     vm.put("title", "Welcome!");
 
     PlayerLobby playerLobby = this.gameCenter.getPlayerLobby();
-    vm.put("players", playerLobby.getPlayerLobby());
+    vm.put(PLAYER_LIST, playerLobby.getPlayerLobby());
 
     // Allows player to see current players only if signed in
 
@@ -76,26 +77,29 @@ public class GetHomeRoute implements Route {
         Player player = session.attribute(PostSignInRoute.PLAYER);
         vm.put(GetStartGameRoute.CURRENT_PLAYER_ATTR, player);
         vm.put(PLAYER_LIST, playerLobby.getPlayerLobby());
+        GameLobby gameLobby = this.gameCenter.getGameLobby();
         final String username = request.queryParams("opponent");
         if(username != null){
           Player opponent = PlayerLobby.getPlayer(username);
-          if(!this.gameCenter.getGameLobby().hasGame(opponent)){
-            this.gameCenter.getGameLobby().addGame(new Game(player, opponent));
+          if(!gameLobby.hasGame(opponent)){
+            Game game = new Game(player, opponent);
+            gameLobby.addGame(game);
             vm.put(GetStartGameRoute.VIEW_MODE_ATTR, Game.ViewMode.PLAY);
             vm.put(GetStartGameRoute.RED_PLAYER_ATTR, player);
             vm.put(GetStartGameRoute.WHITE_PLAYER_ATTR, opponent);
-            vm.put(GetStartGameRoute.ACTIVE_COLOR_ATTR, this.gameCenter.getGameLobby().getGame(player).getActiveColor());
-            vm.put(GetStartGameRoute.BOARD_ATTR, this.gameCenter.getGameLobby().getGameBoard(player));
+            vm.put(GetStartGameRoute.ACTIVE_COLOR_ATTR, game.getActiveColor());
+            vm.put(GetStartGameRoute.BOARD_ATTR, gameLobby.getGameBoard(player));
             return templateEngine.render(new ModelAndView(vm, GetStartGameRoute.GAME_NAME));
           }
         }
-        if(this.gameCenter.getGameLobby().hasGame(player)){
-          if(!this.gameCenter.getGameLobby().getGame(player).hasWinner()){
+        if(gameLobby.hasGame(player)){
+          Game game = gameLobby.getGame(player);
+          if(!game.hasWinner()){
             vm.put(GetStartGameRoute.VIEW_MODE_ATTR, "PLAY");
-            vm.put(GetStartGameRoute.RED_PLAYER_ATTR, this.gameCenter.getGameLobby().getGame(player).getRedPlayer());
-            vm.put(GetStartGameRoute.WHITE_PLAYER_ATTR, this.gameCenter.getGameLobby().getGame(player).getWhitePlayer());
-            vm.put(GetStartGameRoute.ACTIVE_COLOR_ATTR, this.gameCenter.getGameLobby().getGame(player).getActiveColor());
-            vm.put(GetStartGameRoute.BOARD_ATTR, this.gameCenter.getGameLobby().getGameBoard(player));
+            vm.put(GetStartGameRoute.RED_PLAYER_ATTR, game.getRedPlayer());
+            vm.put(GetStartGameRoute.WHITE_PLAYER_ATTR, game.getWhitePlayer());
+            vm.put(GetStartGameRoute.ACTIVE_COLOR_ATTR, game.getActiveColor());
+            vm.put(GetStartGameRoute.BOARD_ATTR, gameLobby.getGameBoard(player));
             return templateEngine.render(new ModelAndView(vm, GetStartGameRoute.GAME_NAME));
           }
         }
@@ -103,7 +107,6 @@ public class GetHomeRoute implements Route {
       vm.put(NUM_PLAYERS, playerLobby.getNumberOfPlayers());
       vm.put(LOBBY_ATTR, null);
     }
-
     return templateEngine.render(new ModelAndView(vm, ROUTE_NAME));
   }
 
