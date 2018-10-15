@@ -3,6 +3,7 @@ package com.webcheckers.ui;
 import com.webcheckers.application.GameCenter;
 import com.webcheckers.application.PlayerLobby;
 import com.webcheckers.model.Game;
+import com.webcheckers.model.Message;
 import com.webcheckers.model.Player;
 import spark.*;
 
@@ -35,6 +36,8 @@ public class GetRequestGameRoute implements Route{
         }
         Game game = new Game(player1, player2);
         gameCenter.getGameLobby().addGame(game);
+        Message message = new Message(Message.Type.ERROR, "Text");
+        vm.put(GetStartGameRoute.MESSAGE, message);
         vm.put(GetStartGameRoute.CURRENT_PLAYER_ATTR, player1);
         vm.put(GetStartGameRoute.VIEW_MODE_ATTR, Game.ViewMode.PLAY);
         vm.put(GetStartGameRoute.RED_PLAYER_ATTR, player1);

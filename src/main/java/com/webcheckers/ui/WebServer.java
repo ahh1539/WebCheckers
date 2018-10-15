@@ -63,6 +63,7 @@ public class WebServer {
 
   public static final String REQUEST_GAME_URL = "/requestGame";
 
+  public static final String VALIDATE_MOVE_URL = "/validateMove";
   //
   // Attributes
   //
@@ -161,6 +162,7 @@ public class WebServer {
     LOG.config("WebServer is initialized.");
 
     post(SIGN_IN_URL, new PostSignInRoute(templateEngine, gameCenter));
+    post(VALIDATE_MOVE_URL, new PostValidateMoveRoute(templateEngine, gameCenter));
 
     get(SIGN_OUT_URL, new GetSignOutRoute(templateEngine, gameCenter));
 

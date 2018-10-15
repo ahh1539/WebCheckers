@@ -26,6 +26,7 @@ public class GetStartGameRoute implements Route {
     static final String ACTIVE_COLOR_ATTR = "activeColor";
     static final String VIEW_MODE_ATTR = "viewMode";
 
+    static final String MESSAGE = "message";
 
 
     public GetStartGameRoute(final TemplateEngine templateEngine, final GameCenter gameCenter) {
