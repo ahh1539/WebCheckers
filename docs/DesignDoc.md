@@ -9,20 +9,24 @@ geometry: margin=1in
 > and appear in the generated PDF in italics._
 
 ## Team Information
-* Team name: TEAMNAME
+* Team name: Back of the Bus
 * Team members
-  * MEMBER1
-  * MEMBER2
-  * MEMBER3
-  * MEMBER4
+  * Elijah Parrish
+  * Daria Chaplin
+  * Alex Hurley
+  * Lilian Khun
+  * Paula Register
 
 ## Executive Summary
 
-This is a summary of the project.
+WebCheckers is an online web checkers game that will allow
+multiple players to log in and play a game of checkers with one another.
+The project is built using Java, Maven, the Spark Framework, and the FreeMarker
+Template engine.
 
 ### Purpose
-> _Provide a very brief statement about the project and the most
-> important user group and user goals._
+> _The purpose of this project is to provide the players the ablity
+to log in and play one another online wherever they are._
 
 ### Glossary and Acronyms
 > _Provide a table of terms and acronyms._
