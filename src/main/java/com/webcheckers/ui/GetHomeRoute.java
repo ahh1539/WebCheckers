@@ -10,7 +10,7 @@ import com.webcheckers.application.GameLobby;
 import com.webcheckers.application.PlayerLobby;
 import com.webcheckers.model.Game;
 import com.webcheckers.model.Player;
-import javafx.geometry.Pos;
+//import javafx.geometry.Pos;
 import spark.*;
 
 /**
