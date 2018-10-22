@@ -19,10 +19,13 @@ geometry: margin=1in
 
 ## Executive Summary
 
-WebCheckers is an online web checkers game that will allow
-multiple players to log in and play a game of checkers with one another.
-The project is built using Java, Maven, the Spark Framework, and the FreeMarker
-Template engine.
+WebCheckers is an online application that will allow
+multiple players to log in and play a game of checkers with one another. The game interface
+will support drag and drop browser capabilities for making moves. Beyond this basic
+set of features we plan to implement a system so that the players can spectate a game that is 
+in progress as well as replay a game they recently played, so that they can further
+refine their checker playing skills.
+
 
 ### Purpose
 > _The purpose of this project is to provide the players the ablity
@@ -56,13 +59,15 @@ This section describes the features of the application.
 
 ## Application Domain
 
-This section describes the application domain.
+This model shows the general domain of the project
 
-![The WebCheckers Domain Model](domain-model-placeholder.png)
+![The WebCheckers Domain Model](domain_model.png)
 
-> _Provide a high-level overview of the domain for this application. You
-> can discuss the more important domain entities and their relationship
-> to each other._
+> The central entity of our application is the Checkers game, which is played on a board.
+The board is defined by Squares, which are in turn defined by their color and location. 
+The checkers game is played with the pieces and played by the player. The player makes moves
+that can be defined by the type of piece that is being moved and the type of move
+that the piece is making.   
 
 
 ## Architecture and Design
