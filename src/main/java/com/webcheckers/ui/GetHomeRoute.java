@@ -73,7 +73,7 @@ public class GetHomeRoute implements Route {
     PlayerLobby playerLobby = this.gameCenter.getPlayerLobby();
     GameLobby gameLobby = this.gameCenter.getGameLobby();
 
-    vm.put(PLAYER_LIST, playerLobby.getPlayerLobby());
+    //vm.put(PLAYER_LIST, playerLobby.getPlayerLobby()); TODO is this redundant?
 
     // Allows player to see current players only if signed in
     Player player = session.attribute(PostSignInRoute.PLAYER);
@@ -83,7 +83,7 @@ public class GetHomeRoute implements Route {
         vm.put(PLAYER_LIST, playerLobby.getPlayerLobby());
         final String username = request.queryParams("opponent");
 
-        // Check if the opponent is not null, then get the player from username
+        // Check if the opponent is not null, then get the player from the PlayerLobby based on their username
         if(username != null){
           Player opponent = PlayerLobby.getPlayer(username);
 
