@@ -14,7 +14,7 @@ geometry: margin=1in
   * Elijah Parrish
   * Daria Chaplin
   * Alex Hurley
-  * Lilian Khun
+  * Lillian Kuhn
   * Paula Register
 
 ## Executive Summary
