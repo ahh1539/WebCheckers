@@ -4,9 +4,10 @@ import static org.junit.jupiter.api.Assertions.*;
 
 import net.bytebuddy.build.ToStringPlugin;
 import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 
-
+@Tag("Model-tier")
 public class MessageTester {
 
     @Test
