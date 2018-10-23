@@ -12,8 +12,8 @@ public class Player {
     public enum Color {RED, WHITE}
 
     private String name;
-    private int totalGames;
-    private int wins;
+    private double totalGames;
+    private double wins;
     private boolean inGame;
     private Color color;
 
@@ -63,9 +63,9 @@ public class Player {
     /**
      * Get total number of games player has participated in
      * @return totalGames
-     *      The integer number of games the Player has participated in
+     *      The number of games the Player has participated in
      */
-    public int getTotalGames(){
+    public double getTotalGames(){
         return totalGames;
     }
 
@@ -73,7 +73,7 @@ public class Player {
      * get number of games player has won
      * @return wins
      */
-    public int getWins(){
+    public double getWins(){
         return wins;
     }
 
@@ -118,7 +118,7 @@ public class Player {
      *      A double representing the average number of wins
      */
     public double getAverage(){
-        return wins/(float)totalGames;
+        return wins/totalGames;
     }
 
     /**
