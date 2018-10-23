@@ -17,12 +17,13 @@ public class Space {
 
     /**
      * Create a Space object
-     * @param piece Piece
+     * this.piece defaults to null!
+     *
      * @param isValid Boolean representing if the space is valid
      * @param cellIdx Integer representing the cell index value
      */
-    public Space(Piece piece, boolean isValid, int cellIdx){
-        this.piece = piece;
+    public Space(boolean isValid, int cellIdx){
+        this.piece = null;
         this.cellIdx = cellIdx;
         this.isValid = isValid;
         this.color = Color.BLACK;
