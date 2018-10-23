@@ -96,10 +96,17 @@ Details of the components within these tiers are supplied below.
 This section describes the web interface flow; this is how the user views and interacts
 with the WebCheckers application.
 
-![The WebCheckers Web Interface Statechart](web-interface-placeholder.png)
+![The WebCheckers Web Interface Statechart](state_diagram.png)
 
 > _Provide a summary of the application's user interface.  Describe, from
-> the user's perspective, the flow of the pages in the web application._
+> the user's perspective, the flow of the pages in the web application.
+The flow of the web pages from the user's perspective is as follows: When the user opens the home page
+they first see a simple welcome message and a button to sign in, they will also be presented
+with the number of players who are signed in. When they click to sign in they will be redirected to the Signin
+page where they can post their username. They will then be redirected to home. If they then click 
+the name of another player then both players will be redirected to the game screen 
+where they can play the game of checkers. Once a winner has been decided they will be redirected to the home
+screen._
 
 
 ### UI Tier
