@@ -4,6 +4,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 import java.util.Iterator;
 import java.util.Map;
+import java.util.NoSuchElementException;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Tag;
@@ -102,18 +103,19 @@ public class RowTester {
      * Tests that next method runs as expected
      */
     @Test
-    @DisplayName("RowIterator next method")
+    @DisplayName("RowIterator next and hasNext methods")
     public void rowIteratorNext() {
+        Row testRow = new Row(EVEN_NUM);
+        Iterator<Space> testRowIterator = testRow.iterator();
+        Space space;
 
-    }
+        for(int i = 0; i < ROW_LENGTH; i++) {
+            // next method calls hasNext, so this is already inherently tested
+            space = testRowIterator.next();
+            assertNotNull(space);
+        }
 
-    /**
-     * Tests that hasNext works properly
-     */
-    @Test
-    @DisplayName("RowIterator hasNext method")
-    public void rowIteratorHasNext() {
-
+        assertThrows(NoSuchElementException.class, testRowIterator::next);
     }
 
     /**
