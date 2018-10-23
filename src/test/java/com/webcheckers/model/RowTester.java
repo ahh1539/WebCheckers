@@ -2,6 +2,7 @@ package com.webcheckers.model;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+import java.util.Iterator;
 import java.util.Map;
 
 import org.junit.jupiter.api.DisplayName;
@@ -23,8 +24,6 @@ public class RowTester {
     private static final int ROW_LENGTH = 8;
     private static final int EVEN_NUM = 4;
     private static final int ODD_NUM = 5;
-    private Space[] row = new Space[ROW_LENGTH];
-    private int index;
 
     /**
      * Tests the constructor when passed an even index
@@ -69,12 +68,63 @@ public class RowTester {
     public void getRowOdd() {
         Row testRow = new Row(ODD_NUM);
         Space[] spaces = testRow.getRow();
-        assertEquals(spaces.length, ROW_LENGTH);
+        assertEquals(ROW_LENGTH, spaces.length);
 
         // Assert that the row alternates, black and white
-        assertEquals(spaces[EVEN_NUM].getColor(), Space.Color.WHITE);
-        assertEquals(spaces[ODD_NUM].getColor(), Space.Color.BLACK);
+        assertEquals(Space.Color.WHITE, spaces[EVEN_NUM].getColor());
+        assertEquals(Space.Color.BLACK, spaces[ODD_NUM].getColor());
     }
 
+    /**
+     * Tests the getIndex function
+     */
+    @Test
+    @DisplayName("getIndex")
+    public void getIndex() {
+        // Arbitrarily uses even number, does not affect functionality here
+        Row testRow = new Row(EVEN_NUM);
+        assertEquals(EVEN_NUM, testRow.getIndex());
+    }
+
+    /**
+     * Tests the constructor of RowIterator
+     */
+    @Test
+    @DisplayName("create RowIterator")
+    public void createRowIterator() {
+        // Arbitrarily uses even number, does not affect functionality here
+        Row testRow = new Row(EVEN_NUM);
+        Iterator<Space> testRowIterator = testRow.iterator();
+        assertNotNull(testRowIterator);
+    }
+
+    /**
+     * Tests that next method runs as expected
+     */
+    @Test
+    @DisplayName("RowIterator next method")
+    public void rowIteratorNext() {
+
+    }
+
+    /**
+     * Tests that hasNext works properly
+     */
+    @Test
+    @DisplayName("RowIterator hasNext method")
+    public void rowIteratorHasNext() {
+
+    }
+
+    /**
+     * Tests that remove() throws an exception for a RowIterator
+     */
+    @Test
+    @DisplayName("RowIterator remove throws exception")
+    public void removeException() {
+        Row testRow = new Row(EVEN_NUM);
+        Iterator<Space> testRowIterator = testRow.iterator();
+        assertThrows(UnsupportedOperationException.class, testRowIterator::remove);
+    }
 }
 
