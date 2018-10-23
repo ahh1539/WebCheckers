@@ -1,6 +1,6 @@
 package com.webcheckers.model;
 
-public class KingPiece implements Piece {
+public class KingPiece extends Piece {
 
 
     //
@@ -19,9 +19,8 @@ public class KingPiece implements Piece {
      * @param idx
      *      The index associated with the placement on the board
      */
-    public KingPiece(Color color, int idx){
-        this.color = color;
-        this.index = idx;
+    public KingPiece(Color color, int idx) {
+        super(color, idx);
     }
 
 
@@ -55,8 +54,8 @@ public class KingPiece implements Piece {
      */
     @Override
     public boolean equals(Object object){
-        if(object instanceof SimplePiece){
-            SimplePiece piece = (SimplePiece) object;
+        if(object instanceof Piece){
+            Piece piece = (Piece) object;
             return index == piece.getIndex() && color.equals(piece.getColor());
         }
         return false;

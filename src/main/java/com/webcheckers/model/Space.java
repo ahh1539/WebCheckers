@@ -49,14 +49,14 @@ public class Space {
      * Place a white piece on the Space. The Space is no longer a valid spot
      */
     public void putWhitePiece() {
-        this.piece = new SimplePiece(Piece.Color.WHITE, cellIdx);
+        this.piece = new Piece(Piece.Color.WHITE, cellIdx);
         this.isValid = false;
     }
     /**
      * Place a red piece on the Space. The Space is no longer a valid spot
      */
     public void putRedPiece() {
-        this.piece = new SimplePiece(Piece.Color.RED, cellIdx);
+        this.piece = new Piece(Piece.Color.RED, cellIdx);
         this.isValid = false;
     }
 
