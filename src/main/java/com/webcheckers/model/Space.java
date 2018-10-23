@@ -50,14 +50,18 @@ public class Space {
      * Place a white piece on the Space. The Space is no longer a valid spot
      */
     public void putWhitePiece() {
-        this.piece = new Piece(Piece.Color.WHITE, Piece.Type.SINGLE, cellIdx);
+        if(this.isValid) {
+            this.piece = new Piece(Piece.Color.WHITE, Piece.Type.SINGLE, cellIdx);
+        }
         this.isValid = false;
     }
     /**
      * Place a red piece on the Space. The Space is no longer a valid spot
      */
     public void putRedPiece() {
-        this.piece = new Piece(Piece.Color.RED, Piece.Type.SINGLE, cellIdx);
+        if(this.isValid) {
+            this.piece = new Piece(Piece.Color.RED, Piece.Type.SINGLE, cellIdx);
+        }
         this.isValid = false;
     }
 
@@ -78,10 +82,11 @@ public class Space {
     }
 
     /**
-     * Remove a piece from the Space by setting it to null
+     * Remove a piece from the Space by setting it to null and making valid again
      */
     public void removePiece(){
         this.piece = null;
+        this.isValid = true;
     }
 
     /**
