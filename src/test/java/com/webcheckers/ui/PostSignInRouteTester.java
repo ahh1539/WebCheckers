@@ -4,6 +4,7 @@ package com.webcheckers.ui;
 import com.webcheckers.application.GameCenter;
 import com.webcheckers.application.GameLobby;
 import com.webcheckers.application.PlayerLobby;
+import com.webcheckers.model.Player;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
@@ -18,6 +19,12 @@ import static org.mockito.Mockito.when;
 
 @Tag("UI-tier")
 public class PostSignInRouteTester {
+
+    private static final String USERNAME = "user 2";
+    private static final String SAME_USERNAME = "  user   2";
+    private static final String DIFF_USERNAME = "diff user";
+    private static final String INVALID_USERNAME = "user!";
+
 
     /**
      * The component-under-test (CuT).
@@ -69,7 +76,8 @@ public class PostSignInRouteTester {
     public void bad_u_name_1(){
 
         // arrange test scenario: User tries to sign in without uName
-        when(request.queryParams("")).thenReturn("invalid name");
+        playerLobby.addPlayer(new Player("user"));
+        when(request.queryParams(eq(PostSignInRoute.USERNAME))).thenReturn("invalid name");
 
         final TemplateEngineTester testHelper = new TemplateEngineTester();
         when(engine.render(any(ModelAndView.class))).thenAnswer(testHelper.makeAnswer());
@@ -83,16 +91,13 @@ public class PostSignInRouteTester {
         testHelper.assertViewModelIsaMap();
         //   * model contains all necessary View-Model data
         testHelper.assertViewModelAttribute(
-                GetHomeRoute.TITLE_ATTR, GetSignInRoute.TITLE);
-        testHelper.assertViewModelAttribute(
-                GetHomeRoute.NEW_PLAYER_ATTR, Boolean.FALSE);
-        testHelper.assertViewModelAttribute(
-                PostGuessRoute.MESSAGE_TYPE_ATTR, PostGuessRoute.ERROR_TYPE);
-        testHelper.assertViewModelAttribute(
-                PostGuessRoute.MESSAGE_ATTR, PostGuessRoute.makeBadArgMessage(NOT_A_NUMBER));
-        testHelper.assertViewModelAttributeIsAbsent(PostGuessRoute.YOU_WON_ATTR);
+                GetSignInRoute.TITLE_ATTR, GetSignInRoute.TITLE);
+        //testHelper.assertViewModelAttribute(
+          //      GetStartGameRoute.CURRENT_PLAYER_ATTR, );
+        //testHelper.assertViewModelAttribute(
+         //       GetHomeRoute.LOBBY_ATTR, PostSignInRoute.ERROR_TYPE);
         //   * test view name
-        testHelper.assertViewName(GetGameRoute.VIEW_NAME);
+        testHelper.assertViewName(GetHomeRoute.ROUTE_NAME);
 
     }
 

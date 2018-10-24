@@ -32,7 +32,7 @@ public class PostSignInRoute implements Route {
     static final String MESSAGE_ATTR = "message";
     static final String MESSAGE_TYPE_ATTR = "messageType";
     public static final String TITLE_ATTR = "title";
-    public static final String TITLE = "Sign-in";
+    public static final String TITLE = "Sign In!";
     public static final String PLAYER = "player";
     static final String ERROR_TYPE = "error";
     static final String VIEW_NAME = "signin.ftl";
