@@ -35,6 +35,12 @@ public class PlayerLobbyTest extends java.lang.Object {
     }
 
     @Test
+    @DisplayName("Correct player returned")
+    void testGetPlayernull(){
+        assertTrue(lobby.getPlayer("Eli") == null, "Successfully found player");
+    }
+
+    @Test
     @DisplayName("Player removed from player")
     void testPlayerRemoved(){
         lobby.addPlayer(second);
@@ -56,5 +62,6 @@ public class PlayerLobbyTest extends java.lang.Object {
         lobby.addPlayer(second);
         assertTrue(lobby.getNumberOfPlayers() == 2, "Returned correct amount of players");
     }
+
 
 }

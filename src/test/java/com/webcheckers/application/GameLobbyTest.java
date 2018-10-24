@@ -17,7 +17,7 @@ import com.webcheckers.model.Game;
 
 
 import java.util.ArrayList;
-/**
+
 @Tag("Application-tier")
 public class GameLobbyTest {
 
@@ -45,8 +45,7 @@ public class GameLobbyTest {
         lobby.removeGame(number1);
         assertFalse(lobby.hasGame(number1), "Player removed successfully");
 
-        assertNotNull(lobby.getGameBoard(number2));
+        //assertNotNull(lobby.getGameBoard(number2));
 
     }
 }
-*/
