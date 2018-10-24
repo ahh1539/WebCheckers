@@ -7,6 +7,11 @@ import org.junit.jupiter.api.BeforeEach;
 import com.webcheckers.model.Player;
 
 
+/**
+ * Test class for PlayerLobby
+ * @author Alex Hurley
+ */
+
 
 public class PlayerLobbyTest extends java.lang.Object {
 
@@ -27,6 +32,12 @@ public class PlayerLobbyTest extends java.lang.Object {
     void testPlayerAdded(){
         lobby.addPlayer(first);
         assertTrue(lobby.hasPlayer(first), "Player Alex Successfully added");
+    }
+
+    @Test
+    @DisplayName("Correct player returned")
+    void testGetPlayernull(){
+        assertTrue(lobby.getPlayer("Eli") == null, "Successfully found player");
     }
 
     @Test
@@ -51,9 +62,6 @@ public class PlayerLobbyTest extends java.lang.Object {
         lobby.addPlayer(second);
         assertTrue(lobby.getNumberOfPlayers() == 2, "Returned correct amount of players");
     }
-
-
-
 
 
 }

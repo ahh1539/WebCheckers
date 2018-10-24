@@ -1,46 +1,51 @@
-/*
 package com.webcheckers.application;
 
-import org.junit.jupiter.api.BeforeEach;
+import static org.junit.jupiter.api.Assertions.*;
+
+import java.util.Map;
+
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
-import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
+import org.mockito.invocation.InvocationOnMock;
+import org.mockito.stubbing.Answer;
 
-*/
-/**
- * The unit test suite for the {@link GameLobby} component
- *//*
+import spark.ModelAndView;
+import com.webcheckers.application.PlayerLobby;
+import com.webcheckers.model.Player;
+import com.webcheckers.model.Game;
+
+
+
+import java.util.ArrayList;
 
 @Tag("Application-tier")
 public class GameLobbyTest {
 
-    private GameCenter gameCenter;
-    private GameLobby CuT;
+    private Player number1 = new Player("Eli");
+    private Player number2 = new Player("Daria");
+    private Player number3 = new Player("Paula");
+    private Player number4 = new Player("Lilian");
 
-    @BeforeEach
-    public void testSetup(){*/
-/**//*
-
-        gameCenter = mock(GameCenter.class);
-
-        // Setup CuT
-        CuT = new GameLobby();
-    }
-
-    */
-/**
-     * Test the ability to make a new GameLobby.
-     *//*
+    private Game first = new Game(number1, number2);
+    private Game second = new Game(number3, number4);
+    private GameLobby lobby = new GameLobby();
 
     @Test
-    public void test_make_game_lobby() {
-        // Invoke test
-        final GameLobby gameLobby = new GameLobby();
-        // Analyze results
-        assertNotNull(gameLobby);
-    }
+    public void testPlayerLobby(){
+        lobby.addGame(first);
+        lobby.addGame(second);
 
+        assertTrue(lobby instanceof GameLobby, "is an instance of player lobby");
+
+        assertTrue(lobby.hasGame(number1), "Player game created successfully");
+        assertTrue(lobby.hasGame(number2), "Player game created successfully");
+
+        assertTrue(lobby.getGame(number3) == second, "Successfully found player");
+
+        lobby.removeGame(number1);
+        assertFalse(lobby.hasGame(number1), "Player removed successfully");
+
+        //assertNotNull(lobby.getGameBoard(number2));
+
+    }
 }
-*/
