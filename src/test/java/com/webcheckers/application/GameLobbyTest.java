@@ -17,7 +17,7 @@ import com.webcheckers.model.Game;
 
 
 import java.util.ArrayList;
-
+/**
 @Tag("Application-tier")
 public class GameLobbyTest {
 
@@ -49,3 +49,4 @@ public class GameLobbyTest {
 
     }
 }
+*/
