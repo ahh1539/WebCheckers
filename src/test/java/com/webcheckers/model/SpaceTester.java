@@ -80,6 +80,20 @@ public class SpaceTester {
         assertTrue(space.isValid());
     }
 
+    @Test
+    @DisplayName("test isValid")
+    void testIsValid(){
+        Space space = new Space(true, 0);
+        assertTrue(space.isValid());
+
+        space.putWhitePiece();
+        assertFalse(space.isValid());
+
+        space.removePiece();
+        assertTrue(space.isValid());
+
+    }
+
 
 
 }
