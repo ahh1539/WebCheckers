@@ -6,6 +6,12 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import com.webcheckers.model.Player;
 
+
+/**
+ * Test class for GameCenter
+ * @author Alex Hurley
+ */
+
 public class GameCenterTest {
 
     Player first = new Player("Alex");
