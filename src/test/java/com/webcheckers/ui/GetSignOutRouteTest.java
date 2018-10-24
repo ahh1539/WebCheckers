@@ -1,3 +1,4 @@
+/*
 package com.webcheckers.ui;
 import com.webcheckers.application.GameCenter;
 import com.webcheckers.application.GameLobby;
@@ -65,3 +66,4 @@ public class GetSignOutRouteTest {
 
     }
 }
+*/
