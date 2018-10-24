@@ -14,15 +14,15 @@ import com.webcheckers.model.Player;
 
 public class GameCenterTest {
 
-    Player first = new Player("Alex");
-    Player second = new Player("Daria");
-    Player third = new Player("Eli");
+    private Player first = new Player("Alex");
+    private Player second = new Player("Daria");
+    private Player third = new Player("Eli");
 
-    PlayerLobby playerLobby = new PlayerLobby();
-    GameLobby gameLobby = new GameLobby();
-    Game game = new Game(first,second);
+    private PlayerLobby playerLobby = new PlayerLobby();
+    private GameLobby gameLobby = new GameLobby();
+    private Game game = new Game(first,second);
 
-    GameCenter gc = new GameCenter(playerLobby,gameLobby);
+    private GameCenter gc = new GameCenter(playerLobby,gameLobby);
 
     @Test
     @DisplayName("instanceOfGameCenter")

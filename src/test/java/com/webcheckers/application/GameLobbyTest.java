@@ -21,14 +21,14 @@ import java.util.ArrayList;
 @Tag("Application-tier")
 public class GameLobbyTest {
 
-    Player number1 = new Player("Eli");
-    Player number2 = new Player("Daria");
-    Player number3 = new Player("Paula");
-    Player number4 = new Player("Lilian");
+    private Player number1 = new Player("Eli");
+    private Player number2 = new Player("Daria");
+    private Player number3 = new Player("Paula");
+    private Player number4 = new Player("Lilian");
 
-    Game first = new Game(number1, number2);
-    Game second = new Game(number3, number4);
-    GameLobby lobby = new GameLobby();
+    private Game first = new Game(number1, number2);
+    private Game second = new Game(number3, number4);
+    private GameLobby lobby = new GameLobby();
 
     @Test
     public void testPlayerLobby(){
