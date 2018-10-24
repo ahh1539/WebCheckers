@@ -40,9 +40,4 @@ public class PlayerLobbyTest extends java.lang.Object {
         assertTrue(lobby.getNumberOfPlayers() == 2, "Returned correct amount of players");
 
     }
-
-
-
-
-
 }
