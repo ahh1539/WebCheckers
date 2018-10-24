@@ -1,19 +1,12 @@
 package com.webcheckers.application;
 
 import static org.junit.jupiter.api.Assertions.*;
-
-import java.util.Map;
-
-import org.mockito.invocation.InvocationOnMock;
-import org.mockito.stubbing.Answer;
-
-import spark.ModelAndView;
-import com.webcheckers.application.PlayerLobby;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.BeforeEach;
 import com.webcheckers.model.Player;
 
 
-
-import java.util.ArrayList;
 
 public class PlayerLobbyTest extends java.lang.Object {
 
@@ -22,22 +15,40 @@ public class PlayerLobbyTest extends java.lang.Object {
     Player third = new Player("Eli");
     PlayerLobby lobby = new PlayerLobby();
 
-    public void testPlayerLobby(){
+
+    @Test
+    @DisplayName("Object is a PlayerLobby")
+    void testPlayerLobbyConstructor(){
+        assertTrue(lobby instanceof PlayerLobby);
+    }
+
+    @Test
+    @DisplayName("Playerlobby adds player successfuly")
+    void testPlayerAdded(){
+        lobby.addPlayer(first);
+        assertTrue(lobby.hasPlayer(first), "Player Alex Successfully added");
+    }
+
+    @Test
+    @DisplayName("Player removed from player")
+    void testPlayerRemoved(){
+        lobby.addPlayer(second);
+        lobby.removePlayer(second);
+        assertFalse(lobby.hasPlayer(second), "Player successfully removed");
+    }
+
+    @Test
+    @DisplayName("Correct player returned")
+    void testGetPlayer(){
+        lobby.addPlayer(third);
+        assertTrue(lobby.getPlayer("Eli") == third, "Successfully found player");
+    }
+
+    @Test
+    @DisplayName("Playerlobby size correct")
+    void testGetNumberOfPlayers(){
         lobby.addPlayer(first);
         lobby.addPlayer(second);
-        lobby.addPlayer(third);
-
-        assertTrue(lobby instanceof PlayerLobby, "is an instance of player lobby");
-
-        assertTrue(lobby.hasPlayer(first), "Player added successfully");
-        assertTrue(lobby.hasPlayer(third), "Player added successfully");
-
-        assertTrue(lobby.getPlayer("Daria") == second, "Successfully found player");
-
-        lobby.removePlayer(first);
-        assertFalse(lobby.hasPlayer(first), "Player removed successfully");
-
         assertTrue(lobby.getNumberOfPlayers() == 2, "Returned correct amount of players");
-
     }
 }
