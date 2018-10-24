@@ -3,25 +3,21 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
-
-import java.util.Map;
-
 import com.webcheckers.application.GameCenter;
 import com.webcheckers.application.GameLobby;
 import com.webcheckers.application.PlayerLobby;
-import com.webcheckers.model.Game;
 import com.webcheckers.model.Player;
-import com.webcheckers.ui.GetSignInRoute;
-
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 
-import org.mockito.invocation.InvocationOnMock;
-import org.mockito.stubbing.Answer;
-
 import spark.*;
+
+
+/**
+ * Test class for GetStartGameRoute
+ * @author Alex Hurley
+ */
 
 public class TestGetStartGameRoute {
 
@@ -42,6 +38,7 @@ public class TestGetStartGameRoute {
     public void setup(){
         engine = mock(TemplateEngine.class);
         request = mock(Request.class);
+        response = mock(Response.class);
         session = mock(Session.class);
         when(request.session()).thenReturn(session);
 
@@ -74,7 +71,7 @@ public class TestGetStartGameRoute {
 
         testHelper.assertViewModelExists();
         testHelper.assertViewModelIsaMap();
-
+        testHelper.assertViewModelAttribute(GetStartGameRoute.WHITE_PLAYER_ATTR, null);
         testHelper.assertViewModelAttribute(GetStartGameRoute.TITLE_ATTR, GetStartGameRoute.TITLE);
     }
 }

@@ -7,6 +7,11 @@ import org.junit.jupiter.api.BeforeEach;
 import com.webcheckers.model.Player;
 
 
+/**
+ * Test class for PlayerLobby
+ * @author Alex Hurley
+ */
+
 
 public class PlayerLobbyTest extends java.lang.Object {
 
@@ -51,4 +56,5 @@ public class PlayerLobbyTest extends java.lang.Object {
         lobby.addPlayer(second);
         assertTrue(lobby.getNumberOfPlayers() == 2, "Returned correct amount of players");
     }
+
 }

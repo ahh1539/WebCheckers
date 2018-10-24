@@ -98,6 +98,7 @@ import static org.mockito.Mockito.*;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
+
 @Tag("UI-tier")
 public class GetSignOutRouteTest {
     private GetSignOutRoute CuT;
