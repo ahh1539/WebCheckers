@@ -19,7 +19,7 @@ import spark.*;
  * @author Alex Hurley
  */
 
-public class TestGetStartGameRoute {
+public class GetStartGameRouteTest {
 
     Player first = new Player("Alex");
     Player second = new Player("Daria");

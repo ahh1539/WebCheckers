@@ -16,7 +16,7 @@ import spark.*;
  * @author Daria Chaplin (dxc4643)
  */
 @Tag("UI-tier")
-public class GetSignInRouteTester {
+public class GetSignInRouteTest {
 
     /**
      * The component-under-test (CuT).

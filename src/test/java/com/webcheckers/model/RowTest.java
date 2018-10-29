@@ -20,7 +20,7 @@ import spark.ModelAndView;
  * @author Daria Chaplin (dxc4643)
  */
 @Tag("Model-tier")
-public class RowTester {
+public class RowTest {
 
     private static final int ROW_LENGTH = 8;
     private static final int EVEN_NUM = 4;

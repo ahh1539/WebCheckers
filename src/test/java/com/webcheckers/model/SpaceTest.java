@@ -7,7 +7,7 @@ import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 
 @Tag("Model-tier")
-public class SpaceTester {
+public class SpaceTest {
 
     @Test
     @DisplayName("default piece")
