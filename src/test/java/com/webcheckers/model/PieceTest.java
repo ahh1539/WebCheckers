@@ -25,6 +25,7 @@ public class PieceTest {
     public void test_red_piece(){
         final Piece CuT = new Piece(redColor, index);
         assertEquals(Piece.Color.RED, CuT.getColor());
+        assertEquals(index, CuT.getIndex());
     }
 
     /**
@@ -34,6 +35,7 @@ public class PieceTest {
     public void test_white_single(){
         final Piece CuT = new Piece(whiteColor, index);
         assertEquals(Piece.Color.WHITE, CuT.getColor());
+        assertEquals(index, CuT.getIndex());
     }
 
     /**
@@ -51,8 +53,8 @@ public class PieceTest {
      */
     @Test
     public void test_equals_false(){
-        final Piece CuT = new Piece(redColor, 0);
-        final Piece CuT2 = new Piece(whiteColor, 0);
+        final Piece CuT = new Piece(redColor, index);
+        final Piece CuT2 = new Piece(whiteColor, 1);
         assertFalse(CuT.equals(CuT2));
     }
 }
