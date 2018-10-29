@@ -8,7 +8,7 @@ import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 
 @Tag("Model-tier")
-public class MessageTester {
+public class MessageTest {
 
     @Test
     @DisplayName("type")
