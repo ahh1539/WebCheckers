@@ -51,7 +51,7 @@ public class Space {
      */
     public void putWhitePiece() {
         if(this.isValid) {
-            this.piece = new Piece(Piece.Color.WHITE, Piece.Type.SINGLE, cellIdx);
+            this.piece = new Piece(Piece.Color.WHITE, cellIdx);
         }
         this.isValid = false;
     }
@@ -60,7 +60,7 @@ public class Space {
      */
     public void putRedPiece() {
         if(this.isValid) {
-            this.piece = new Piece(Piece.Color.RED, Piece.Type.SINGLE, cellIdx);
+            this.piece = new Piece(Piece.Color.RED, cellIdx);
         }
         this.isValid = false;
     }
