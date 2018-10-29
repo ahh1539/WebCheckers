@@ -37,20 +37,15 @@ public class Piece {
     public Color getColor() {
         return color;
     }
-
-    /**
-     * Get the index of the piece
-     * @return int index
-     */
-    public int getIndex(){
-        return this.index;
-    }
-
+    
     /**
      * Gets the index of the Piece
      * @return the integer representation of the index of the piece, the place on the board
      */
-    public int getIndex(){ return index; }
+    public int getIndex(){
+        return index;
+    }
+
     /**
      * Check the equality of two objects and see if the provided object
      * is equal to the Piece
