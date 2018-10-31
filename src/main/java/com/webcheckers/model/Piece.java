@@ -6,6 +6,7 @@ package com.webcheckers.model;
 public class Piece {
 
     public enum Color {RED, WHITE}
+    public enum Type{ SINGLE, KING};
 
     //
     // Attributes
@@ -13,6 +14,7 @@ public class Piece {
 
     private Color color;
     private int index;
+    private Type type;
 
 
 
@@ -26,6 +28,7 @@ public class Piece {
     public Piece(Color color, int idx){
         this.color = color;
         this.index = idx;
+        this.type = Type.SINGLE;
     }
 
 
@@ -37,6 +40,8 @@ public class Piece {
     public Color getColor() {
         return color;
     }
+
+    public Type getType(){return type;}
 
     /**
      * Get the index of the piece
