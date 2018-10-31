@@ -33,6 +33,8 @@ public class BoardView implements Iterable<Row>{
     // Public Methods
     //
 
+    //TODO add functions to place pieces differently for different player
+
     /**
      * Initializes all pieces on the board and places them according to the colors of the Spaces.
      */
@@ -55,7 +57,6 @@ public class BoardView implements Iterable<Row>{
         }
     }
 
-    //TODO add functions to place pieces differently for different player
 
     /**
      * Provides a way to Iterate through each Row of the Board

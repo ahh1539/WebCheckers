@@ -15,14 +15,14 @@ public class SpaceTester {
     @Test
     @DisplayName("default piece")
     void testPieceDefault(){
-        Space space = new Space(true, 0);
+        Space space = new Space(null,true, 0);
         assertNull(space.getPiece());
     }
 
     @Test
     @DisplayName("makeWhite")
     void testMakeWhite(){
-        Space space = new Space(true, 0);
+        Space space = new Space(null,true, 0);
         space.makeSpaceWhite();
         assertEquals(Space.Color.WHITE, space.getColor());
     }
@@ -30,14 +30,14 @@ public class SpaceTester {
     @Test
     @DisplayName("default color")
     void testPieceColor(){
-        Space space = new Space(true, 0);
+        Space space = new Space(null,true, 0);
         assertEquals(Space.Color.BLACK, space.getColor());
     }
 
     @Test
     @DisplayName("dropping RED piece on valid space")
     void testRedPieceDroppedValid(){
-        Space space = new Space(true, 0);
+        Space space = new Space(null,true, 0);
         space.putRedPiece();
         assertTrue(space.getPiece().getColor() == Piece.Color.RED);
         assertFalse(space.isValid());
@@ -46,16 +46,16 @@ public class SpaceTester {
     @Test
     @DisplayName("dropping WHITE piece on valid space")
     void testWhitePieceDroppedValid(){
-        Space space = new Space(true, 0);
+        Space space = new Space(null,true, 0);
         space.putWhitePiece();
         assertTrue(space.getPiece().getColor() == Piece.Color.WHITE);
         assertFalse(space.isValid());
     }
 
     @Test
-    @DisplayName("dropping WHITE piece on valid space")
+    @DisplayName("dropping WHITE piece on invalid space")
     void testPieceDroppedInvalid(){
-        Space space = new Space(false, 0);
+        Space space = new Space(null,false, 0);
         space.putWhitePiece();
         assertTrue(space.getPiece() == null);
         space.putRedPiece();
@@ -65,14 +65,14 @@ public class SpaceTester {
     @Test
     @DisplayName("idx")
     void testIndex(){
-        Space space = new Space(true, 0);
+        Space space = new Space(null,true, 0);
         assertEquals(0,space.getCellIdx());
     }
 
     @Test
     @DisplayName("RemovePiece")
     void testRemovePiece(){
-        Space space = new Space(true, 0);
+        Space space = new Space(null,true, 0);
         space.putRedPiece();
         assertNotNull(space.getPiece());
         assertFalse(space.isValid());
