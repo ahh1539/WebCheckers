@@ -8,6 +8,7 @@ import com.webcheckers.model.Message;
 import com.webcheckers.model.Player;
 import spark.*;
 
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -45,6 +46,7 @@ public class GetRequestGameRoute implements Route{
         vm.put(TITLE_ATTR, TITLE);
         final Session session = request.session();
 
+
         // Sets up player and opponent player based on selection
 
         Player player1 =  session.attribute(PostSignInRoute.PLAYER);
@@ -65,9 +67,8 @@ public class GetRequestGameRoute implements Route{
         if (PlayerLobby.getPlayer(player1.getName()).inGame()|| PlayerLobby.getPlayer(player2.getName()).inGame()){
             String msg = "The player you have selected is already in a game. Select another player.";
             Message message = new Message(Message.Type.ERROR, msg);
-            vm.put("errorMsg", msg);
+            vm.put("errorMsg", message);
             response.redirect(WebServer.HOME_URL);
-            return templateEngine.render(new ModelAndView(vm, GetHomeRoute.ROUTE_NAME));
         }
 
         // Instantiates new game and marks both players as being participants

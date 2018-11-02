@@ -44,6 +44,7 @@ public class PostSignInRoute implements Route {
     /**
      * Make an error message when the username is invalid.
      */
+
     static String makeBadArgMessage(final String usernameStr) {
         return String.format("Usernames must be alphanumeric, spaces optional. '%s' is invalid.", usernameStr);
     }
@@ -106,19 +107,22 @@ public class PostSignInRoute implements Route {
         // retrieve request parameter
         final String username = request.queryParams(USERNAME);
 
+        final String usr = username.replaceAll("\\s+","");
+
         // Check if the username is alphanumeric
         Pattern p = Pattern.compile("[^a-zA-Z0-9\\s]");
-        boolean isAlphaNumeric = !p.matcher(username).find();
+
+        boolean isAlphaNumeric = !p.matcher(usr).find();
 
         if(!isAlphaNumeric){
-            return templateEngine.render(error(vm, makeBadArgMessage(username)));
+            return templateEngine.render(error(vm, makeBadArgMessage(usr)));
         }
 
         // Check if the player's name has been taken
-        Player player = new Player(username);
+        Player player = new Player(usr);
         PlayerLobby playerLobby = gameCenter.getPlayerLobby();
         if(playerLobby.hasPlayer(player)){
-            return templateEngine.render(error(vm, makeInvalidArgMessage(username)));
+            return templateEngine.render(error(vm, makeInvalidArgMessage(usr)));
         }
 
         // If it passed all the checks, add the player to the lobby
