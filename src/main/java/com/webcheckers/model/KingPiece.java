@@ -9,6 +9,7 @@ public class KingPiece extends Piece {
 
     private Color color;
     private int index;
+    private Type type = Type.KING;
 
 
 

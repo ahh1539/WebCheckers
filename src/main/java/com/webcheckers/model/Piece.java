@@ -41,6 +41,11 @@ public class Piece {
         return color;
     }
 
+    /**
+     * Gets the Type of the Piece
+     * @return
+     *      the Type {@link Type} of the Piece, SINGLE or KING
+     */
     public Type getType(){return type;}
 
     /**

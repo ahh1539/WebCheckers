@@ -15,8 +15,8 @@ public class Game {
     private Player whitePlayer;
     private Player winner;
     private Piece.Color activeColor;
-    private BoardView board;
-    private ArrayList<Piece> pieces;
+    private BoardView redBoard;
+    private BoardView whiteBoard;
 
     public enum ViewMode { PLAY, SPECTATOR, REPLAY }
 
@@ -36,26 +36,8 @@ public class Game {
         this.whitePlayer = whitePlayer;
         this.activeColor = Piece.Color.RED;
         this.winner = null;
-        this.board = new BoardView();
-        this.pieces = new ArrayList<>();
-    }
-
-    /**
-     * Add a piece to the ongoing list of pieces
-     * @param piece
-     *      Piece {@link Piece} to add to the list of Pieces
-     */
-    public void addPiece(Piece piece){
-        pieces.add(piece);
-    }
-
-    /**
-     * Remove piece from board once it has been defeated
-     * @param piece
-     *      Piece {@link Piece} to remove from the list of Pieces
-     */
-    public void removePiece(Piece piece){
-        pieces.remove(piece);
+        this.redBoard = new BoardView("red");
+        this.whiteBoard = new BoardView("white");
     }
 
     /**
@@ -117,12 +99,23 @@ public class Game {
     }
 
     /**
-     * Gets the Board for this Game
+     * Gets the Board for this Game if current player is red
      * @return
      *      Board {@link BoardView} representation for this Game
      */
-    public BoardView getBoard(){
-        return this.board;
+    public BoardView getRedBoard(){
+
+        return this.redBoard;
+    }
+
+    /**
+     * Gets the Board for this Game if current player is white
+     * @return
+     *      Board {@link BoardView} representation for this Game
+     */
+    public BoardView getWhiteBoard(){
+
+        return this.whiteBoard;
     }
 
     /**

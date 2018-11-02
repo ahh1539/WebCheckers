@@ -4,7 +4,8 @@ import java.util.Iterator;
 import java.util.NoSuchElementException;
 
 /**
- * An array of Iterable Rows comprised of Spaces that make up the board. Creates the board with Red and White Spaces.
+ * An array of Iterable Rows comprised of Spaces that make up the board.
+ * Creates the board with Red and White Spaces.
  */
 public class BoardView implements Iterable<Row>{
 
@@ -21,24 +22,28 @@ public class BoardView implements Iterable<Row>{
     /**
      * Creates a new Board with 8 Rows then places the Pieces in the correct spots.
      */
-    public BoardView() {
+    public BoardView(String color) {
         this.gameBoard = new Row[BOARD_LENGTH];
         for(int i = 0; i < BOARD_LENGTH; i++) {
             this.gameBoard[i] = new Row(i);
         }
-        placePieces();
+        if( color.equals("red")) {
+            placeRedPieces();
+        }
+        else{
+            placeWhitePieces();
+        }
     }
 
     //
     // Public Methods
     //
 
-    //TODO add functions to place pieces differently for different player
 
     /**
      * Initializes all pieces on the board and places them according to the colors of the Spaces.
      */
-    public void placePieces(){
+    public void placeRedPieces(){
         for(int i = 0; i < BOARD_LENGTH; i++ ){
             if( i < 3){
                 for (Space space: gameBoard[i]) {
@@ -57,6 +62,27 @@ public class BoardView implements Iterable<Row>{
         }
     }
 
+    /**
+     * Initializes all pieces on the board and places them according to the colors of the Spaces.
+     */
+    public void placeWhitePieces(){
+        for(int i = 0; i < BOARD_LENGTH; i++ ){
+            if( i < 3){
+                for (Space space: gameBoard[i]) {
+                    if (space.getColor() == Space.Color.WHITE) {
+                        space.putRedPiece();
+                    }
+                }
+            }
+            if( i > 4){
+                for (Space space: gameBoard[i]) {
+                    if (space.getColor() == Space.Color.WHITE) {
+                        space.putWhitePiece();
+                    }
+                }
+            }
+        }
+    }
 
     /**
      * Provides a way to Iterate through each Row of the Board
