@@ -22,15 +22,16 @@ public class BoardView implements Iterable<Row>{
     /**
      * Creates a new Board with 8 Rows then places the Pieces in the correct spots.
      */
-    public BoardView(String color) {
+    public BoardView(Player player) {
         this.gameBoard = new Row[BOARD_LENGTH];
         for(int i = 0; i < BOARD_LENGTH; i++) {
             this.gameBoard[i] = new Row(i);
         }
-        if( color.equals("red")) {
+        if( player.getColor() == Player.Color.RED) {
             placeRedPieces();
         }
         else{
+            System.out.println("placing white pieces");
             placeWhitePieces();
         }
     }

@@ -62,6 +62,7 @@ public class PostStartGameRoute implements Route {
 
         Player player = session.attribute(PostSignInRoute.PLAYER);
         vm.put(GetStartGameRoute.CURRENT_PLAYER_ATTR, player);
+        LOG.finer("player's color is " + player.getColor());
 
         // Sets up board and sets view mode to Play
 

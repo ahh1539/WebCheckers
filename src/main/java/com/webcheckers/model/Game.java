@@ -20,6 +20,8 @@ public class Game {
 
     public enum ViewMode { PLAY, SPECTATOR, REPLAY }
 
+
+
     /**
      * Create a Game with the red and white players, where the active color is
      * red and the winner is null.
@@ -36,8 +38,8 @@ public class Game {
         this.whitePlayer = whitePlayer;
         this.activeColor = Piece.Color.RED;
         this.winner = null;
-        this.redBoard = new BoardView("red");
-        this.whiteBoard = new BoardView("white");
+        this.redBoard = new BoardView(redPlayer);
+        this.whiteBoard = new BoardView(whitePlayer);
     }
 
     /**
@@ -57,6 +59,9 @@ public class Game {
     public Player getWhitePlayer() {
         return whitePlayer;
     }
+
+    //TODO getCO(string uname) if name == RED.name ret red, elif name = WHITE.name, else null
+
 
     /**
      * Sets the white player to a new player created from the provided username

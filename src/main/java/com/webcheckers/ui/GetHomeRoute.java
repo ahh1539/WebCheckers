@@ -86,6 +86,7 @@ public class GetHomeRoute implements Route {
         // Check if the opponent is not null, then get the player from the PlayerLobby based on their username
         if(username != null){
           Player opponent = PlayerLobby.getPlayer(username);
+          opponent.assignColor(Player.Color.WHITE);
 
           if(!gameLobby.hasGame(opponent)){
 
@@ -110,13 +111,19 @@ public class GetHomeRoute implements Route {
 
           Game game = gameLobby.getGame(player);
 
+          //TODO p.color = game.getCOl(p.name)
+
           if(!game.hasWinner()){
+
 
             vm.put(GetStartGameRoute.VIEW_MODE_ATTR, "PLAY");
             vm.put(GetStartGameRoute.RED_PLAYER_ATTR, game.getRedPlayer());
             vm.put(GetStartGameRoute.WHITE_PLAYER_ATTR, game.getWhitePlayer());
             vm.put(GetStartGameRoute.ACTIVE_COLOR_ATTR, game.getActiveColor());
-            vm.put(GetStartGameRoute.BOARD_ATTR, gameLobby.getGameBoard(player));
+            vm.put(GetStartGameRoute.BOARD_ATTR, gameLobby.getGameBoard(game.getWhitePlayer()));//getGameBoard(player));
+            //TODO ^ gL,getBo(player)
+            LOG.info("player's color is " + player.getColor());
+            System.out.println("player's color is " + player.getColor());
 
             return templateEngine.render(new ModelAndView(vm, GetStartGameRoute.GAME_NAME));
 

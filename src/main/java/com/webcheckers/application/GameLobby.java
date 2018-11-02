@@ -66,9 +66,11 @@ public class GameLobby {
     public BoardView getGameBoard(Player player){
         for(Game game : gameLobby){
             if(game.hasGame(player) && player.getColor() == Player.Color.RED){
+                System.out.println("getting red board");
                 return game.getRedBoard();
             }
             else if(game.hasGame(player) && player.getColor() == Player.Color.WHITE){
+                System.out.println("getting white board");
                 return game.getWhiteBoard();
             }
         }

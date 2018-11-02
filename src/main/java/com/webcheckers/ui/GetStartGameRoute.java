@@ -57,6 +57,8 @@ public class GetStartGameRoute implements Route {
 
         final Session session = request.session();
         Player player = session.attribute(PostSignInRoute.PLAYER);
+        player = PlayerLobby.getPlayer(player.getName());
+        LOG.info("player color start game:" + player.getColor());
         PlayerLobby.getPlayer(player.getName()).joinGame();
         Game game = this.gameCenter.getGameLobby().getGame(player);
 
