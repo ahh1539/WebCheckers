@@ -60,8 +60,17 @@ public class Game {
         return whitePlayer;
     }
 
-    //TODO getCO(string uname) if name == RED.name ret red, elif name = WHITE.name, else null
-
+    public Player.Color getPlayerColor(String username){
+        if(username.equals(Player.Color.RED)){
+            return Player.Color.RED;
+        }
+        else if( username.equals(Player.Color.WHITE)){
+            return Player.Color.WHITE;
+        }
+        else{
+            return null;
+        }
+    }
 
     /**
      * Sets the white player to a new player created from the provided username

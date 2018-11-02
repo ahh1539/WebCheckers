@@ -110,7 +110,7 @@ public class GetHomeRoute implements Route {
         if(gameLobby.hasGame(player)){
 
           Game game = gameLobby.getGame(player);
-
+          player.assignColor(game.getPlayerColor(player.getName()));
           //TODO p.color = game.getCOl(p.name)
 
           if(!game.hasWinner()){
@@ -120,7 +120,7 @@ public class GetHomeRoute implements Route {
             vm.put(GetStartGameRoute.RED_PLAYER_ATTR, game.getRedPlayer());
             vm.put(GetStartGameRoute.WHITE_PLAYER_ATTR, game.getWhitePlayer());
             vm.put(GetStartGameRoute.ACTIVE_COLOR_ATTR, game.getActiveColor());
-            vm.put(GetStartGameRoute.BOARD_ATTR, gameLobby.getGameBoard(game.getWhitePlayer()));//getGameBoard(player));
+            vm.put(GetStartGameRoute.BOARD_ATTR, gameLobby.getGameBoard(player));
             //TODO ^ gL,getBo(player)
             LOG.info("player's color is " + player.getColor());
             System.out.println("player's color is " + player.getColor());
