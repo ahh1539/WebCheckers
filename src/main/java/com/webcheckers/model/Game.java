@@ -61,10 +61,10 @@ public class Game {
     }
 
     public Player.Color getPlayerColor(String username){
-        if(username.equals(Player.Color.RED)){
+        if(username.equals(redPlayer.getName())){
             return Player.Color.RED;
         }
-        else if( username.equals(Player.Color.WHITE)){
+        else if( username.equals(whitePlayer.getName())){
             return Player.Color.WHITE;
         }
         else{
