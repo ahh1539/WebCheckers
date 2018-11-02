@@ -64,6 +64,8 @@ public class WebServer {
   public static final String REQUEST_GAME_URL = "/requestGame";
 
   public static final String VALIDATE_MOVE_URL = "/validateMove";
+
+  public static final String CHECK_TURN_URL = "/checkTurn";
   //
   // Attributes
   //
@@ -160,11 +162,15 @@ public class WebServer {
     get(SIGN_OUT_URL, new GetSignOutRoute(templateEngine, gameCenter));
     // Request a game
     get(REQUEST_GAME_URL, new GetRequestGameRoute(templateEngine, gameCenter));
+    // Check whose turn it is
+    get(CHECK_TURN_URL, new GetCheckTurnRoute(templateEngine, gameCenter));
+
 
     // Posts the player username as they sign in
     post(SIGN_IN_URL, new PostSignInRoute(templateEngine, gameCenter));
     // Post a move to validate
     post(VALIDATE_MOVE_URL, new PostValidateMoveRoute(templateEngine, gameCenter));
+
 
     LOG.config("WebServer is initialized.");
 
