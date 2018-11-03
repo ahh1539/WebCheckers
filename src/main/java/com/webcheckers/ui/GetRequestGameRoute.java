@@ -68,7 +68,9 @@ public class GetRequestGameRoute implements Route{
             String msg = "The player you have selected is already in a game. Select another player.";
             Message message = new Message(Message.Type.ERROR, msg);
             vm.put("errorMsg", message);
+
             response.redirect(WebServer.HOME_URL);
+            return templateEngine.render(new ModelAndView(vm, WebServer.HOME_URL));
         }
 
         // Instantiates new game and marks both players as being participants
