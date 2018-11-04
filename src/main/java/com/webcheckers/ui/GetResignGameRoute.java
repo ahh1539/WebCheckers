@@ -3,6 +3,7 @@ package com.webcheckers.ui;
 import com.webcheckers.application.GameCenter;
 import com.webcheckers.application.PlayerLobby;
 import com.webcheckers.model.Game;
+import com.webcheckers.model.Message;
 import com.webcheckers.model.Player;
 import spark.*;
 
@@ -49,7 +50,7 @@ public class GetResignGameRoute implements Route{
      *   the rendered HTML for the Home page
      */
     @Override
-    public Object handle(Request request, Response response) {
+    public Message handle(Request request, Response response) {
         LOG.finer("GetResignGame is invoked.");
 
         // Retrieves the HTTP session and necessary player/game info
@@ -72,13 +73,11 @@ public class GetResignGameRoute implements Route{
         player.leaveGame();
 
 
-        Map<String, Object> vm = new HashMap<>();
-        vm.put(TITLE_ATTR, TITLE);
 
         // Handles a null game object
 
         response.redirect(WebServer.HOME_URL);
-        return templateEngine.render(new ModelAndView(vm, WebServer.HOME_URL));
+        return new Message(Message.Type.INFO, "Player sucessfully resigned" );
     }
 }
 
