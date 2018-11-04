@@ -56,32 +56,29 @@ public class GetResignGameRoute implements Route{
 
         final Session session = request.session();
         Player player = session.attribute(PostSignInRoute.PLAYER);
+
         PlayerLobby.getPlayer(player.getName()).joinGame();
         Game game = this.gameCenter.getGameLobby().getGame(player);
+        Player loser = player;
+        game.setLoser(loser);
+        loser.leaveGame();
+        if (loser.getColor() == Player.Color.WHITE){
+            game.setWinner(game.getRedPlayer());
+            game.getRedPlayer().leaveGame();
+        }
+        else {
+            game.setWinner(game.getWhitePlayer());
+            game.getWhitePlayer().leaveGame();
+        }
+
 
         Map<String, Object> vm = new HashMap<>();
         vm.put(TITLE_ATTR, TITLE);
 
         // Handles a null game object
 
-        if(game == null){
-            vm.put(TITLE_ATTR, TITLE);
-            vm.put(GetHomeRoute.NUM_PLAYERS, this.gameCenter.getPlayerLobby().getNumberOfPlayers());
-            vm.put(CURRENT_PLAYER_ATTR, player);
-            vm.put(GetHomeRoute.LOBBY_ATTR, this.gameCenter.getPlayerLobby().getPlayerLobby());
-            return templateEngine.render(new ModelAndView(vm, GetHomeRoute.ROUTE_NAME));
-        }
-
-        // Configures view model to set up template based on player and opponent info
-
-        vm.put(BOARD_ATTR, game.getBoard());
-        vm.put(CURRENT_PLAYER_ATTR, player);
-        vm.put(TITLE_ATTR, TITLE);
-        vm.put(VIEW_MODE_ATTR, Game.ViewMode.PLAY);
-        vm.put(RED_PLAYER_ATTR, game.getRedPlayer());
-        vm.put(WHITE_PLAYER_ATTR, game.getWhitePlayer());
-        vm.put(ACTIVE_COLOR_ATTR, game.getActiveColor());
-        return templateEngine.render(new ModelAndView(vm , GetStartGameRoute.GAME_NAME));
+        response.redirect(WebServer.HOME_URL);
+        return templateEngine.render(new ModelAndView(vm, WebServer.HOME_URL));
     }
 }
 
