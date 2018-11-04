@@ -23,6 +23,14 @@ public class KingPiece extends Piece {
         this.type = Type.KING;
     }
 
+    /**
+     * Gets the type of the Piece
+     * @return
+     *      the Type {@link Type} of the Piece, KING in this case
+     */
+    public Type getType() {
+        return type;
+    }
 
     /**
      * Gets the color of the Piece

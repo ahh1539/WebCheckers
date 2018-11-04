@@ -29,6 +29,14 @@ public class Piece {
         this.type = Type.SINGLE;
     }
 
+    /**
+     * Gets the type of the Piece
+     * @return
+     *      the Type {@link Type} of the Piece, SINGLE in this case
+     */
+    public Type getType() {
+        return type;
+    }
 
     /**
      * Gets the color of the Piece
