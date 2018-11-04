@@ -61,7 +61,6 @@ public class GetResignGameRoute implements Route{
         Game game = this.gameCenter.getGameLobby().getGame(player);
         Player loser = player;
         game.setLoser(loser);
-        loser.leaveGame();
         if (loser.getColor() == Player.Color.WHITE){
             game.setWinner(game.getRedPlayer());
             game.getRedPlayer().leaveGame();
@@ -70,6 +69,7 @@ public class GetResignGameRoute implements Route{
             game.setWinner(game.getWhitePlayer());
             game.getWhitePlayer().leaveGame();
         }
+        loser.leaveGame();
 
 
         Map<String, Object> vm = new HashMap<>();
