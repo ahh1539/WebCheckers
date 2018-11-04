@@ -50,18 +50,18 @@ public class GetResignGameRoute implements Route{
      */
     @Override
     public Object handle(Request request, Response response) {
-        LOG.finer("GetStartGameRoute is invoked.");
+        LOG.finer("GetResignGame is invoked.");
 
         // Retrieves the HTTP session and necessary player/game info
 
         final Session session = request.session();
         Player player = session.attribute(PostSignInRoute.PLAYER);
 
-        PlayerLobby.getPlayer(player.getName()).joinGame();
+
         Game game = this.gameCenter.getGameLobby().getGame(player);
-        Player loser = player;
-        game.setLoser(loser);
-        if (loser.getColor() == Player.Color.WHITE){
+
+        game.setLoser(player);
+        if (player.getColor() == Player.Color.WHITE){
             game.setWinner(game.getRedPlayer());
             game.getRedPlayer().leaveGame();
         }
@@ -69,7 +69,7 @@ public class GetResignGameRoute implements Route{
             game.setWinner(game.getWhitePlayer());
             game.getWhitePlayer().leaveGame();
         }
-        loser.leaveGame();
+        player.leaveGame();
 
 
         Map<String, Object> vm = new HashMap<>();
