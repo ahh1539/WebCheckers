@@ -65,6 +65,8 @@ public class WebServer {
 
   public static final String VALIDATE_MOVE_URL = "/validateMove";
 
+  public static final String RESIGN_GAME_URL = "/resignGame";
+
   public static final String CHECK_TURN_URL = "/checkTurn";
 
   public static final String BACKUP_MOVE_URL = "/backupMove";
@@ -158,7 +160,6 @@ public class WebServer {
 
     // Shows the Checkers game Home page.
     get(HOME_URL, new GetHomeRoute(templateEngine, gameCenter));
-
     // Shows the Sign In page.
     get(SIGN_IN_URL, new GetSignInRoute(templateEngine));
     // Shows the game page.
@@ -169,7 +170,8 @@ public class WebServer {
     get(REQUEST_GAME_URL, new GetRequestGameRoute(templateEngine, gameCenter));
 
 
-
+    //Posts when the player is to resign because they are the inferior player
+    post(RESIGN_GAME_URL, new PostResignGameRoute(templateEngine, gameCenter));
     // Posts the player username as they sign in
     post(SIGN_IN_URL, new PostSignInRoute(templateEngine, gameCenter));
     // Post a move to validate
