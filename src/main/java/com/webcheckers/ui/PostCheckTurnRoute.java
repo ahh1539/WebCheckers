@@ -47,14 +47,29 @@ public class PostCheckTurnRoute implements Route {
     @Override
     public Object handle(Request request, Response response) {
 
+//        Map<String, Object> vm = new HashMap<>();
+//
+//        vm.put(MESSAGE_ATTR, "true");
+//        vm.put(MESSAGE_TYPE_ATTR, Message.Type.INFO);
+
         final Session session = request.session();
-        Map<String, Object> vm = new HashMap<>();
+        Gson gson = new Gson();
 
-        Message message = new Message(Message.Type.INFO, "true");
+        // get current player and game to compare active color with
+        Player player = session.attribute(PostSignInRoute.PLAYER);
+        Game game = gameCenter.getGameLobby().getGame(player);
 
-        vm.put(MESSAGE_ATTR, "true");
-        vm.put(MESSAGE_TYPE_ATTR, Message.Type.INFO);
+        // default behavior returns Not My Turn values
+        Message message = new Message(Message.Type.ERROR, "false");
 
-        return message;
+        // if it is current player's turn, change messages values
+        if(game.getActiveColor().equals(player.getColor())) {
+            message = new Message(Message.Type.INFO, "true");
+        }
+
+        // convert message to JSON for response
+        String rJson = gson.toJson(message);
+
+        return rJson;
     }
 }

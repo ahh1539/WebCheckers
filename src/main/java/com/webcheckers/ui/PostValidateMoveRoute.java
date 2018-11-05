@@ -40,16 +40,15 @@ public class PostValidateMoveRoute implements Route {
     @Override
     public Object handle(Request request, Response response) {
 
-//        // code from Ajax slides
-//        get("/path", new GetRoute(gson));
-
+        // grab move from request
         final Gson gson = new Gson();
         final String json = request.body();
         final Move move = gson.fromJson(json, Move.class);
 
-        LOG.info(move.toString());
+        // check if it's valid, and format response message to JSON
+        Message message = move.isValid();
+        String rjson = gson.toJson(message);
 
-        return new Message(Message.Type.INFO, "valid move");
-
+        return rjson;
     }
 }

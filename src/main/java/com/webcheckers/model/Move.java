@@ -12,6 +12,10 @@ public class Move implements Serializable {
         this.end = end;
     }
 
+    public Message isValid(){
+        return new Message(Message.Type.INFO, "good choice");
+    }
+
     public Position getStart(){
         return start;
     }
