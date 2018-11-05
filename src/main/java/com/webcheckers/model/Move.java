@@ -7,10 +7,38 @@ public class Move implements Serializable {
     private Position start;
     private Position end;
     private BoardView board;
+    private int startRowIndex;
+    private int endRowIndex;
+    private int startCell;
+    private int endCell;
+    private int targetRow;
+    private int targetCell;
+    private boolean isJumpRow;
+    private boolean isJumpCell;
+    private boolean isJumpRowPos;
+    private boolean isJumpCellPos;
+    private boolean correctRows;
+    private boolean correctCell;
+    private boolean correctCellPos;
+    private boolean correctRowsPos;
 
     public Move(Position start, Position end){
         this.start = start;
         this.end = end;
+        startRowIndex = this.start.getRow();
+        endRowIndex = this.end.getRow();
+        startCell =  this.start.getCell();
+        endCell = this.end.getCell();
+        targetRow = (startRowIndex + endRowIndex) / 2;
+        targetCell = (startCell + endCell) / 2;
+        isJumpRow = (startRowIndex - 2) == endRowIndex;
+        isJumpCell = (startCell - 2 == endCell);
+        isJumpRowPos = (startRowIndex + 2) == endRowIndex;
+        isJumpCellPos = (startCell + 2 == endCell);
+        correctRows = (startRowIndex - 1 == endRowIndex);
+        correctCell = (startCell-1 == endCell);
+        correctCellPos = (startCell+1 == endCell);
+        correctRowsPos = (startRowIndex+1 == endRowIndex);
     }
 
     public Position getStart(){
@@ -34,25 +62,22 @@ public class Move implements Serializable {
                 " end: ("+ end.getRow() +", "+end.getCell()+")";
     }
 
+    private Space getStartSpace(Row startRow) {
+        return startRow.getSpace(this.startCell);
+    }
+
+    private Space getEndSpace(Row endRow){
+        return endRow.getSpace(this.endCell);
+    }
     /**
      * Make a move
      * @return
      */
     public BoardView makeMove(){
         BoardView copyBoard = new BoardView(this.board);
-        int startRowIndex = this.start.getRow();
-        int endRowIndex = this.end.getRow();
-        int startCell = this.start.getCell();
-        int endCell = this.end.getCell();
-
-        Row startRow = copyBoard.getRow(startRowIndex);
-        Row endRow = copyBoard.getRow(endRowIndex);
-        Space startSpace = startRow.getSpace(startCell);
-        Space endSpace = endRow.getSpace(endCell);
+        Space startSpace = getStartSpace(copyBoard.getRow(this.startRowIndex));
+        Space endSpace = getEndSpace(copyBoard.getRow(this.endRowIndex));
         Piece movingPiece = startSpace.getPiece();
-
-        int targetRow = (startRowIndex + endRowIndex) / 2;
-        int targetCell = (startCell + endCell) / 2;
         Space targetSpace = copyBoard.getRow(targetRow).getSpace(targetCell);
 
         // Remove piece at starting position and place piece at ending position
@@ -78,31 +103,10 @@ public class Move implements Serializable {
     public boolean isValid(){
         boolean valid = false;
         // Get the starting space and end space
-        Row startRow = this.board.getRow(this.start.getRow());
-        Row endRow = this.board.getRow(this.end.getRow());
-        Space startSpace = startRow.getSpace(this.start.getCell());
-        Space endSpace = endRow.getSpace(this.end.getCell());
+        Space startSpace = getStartSpace(this.board.getRow(this.startRowIndex));
+        Space endSpace = getEndSpace(this.board.getRow(this.endRowIndex));
         Piece movingPiece = startSpace.getPiece();
-
-        // check if regular move and if destination is valid
-        int startRowIndex = this.start.getRow();
-        int endRowIndex = this.end.getRow();
-        int startCell = this.start.getCell();
-        int endCell = this.end.getCell();
-
-        int targetRow = (startRowIndex + endRowIndex) / 2;
-        int targetCell = (startCell + endCell) / 2;
-
         Space targetSpace = this.board.getRow(targetRow).getSpace(targetCell);
-
-        boolean isJumpRow = (startRowIndex - 2) == endRowIndex;
-        boolean isJumpCell = (startCell - 2 == endCell);
-        boolean isJumpRowPos = (startRowIndex + 2) == endRowIndex;
-        boolean isJumpCellPos = (startCell + 2 == endCell);
-        boolean correctRows = (startRowIndex - 1 == endRowIndex);
-        boolean correctCell = (startCell-1 == endCell);
-        boolean correctCellPos = (startCell+1 == endCell);
-        boolean correctRowsPos = (startRowIndex+1 == endRowIndex);
 
         // Check if the piece is single
         if(movingPiece.getType() == Piece.Type.SINGLE){
@@ -166,26 +170,11 @@ public class Move implements Serializable {
      */
     public boolean isJump() {
         boolean valid = false;
-        Row startRow = this.board.getRow(this.start.getRow());
-        Row endRow = this.board.getRow(this.end.getRow());
-        Space startSpace = startRow.getSpace(this.start.getCell());
-        Space endSpace = endRow.getSpace(this.end.getCell());
+        Space startSpace = getStartSpace(this.board.getRow(this.startRowIndex));
+        Space endSpace = getEndSpace(this.board.getRow(this.endRowIndex));
         Piece movingPiece = startSpace.getPiece();
-
-        int startRowIndex = this.start.getRow();
-        int endRowIndex = this.end.getRow();
-        int startCell = this.start.getCell();
-        int endCell = this.end.getCell();
-
-        int targetRow = (startRowIndex + endRowIndex) / 2;
-        int targetCell = (startCell + endCell) / 2;
-
         Space targetSpace = this.board.getRow(targetRow).getSpace(targetCell);
 
-        boolean isJumpRow = (startRowIndex - 2) == endRowIndex;
-        boolean isJumpCell = (startCell - 2 == endCell);
-        boolean isJumpRowPos = (startRowIndex + 2) == endRowIndex;
-        boolean isJumpCellPos = (startCell + 2 == endCell);
         // If the moving piece is single
         if (movingPiece.getType() == Piece.Type.SINGLE) {
             // If the moving piece is RED
