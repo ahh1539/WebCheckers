@@ -76,17 +76,14 @@ public class GetGameRoute implements Route {
         PlayerLobby.getPlayer(player.getName()).joinGame();
         Game game = this.gameCenter.getGameLobby().getGame(player);
 
+
         Map<String, Object> vm = new HashMap<>();
         vm.put(TITLE_ATTR, TITLE);
 
         // Handles a null game object
 
-        if(game == null){
-            vm.put(TITLE_ATTR, TITLE);
-            vm.put(GetHomeRoute.NUM_PLAYERS, this.gameCenter.getPlayerLobby().getNumberOfPlayers());
-            vm.put(CURRENT_PLAYER_ATTR, player);
-            vm.put(GetHomeRoute.LOBBY_ATTR, this.gameCenter.getPlayerLobby().getPlayerLobby());
-            return templateEngine.render(new ModelAndView(vm, GetHomeRoute.ROUTE_NAME));
+        if (game.hasWinner()){
+            response.redirect(WebServer.HOME_URL);
         }
 
         // Configures view model to set up template based on player and opponent info
@@ -98,7 +95,7 @@ public class GetGameRoute implements Route {
         vm.put(RED_PLAYER_ATTR, game.getRedPlayer());
         vm.put(WHITE_PLAYER_ATTR, game.getWhitePlayer());
         vm.put(ACTIVE_COLOR_ATTR, game.getActiveColor());
-        return game;
+        return templateEngine.render(new ModelAndView(vm , GetStartGameRoute.GAME_NAME));
     }
 }
 
