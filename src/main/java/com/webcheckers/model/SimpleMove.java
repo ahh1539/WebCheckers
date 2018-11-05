@@ -1,4 +1,4 @@
 package com.webcheckers.model;
 
-public class SimpleMove implements Move {
+public class SimpleMove {
 }

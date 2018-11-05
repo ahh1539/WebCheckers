@@ -1,6 +1,8 @@
 package com.webcheckers.model;
 
-public class Move {
+import java.io.Serializable;
+
+public class Move implements Serializable {
 
     private Position start;
     private Position end;
@@ -16,5 +18,10 @@ public class Move {
 
     public Position getEnd(){
         return end;
+    }
+
+    public String toString(){
+        return "start: ("+ start.getRow() +", "+start.getCell()+")"+
+                " end: ("+ end.getRow() +", "+end.getCell()+")";
     }
 }

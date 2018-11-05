@@ -163,13 +163,13 @@ public class WebServer {
     // Request a game
     get(REQUEST_GAME_URL, new GetRequestGameRoute(templateEngine, gameCenter));
     // Check whose turn it is
-    get(CHECK_TURN_URL, new GetCheckTurnRoute(templateEngine, gameCenter));
+    get(CHECK_TURN_URL, new PostCheckTurnRoute(templateEngine, gameCenter));
 
 
     // Posts the player username as they sign in
     post(SIGN_IN_URL, new PostSignInRoute(templateEngine, gameCenter));
     // Post a move to validate
-    post(VALIDATE_MOVE_URL, new PostValidateMoveRoute(templateEngine, gameCenter));
+    post(VALIDATE_MOVE_URL, new PostValidateMoveRoute(gson));
 
 
     LOG.config("WebServer is initialized.");

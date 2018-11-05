@@ -7,14 +7,24 @@ import com.webcheckers.model.Message;
 import com.webcheckers.model.Player;
 import spark.*;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Objects;
 import java.util.logging.Logger;
 
-public class GetCheckTurnRoute implements Route {
+public class PostCheckTurnRoute implements Route {
     private static final Logger LOG = Logger.getLogger(GetSignInRoute.class.getName());
 
     private final TemplateEngine templateEngine;
     private final GameCenter gameCenter;
+
+    static final String MESSAGE_ATTR = "message";
+    static final String MESSAGE_TYPE_ATTR = "messageType";
+    public static final String TITLE_ATTR = "title";
+    public static final String TITLE = "Sign In!";
+    public static final String PLAYER = "player";
+    static final String ERROR_TYPE = "error";
+
 
     /**
      * Create the Spark Route (UI controller) for the
@@ -23,7 +33,7 @@ public class GetCheckTurnRoute implements Route {
      * @param templateEngine
      *   the HTML template rendering engine
      */
-    public GetCheckTurnRoute(final TemplateEngine templateEngine, final GameCenter gameCenter) {
+    public PostCheckTurnRoute(final TemplateEngine templateEngine, final GameCenter gameCenter) {
         // validation
         Objects.requireNonNull(templateEngine, "templateEngine must not be null");
         Objects.requireNonNull(gameCenter, "gameCenter must not be null");
@@ -31,12 +41,20 @@ public class GetCheckTurnRoute implements Route {
         this.templateEngine = templateEngine;
         this.gameCenter = gameCenter;
         //
-        LOG.config("GetCheckTurnRoute is initialized.");
+        LOG.config("PostCheckTurnRoute is initialized.");
     }
 
     @Override
     public Object handle(Request request, Response response) {
-        Message message = new Message(Message.Type.ERROR, "not your turn");
+
+        final Session session = request.session();
+        Map<String, Object> vm = new HashMap<>();
+
+        Message message = new Message(Message.Type.INFO, "true");
+
+        vm.put(MESSAGE_ATTR, "true");
+        vm.put(MESSAGE_TYPE_ATTR, Message.Type.INFO);
+
         return message;
     }
 }
