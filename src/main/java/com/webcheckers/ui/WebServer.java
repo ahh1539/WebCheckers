@@ -167,7 +167,7 @@ public class WebServer {
     get(REQUEST_GAME_URL, new GetRequestGameRoute(templateEngine, gameCenter));
 
     //gets when the player is to resign because they are the inferior player
-    get(RESIGN_GAME_URL, new GetResignGameRoute(templateEngine, gameCenter));
+    post(RESIGN_GAME_URL, new PostResignGameRoute(templateEngine, gameCenter));
 
     // Posts the player username as they sign in
     post(SIGN_IN_URL, new PostSignInRoute(templateEngine, gameCenter));
