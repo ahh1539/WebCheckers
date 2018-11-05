@@ -34,9 +34,39 @@ public class Move implements Serializable {
                 " end: ("+ end.getRow() +", "+end.getCell()+")";
     }
 
+    /**
+     * Make a move
+     * @return
+     */
     public BoardView makeMove(){
         BoardView copyBoard = new BoardView(this.board);
-        //Piece piece = copyBoard.getRow(this.start.getRow())
+        int startRowIndex = this.start.getRow();
+        int endRowIndex = this.end.getRow();
+        int startCell = this.start.getCell();
+        int endCell = this.end.getCell();
+
+        Row startRow = copyBoard.getRow(startRowIndex);
+        Row endRow = copyBoard.getRow(endRowIndex);
+        Space startSpace = startRow.getSpace(startCell);
+        Space endSpace = endRow.getSpace(endCell);
+        Piece movingPiece = startSpace.getPiece();
+
+        int targetRow = (startRowIndex + endRowIndex) / 2;
+        int targetCell = (startCell + endCell) / 2;
+        Space targetSpace = copyBoard.getRow(targetRow).getSpace(targetCell);
+
+        // Remove piece at starting position and place piece at ending position
+        startSpace.removePiece();
+        endSpace.putPiece(movingPiece);
+
+        // Check if move is a jump
+        if(this.isJump()) {
+            // Capture piece
+            targetSpace.removePiece();
+        }
+        if((endRowIndex == 7 || endRowIndex == 0) && endSpace.getPiece().getType() == Piece.Type.SINGLE) {
+            endSpace.putPiece(movingPiece.makeKingPiece());
+        }
         return copyBoard;
     }
 
@@ -192,7 +222,6 @@ public class Move implements Serializable {
                 }
             }
         }
-
         return valid;
     }
 

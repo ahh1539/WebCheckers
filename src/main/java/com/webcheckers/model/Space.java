@@ -101,6 +101,15 @@ public class Space {
     }
 
     /**
+     * Puts Piece object in this space
+     * @param piece Piece object to put
+     */
+    public void putPiece(Piece piece){
+        this.piece = piece;
+        this.isValid = false;
+    }
+
+    /**
      * Returns a boolean of whether the space is valid or not
      * @return True if the space is valid and does not currently contain a piece
      */
