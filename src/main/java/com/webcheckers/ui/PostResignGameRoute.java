@@ -64,7 +64,12 @@ public class PostResignGameRoute implements Route{
         }
         player.leaveGame();
 
-        return new Message(Message.Type.INFO, "Player sucessfully resigned" );
+        if (!game.getWhitePlayer().inGame() || !game.getRedPlayer().inGame()){
+            return new Message(Message.Type.INFO, "Resignation was a success");
+        }
+        else {
+            return new Message(Message.Type.ERROR, "Did not resign successfully" );
+        }
     }
 }
 
