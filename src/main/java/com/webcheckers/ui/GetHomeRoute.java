@@ -94,7 +94,6 @@ public class GetHomeRoute implements Route {
             Game game = new Game(player, opponent);
             gameLobby.addGame(game);
 
-
             vm.put(GetStartGameRoute.VIEW_MODE_ATTR, Game.ViewMode.PLAY);
             vm.put(GetStartGameRoute.RED_PLAYER_ATTR, player);
             vm.put(GetStartGameRoute.WHITE_PLAYER_ATTR, opponent);

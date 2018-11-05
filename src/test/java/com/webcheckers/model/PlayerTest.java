@@ -6,11 +6,8 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 
-/**
- * author:
- */
 @Tag("Model-tier")
-public class PlayerTester {
+public class PlayerTest {
 
 
     // holds player object to test

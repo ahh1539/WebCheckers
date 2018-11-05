@@ -17,12 +17,13 @@ public class Space {
 
     /**
      * Create a Space object
-     * @param piece Piece
+     * this.piece defaults to null!
+     *
      * @param isValid Boolean representing if the space is valid
      * @param cellIdx Integer representing the cell index value
      */
-    public Space(Piece piece, boolean isValid, int cellIdx){
-        this.piece = piece;
+    public Space(boolean isValid, int cellIdx){
+        this.piece = null;
         this.cellIdx = cellIdx;
         this.isValid = isValid;
         this.color = Color.BLACK;
@@ -51,8 +52,8 @@ public class Space {
     public void putWhitePiece() {
         if(this.isValid) {
             this.piece = new Piece(Piece.Color.WHITE, cellIdx);
-            this.isValid = false;
         }
+        this.isValid = false;
     }
     /**
      * Place a red piece on the Space. The Space is no longer a valid spot
@@ -60,8 +61,8 @@ public class Space {
     public void putRedPiece() {
         if(this.isValid) {
             this.piece = new Piece(Piece.Color.RED, cellIdx);
-            this.isValid = false;
         }
+        this.isValid = false;
     }
 
     /**
@@ -81,8 +82,7 @@ public class Space {
     }
 
     /**
-     * Remove a piece from the Space by setting it to null
-     * and making is valid again
+     * Remove a piece from the Space by setting it to null and making valid again
      */
     public void removePiece(){
         this.piece = null;

@@ -1,7 +1,8 @@
-package com.webcheckers.model;
+package com.webcheckers.application;
+
+import com.webcheckers.model.Position;
 
 public class Move {
-
     private Position start;
     private Position end;
 
