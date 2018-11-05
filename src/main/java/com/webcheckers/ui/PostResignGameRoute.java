@@ -29,7 +29,7 @@ public class PostResignGameRoute implements Route{
         Objects.requireNonNull(gameCenter, "gameCenter must not be null");
         this.templateEngine = templateEngine;
         this.gameCenter = gameCenter;
-        LOG.config("GetResignGameRoute is initialized.");
+        LOG.config("PostResignGameRoute is initialized.");
     }
     /**
      * Render the WebCheckers Start Game page.
@@ -52,6 +52,7 @@ public class PostResignGameRoute implements Route{
 
         Game game = this.gameCenter.getGameLobby().getGame(player);
 
+        //sets winner and loser for game and removes both players
         game.setLoser(player);
 
         if (player.getColor() == Player.Color.WHITE){
@@ -64,6 +65,7 @@ public class PostResignGameRoute implements Route{
         }
         player.leaveGame();
 
+        // checks whether or not players successfully left the game
         if (!game.getWhitePlayer().inGame() || !game.getRedPlayer().inGame()){
             return new Message(Message.Type.INFO, "Resignation was a success");
         }
