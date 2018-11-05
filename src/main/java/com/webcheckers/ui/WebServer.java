@@ -64,6 +64,7 @@ public class WebServer {
   public static final String REQUEST_GAME_URL = "/requestGame";
 
   public static final String VALIDATE_MOVE_URL = "/validateMove";
+
   //
   // Attributes
   //
