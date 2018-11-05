@@ -175,6 +175,7 @@ public class Game {
     public void setWinner(Player player){
         if(this.redPlayer.equals(player)) this.winner = this.redPlayer;
         else this.winner = this.whitePlayer;
+        player.addWin();
     }
 
     /**

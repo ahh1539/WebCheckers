@@ -41,6 +41,10 @@ public class Move implements Serializable {
         correctRowsPos = (startRowIndex+1 == endRowIndex);
     }
 
+    public Message isValid(){
+        return new Message(Message.Type.INFO, "good choice");
+    }
+
     public Position getStart(){
         return start;
     }
