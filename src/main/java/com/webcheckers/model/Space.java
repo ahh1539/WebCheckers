@@ -30,6 +30,17 @@ public class Space {
     }
 
     /**
+     * Copy constructor for Space. Creates a new Space object from other
+     * @param other The Space object to copy
+     */
+    public Space(Space other){
+        this.piece = other.piece;
+        this.cellIdx = other.cellIdx;
+        this.isValid = other.isValid;
+        this.color = other.color;
+    }
+
+    /**
      * Returns the Piece that is on the Space
      * @return the Piece on the Space
      */

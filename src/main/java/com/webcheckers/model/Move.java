@@ -6,6 +6,7 @@ public class Move implements Serializable {
 
     private Position start;
     private Position end;
+    private BoardView board;
 
     public Move(Position start, Position end){
         this.start = start;
@@ -18,6 +19,15 @@ public class Move implements Serializable {
 
     public Position getEnd(){
         return end;
+    }
+
+    public void setBoard(BoardView board) {
+        this.board = board;
+    }
+
+    public BoardView getBoard() {
+        return board;
+        //return new BoardView(this.board);
     }
 
     public String toString(){

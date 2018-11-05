@@ -36,10 +36,35 @@ public class BoardView implements Iterable<Row>{
         }
     }
 
+    /**
+     * Create a copy of the Board object for use by the Move object
+     * @param other The board to make a copy of
+     */
+    public BoardView(BoardView other) {
+        this(other.getRow(0), other.getRow(1), other.getRow(2), other.getRow(3),
+                other.getRow(4), other.getRow(5), other.getRow(6), other.getRow(7));
+    }
+
+    public BoardView(Row row1,Row row2,Row row3,Row row4,Row row5,Row row6,Row row7,Row row8){
+        this.gameBoard = new Row[BOARD_LENGTH];
+        this.gameBoard[0] = new Row(row1);
+        this.gameBoard[1] = new Row(row2);
+        this.gameBoard[2] = new Row(row3);
+        this.gameBoard[3] = new Row(row4);
+        this.gameBoard[4] = new Row(row5);
+        this.gameBoard[5] = new Row(row6);
+        this.gameBoard[6] = new Row(row7);
+        this.gameBoard[7] = new Row(row8);
+
+    }
+
     //
     // Public Methods
     //
 
+    public Row getRow(int index){
+        return this.gameBoard[index];
+    }
 
     /**
      * Initializes all pieces on the board and places them according to the colors of the Spaces.

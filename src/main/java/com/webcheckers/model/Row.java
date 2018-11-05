@@ -49,6 +49,23 @@ public class Row implements Iterable<Space>{
         }
     }
 
+    public Row (Row other) {
+        this.index = other.index;
+        this.row = new Space[ROW_LENGTH];
+        for (int i = 0; i < ROW_LENGTH; i++) {
+            this.row[i] = new Space(other.getSpace(i));
+        }
+    }
+
+    /**
+     * Return the Space object at the index
+     * @param index Location of the Space object to get
+     * @return The Space object at index
+     */
+    public Space getSpace(int index){
+        return this.row[index];
+    }
+
     /**
      * Gets the row
      * @return
