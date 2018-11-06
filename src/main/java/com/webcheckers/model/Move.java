@@ -25,20 +25,20 @@ public class Move implements Serializable {
     public Move(Position start, Position end){
         this.start = start;
         this.end = end;
-        startRowIndex = this.start.getRow();
-        endRowIndex = this.end.getRow();
-        startCell =  this.start.getCell();
-        endCell = this.end.getCell();
-        targetRow = (startRowIndex + endRowIndex) / 2;
-        targetCell = (startCell + endCell) / 2;
-        isJumpRow = (startRowIndex - 2) == endRowIndex;
-        isJumpCell = (startCell - 2 == endCell);
-        isJumpRowPos = (startRowIndex + 2) == endRowIndex;
-        isJumpCellPos = (startCell + 2 == endCell);
-        correctRows = (startRowIndex - 1 == endRowIndex);
-        correctCell = (startCell-1 == endCell);
-        correctCellPos = (startCell+1 == endCell);
-        correctRowsPos = (startRowIndex+1 == endRowIndex);
+//        startRowIndex = this.start.getRow();
+//        endRowIndex = this.end.getRow();
+//        startCell =  this.start.getCell();
+//        endCell = this.end.getCell();
+//        targetRow = (startRowIndex + endRowIndex) / 2;
+//        targetCell = (startCell + endCell) / 2;
+//        isJumpRow = (startRowIndex - 2) == endRowIndex;
+//        isJumpCell = (startCell - 2 == endCell);
+//        isJumpRowPos = (startRowIndex + 2) == endRowIndex;
+//        isJumpCellPos = (startCell + 2 == endCell);
+//        correctRows = (startRowIndex - 1 == endRowIndex);
+//        correctCell = (startCell-1 == endCell);
+//        correctCellPos = (startCell+1 == endCell);
+//        correctRowsPos = (startRowIndex+1 == endRowIndex);
     }
 
     public Position getStart(){
@@ -101,6 +101,26 @@ public class Move implements Serializable {
      * @return
      */
     public boolean isValid(BoardView board){
+
+        // Really janky implementation but fixes the fact that our constructor is never called
+        Position start = this.getStart();
+        Position end = this.getEnd();
+
+        startRowIndex = this.start.getRow();
+        endRowIndex = this.end.getRow();
+        startCell =  this.start.getCell();
+        endCell = this.end.getCell();
+        targetRow = (startRowIndex + endRowIndex) / 2;
+        targetCell = (startCell + endCell) / 2;
+        isJumpRow = (startRowIndex - 2) == endRowIndex;
+        isJumpCell = (startCell - 2 == endCell);
+        isJumpRowPos = (startRowIndex + 2) == endRowIndex;
+        isJumpCellPos = (startCell + 2 == endCell);
+        correctRows = (startRowIndex - 1 == endRowIndex);
+        correctCell = (startCell-1 == endCell);
+        correctCellPos = (startCell+1 == endCell);
+        correctRowsPos = (startRowIndex+1 == endRowIndex);
+
         boolean valid = false;
         // Get the starting space and end space
         Space startSpace = getStartSpace(board.getRow(this.startRowIndex));
