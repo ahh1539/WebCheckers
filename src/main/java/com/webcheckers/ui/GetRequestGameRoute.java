@@ -55,6 +55,7 @@ public class GetRequestGameRoute implements Route{
         // Checks if the players are already in the lobby, if not it adds them.
         PlayerLobby playerLobby = gameCenter.getPlayerLobby();
         Player player2 = new Player(secondPlayer);
+        player2.assignColor(Player.Color.WHITE);
         if(!playerLobby.hasPlayer(player1)){
             playerLobby.addPlayer(player1);
         }

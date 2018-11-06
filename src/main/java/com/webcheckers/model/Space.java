@@ -30,6 +30,17 @@ public class Space {
     }
 
     /**
+     * Copy constructor for Space. Creates a new Space object from other
+     * @param other The Space object to copy
+     */
+    public Space(Space other){
+        this.piece = other.piece;
+        this.cellIdx = other.cellIdx;
+        this.isValid = other.isValid;
+        this.color = other.color;
+    }
+
+    /**
      * Returns the Piece that is on the Space
      * @return the Piece on the Space
      */
@@ -51,7 +62,7 @@ public class Space {
      */
     public void putWhitePiece() {
         if(this.isValid) {
-            this.piece = new Piece(Piece.Color.WHITE, Piece.Type.SINGLE, cellIdx);
+            this.piece = new Piece(Piece.Color.WHITE, cellIdx);
         }
         this.isValid = false;
     }
@@ -60,7 +71,7 @@ public class Space {
      */
     public void putRedPiece() {
         if(this.isValid) {
-            this.piece = new Piece(Piece.Color.RED, Piece.Type.SINGLE, cellIdx);
+            this.piece = new Piece(Piece.Color.RED, cellIdx);
         }
         this.isValid = false;
     }
@@ -87,6 +98,15 @@ public class Space {
     public void removePiece(){
         this.piece = null;
         this.isValid = true;
+    }
+
+    /**
+     * Puts Piece object in this space
+     * @param piece Piece object to put
+     */
+    public void putPiece(Piece piece){
+        this.piece = piece;
+        this.isValid = false;
     }
 
     /**

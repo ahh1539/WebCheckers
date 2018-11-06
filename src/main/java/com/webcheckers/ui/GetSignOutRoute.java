@@ -58,6 +58,7 @@ public class GetSignOutRoute implements Route {
     public Object handle(Request request, Response response) {
         LOG.finer("GetSignOutRoute is invoked.");
         Session session = request.session();
+        Map<String, Object> vm = new HashMap<>();
 
         // Get the player and remove them from the attributes
         Player player = session.attribute(PostSignInRoute.PLAYER);
@@ -73,6 +74,9 @@ public class GetSignOutRoute implements Route {
             // The player loses and the opponent wins
             game.setLoser(player);
             Player opponent = game.getWhitePlayer();
+
+            vm.put(GetHomeRoute.ROUTE_NAME, opponent);
+
             game.setWinner(opponent);
 
             // Both players leave the game
@@ -88,7 +92,7 @@ public class GetSignOutRoute implements Route {
         }
 
         //
-        Map<String, Object> vm = new HashMap<>();
+
         vm.put(TITLE_ATTR, TITLE);
         vm.put(GetStartGameRoute.CURRENT_PLAYER_ATTR, null);
         vm.put(GetHomeRoute.NUM_PLAYERS, playerLobby.getNumberOfPlayers());

@@ -57,6 +57,8 @@ public class GetStartGameRoute implements Route {
 
         final Session session = request.session();
         Player player = session.attribute(PostSignInRoute.PLAYER);
+        player = PlayerLobby.getPlayer(player.getName());
+        LOG.info("player color start game:" + player.getColor());
         PlayerLobby.getPlayer(player.getName()).joinGame();
         Game game = this.gameCenter.getGameLobby().getGame(player);
 
@@ -75,7 +77,14 @@ public class GetStartGameRoute implements Route {
 
         // Configures view model to set up template based on player and opponent info
 
-        vm.put(BOARD_ATTR, game.getBoard());
+        if( player.getColor() == Player.Color.RED) {
+            LOG.finer("red board building");
+            vm.put(BOARD_ATTR, game.getRedBoard());
+        }
+        if( player.getColor() == Player.Color.WHITE) {
+            LOG.finer("white board building");
+            vm.put(BOARD_ATTR, game.getWhiteBoard());
+        }
         vm.put(CURRENT_PLAYER_ATTR, player);
         vm.put(TITLE_ATTR, TITLE);
         vm.put(VIEW_MODE_ATTR, Game.ViewMode.PLAY);

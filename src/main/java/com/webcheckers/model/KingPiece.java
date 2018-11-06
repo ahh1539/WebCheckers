@@ -1,12 +1,7 @@
 package com.webcheckers.model;
 
-/**
- * A Piece on the board, representing a Checkers piece
- */
-public class Piece {
+public class KingPiece extends Piece {
 
-    public enum Color {RED, WHITE}
-    public enum Type {SINGLE, KING}
 
     //
     // Attributes
@@ -14,7 +9,9 @@ public class Piece {
 
     private Color color;
     private int index;
-    private Type type;
+    private Type type = Type.KING;
+
+
 
     /**
      * Create a piece with the associated Color and Type and index
@@ -23,20 +20,10 @@ public class Piece {
      * @param idx
      *      The index associated with the placement on the board
      */
-    public Piece(Color color, int idx){
-        this.color = color;
-        this.index = idx;
-        this.type = Type.SINGLE;
+    public KingPiece(Color color, int idx) {
+        super(color, idx);
     }
 
-    /**
-     * Gets the type of the Piece
-     * @return
-     *      the Type {@link Type} of the Piece, SINGLE in this case
-     */
-    public Type getType() {
-        return type;
-    }
 
     /**
      * Gets the color of the Piece
@@ -46,14 +33,16 @@ public class Piece {
     public Color getColor() {
         return color;
     }
-    
+
     /**
-     * Gets the index of the Piece
-     * @return the integer representation of the index of the piece, the place on the board
+     * Gets the index of the piece
+     * @return
+     *      the int index of the piece
      */
     public int getIndex(){
-        return index;
+        return this.index;
     }
+
 
     /**
      * Check the equality of two objects and see if the provided object
@@ -68,14 +57,9 @@ public class Piece {
     public boolean equals(Object object){
         if(object instanceof Piece){
             Piece piece = (Piece) object;
-            return index == piece.index && color.equals(piece.color);
+            return index == piece.getIndex() && color.equals(piece.getColor());
         }
         return false;
-    }
-
-    public Piece makeKingPiece() {
-        this.type = Type.KING;
-        return this;
     }
 
 }

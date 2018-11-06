@@ -69,6 +69,10 @@ public class WebServer {
 
   public static final String CHECK_TURN_URL = "/checkTurn";
 
+  public static final String BACKUP_MOVE_URL = "/backupMove";
+
+  public static final String SUBMIT_TURN_URL = "/submitTurn";
+
   //
   // Attributes
   //
@@ -166,13 +170,19 @@ public class WebServer {
     // Request a game
     get(REQUEST_GAME_URL, new GetRequestGameRoute(templateEngine, gameCenter));
 
-    //gets when the player is to resign because they are the inferior player
-    get(RESIGN_GAME_URL, new GetResignGameRoute(templateEngine, gameCenter));
 
+    //Posts when the player is to resign because they are the inferior player
+    post(RESIGN_GAME_URL, new PostResignGameRoute(templateEngine, gameCenter));
     // Posts the player username as they sign in
     post(SIGN_IN_URL, new PostSignInRoute(templateEngine, gameCenter));
     // Post a move to validate
-    post(VALIDATE_MOVE_URL, new PostValidateMoveRoute(templateEngine, gameCenter));
+    post(VALIDATE_MOVE_URL, new PostValidateMoveRoute(gson));
+    // Check whose turn it is
+    post(CHECK_TURN_URL, new PostCheckTurnRoute(templateEngine, gameCenter));
+    // Submit turn and change active color
+    post(SUBMIT_TURN_URL, new PostSubmitTurnRoute(templateEngine, gameCenter));
+    // Undo move if it's not up to snuff
+    post(BACKUP_MOVE_URL, new PostBackupMoveRoute(gson));
 
 
     LOG.config("WebServer is initialized.");

@@ -14,15 +14,18 @@ geometry: margin=1in
   * Elijah Parrish
   * Daria Chaplin
   * Alex Hurley
-  * Lilian Khun
+  * Lillian Kuhn
   * Paula Register
 
 ## Executive Summary
 
-WebCheckers is an online web checkers game that will allow
-multiple players to log in and play a game of checkers with one another.
-The project is built using Java, Maven, the Spark Framework, and the FreeMarker
-Template engine.
+WebCheckers is an online application that will allow
+multiple players to log in and play a game of checkers with one another. The game interface
+will support drag and drop browser capabilities for making moves. Beyond this basic
+set of features we plan to implement a system so that the players can spectate a game that is 
+in progress as well as replay a game they recently played, so that they can further
+refine their checker playing skills.
+
 
 ### Purpose
 > _The purpose of this project is to provide the players the ablity
@@ -56,13 +59,15 @@ This section describes the features of the application.
 
 ## Application Domain
 
-This section describes the application domain.
+This model shows the general domain of the project
 
-![The WebCheckers Domain Model](domain-model-placeholder.png)
+![The WebCheckers Domain Model](domain_model.png)
 
-> _Provide a high-level overview of the domain for this application. You
-> can discuss the more important domain entities and their relationship
-> to each other._
+> The central entity of our application is the Checkers game, which is played on a board.
+The board is defined by Squares, which are in turn defined by their color and location. 
+The checkers game is played with the pieces and played by the player. The player makes moves
+that can be defined by the type of piece that is being moved and the type of move
+that the piece is making.   
 
 
 ## Architecture and Design
@@ -91,10 +96,17 @@ Details of the components within these tiers are supplied below.
 This section describes the web interface flow; this is how the user views and interacts
 with the WebCheckers application.
 
-![The WebCheckers Web Interface Statechart](web-interface-placeholder.png)
+![The WebCheckers Web Interface Statechart](state_diagram.png)
 
 > _Provide a summary of the application's user interface.  Describe, from
-> the user's perspective, the flow of the pages in the web application._
+> the user's perspective, the flow of the pages in the web application.
+The flow of the web pages from the user's perspective is as follows: When the user opens the home page
+they first see a simple welcome message and a button to sign in, they will also be presented
+with the number of players who are signed in. When they click to sign in they will be redirected to the Signin
+page where they can post their username. They will then be redirected to home. If they then click 
+the name of another player then both players will be redirected to the game screen 
+where they can play the game of checkers. Once a winner has been decided they will be redirected to the home
+screen._
 
 
 ### UI Tier
