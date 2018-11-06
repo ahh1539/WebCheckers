@@ -1,6 +1,7 @@
 package com.webcheckers.model;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 /**
@@ -17,6 +18,8 @@ public class Game {
     private Color activeColor;
     private BoardView redBoard;
     private BoardView whiteBoard;
+
+    private List<Move> moves = new ArrayList<Move>();
 
     public enum ViewMode { PLAY, SPECTATOR, REPLAY }
 
@@ -205,6 +208,10 @@ public class Game {
      */
     public Player getWinner() {
         return this.winner;
+    }
+
+    public void addMove(Move m){
+        moves.add(m);
     }
 
 
