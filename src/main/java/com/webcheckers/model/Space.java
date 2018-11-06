@@ -104,6 +104,15 @@ public class Space {
         this.isValid = true;
     }
 
+//    public boolean isPieceNull(Piece p){
+//        if (p == null){
+//            return true;
+//        }
+//        else {
+//            return false;
+//        }
+//    }
+
     /**
      * Puts Piece object in this space
      * @param piece Piece object to put
