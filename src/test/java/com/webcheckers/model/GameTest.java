@@ -8,22 +8,22 @@ import org.junit.jupiter.api.Test;
 @Tag("Model-tier")
 public class GameTest {
     // holds player object to test
-    Player redPlayer = new Player("FriendlyRed");
-    Player whitePlayer = new Player("FriendlyWhite");
+    private Player redPlayer = new Player("FriendlyRed");
+    private Player whitePlayer = new Player("FriendlyWhite");
     private final Game CuT = new Game(redPlayer, whitePlayer);
 
     @Test
+    @DisplayName("Game is Initialized")
     public void testGame(){
         assertTrue(CuT.getActiveColor() == Piece.Color.RED);
         assertNull(CuT.getWinner());
-        assertEquals(CuT.getRedBoard(), new BoardView(redPlayer));
-        assertEquals(CuT.getWhiteBoard(), new BoardView(whitePlayer));
     }
 
     /**
      * Tests the getRedPlayer method
      */
     @Test
+    @DisplayName("GetRedPlayer works")
     public void testGetRedPlayer(){
         assertEquals(CuT.getRedPlayer(), redPlayer);
     }
@@ -32,29 +32,35 @@ public class GameTest {
      * Tests the getWhitePlayer method
      */
     @Test
+    @DisplayName("GetWhitePlayer works")
     public void testGetWhitePlayer(){
         assertEquals(CuT.getWhitePlayer(), whitePlayer);
     }
 
     @Test
+    @DisplayName("GetPlayerColor works")
     public void testGetPlayerColor(){
+        whitePlayer.assignColor(Player.Color.WHITE);
         assertEquals(CuT.getPlayerColor(redPlayer.getName()), redPlayer.getColor());
         assertEquals(CuT.getPlayerColor(whitePlayer.getName()), whitePlayer.getColor());
         assertNull(CuT.getPlayerColor("Garbage"));
     }
     @Test
+    @DisplayName("SetWhitePlayer works")
     public void testSetWhitePlayer(){
         CuT.setWhitePlayer("Test");
         assertEquals(CuT.getWhitePlayer().getName(), "Test");
     }
 
     @Test
+    @DisplayName("SetRedPlayer works")
     public void testSetRedPlayer(){
         CuT.setRedPlayer("Test");
         assertEquals(CuT.getRedPlayer().getName(), "Test");
     }
 
     @Test
+    @DisplayName("hasGame works")
     public void testHasGame(){
         boolean hasGameRed = CuT.hasGame(redPlayer);
         boolean hasGameWhite = CuT.hasGame(whitePlayer);
@@ -64,21 +70,25 @@ public class GameTest {
     }
 
     @Test
+    @DisplayName("GetRedBoard works")
     public void testGetRedBoard(){
         assertEquals(CuT.getRedBoard(), new BoardView(redPlayer));
     }
 
     @Test
+    @DisplayName("GetWhiteBoard works")
     public void testGetWhiteBoard(){
         assertEquals(CuT.getWhiteBoard(), new BoardView(whitePlayer));
     }
 
     @Test
+    @DisplayName("GetActiveColor works")
     public void testActiveColor(){
         assertEquals(CuT.getActiveColor(), Piece.Color.RED);
     }
 
     @Test
+    @DisplayName("GetActiveColor works after color is toggled")
     public void testActiveColorIsWhite(){
         final Game CuT_copy = new Game(redPlayer, whitePlayer);
         CuT_copy.toggleActiveColor();
@@ -86,6 +96,7 @@ public class GameTest {
     }
 
     @Test
+    @DisplayName("ToggleActiveColor works")
     public void testToggleActiveColor(){
         final Game CuT_copy = new Game(redPlayer, whitePlayer);
         assertEquals(CuT_copy.getActiveColor(), Piece.Color.RED);
@@ -93,6 +104,7 @@ public class GameTest {
         assertEquals(CuT_copy.getActiveColor(), Piece.Color.WHITE);
     }
     @Test
+    @DisplayName("IsActive works")
     public void testIsActive(){
         final Game CuT_copy = new Game(redPlayer, whitePlayer);
         assertTrue(CuT_copy.isActive(redPlayer));
@@ -101,6 +113,7 @@ public class GameTest {
     }
 
     @Test
+    @DisplayName("SetWinner works")
     public void testSetWinner(){
         final Game CuT_copy = new Game(redPlayer, whitePlayer);
         CuT_copy.setWinner(redPlayer);
@@ -108,6 +121,7 @@ public class GameTest {
     }
 
     @Test
+    @DisplayName("SetLoser works")
     public void testSetLoser(){
         final Game CuT_copy = new Game(redPlayer, whitePlayer);
         CuT_copy.setLoser(redPlayer);
@@ -115,6 +129,7 @@ public class GameTest {
     }
 
     @Test
+    @DisplayName("HasWinner works")
     public void testHasWinner(){
         final Game CuT_copy = new Game(redPlayer, whitePlayer);
         assertFalse(CuT_copy.hasWinner());

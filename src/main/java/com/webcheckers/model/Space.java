@@ -116,4 +116,27 @@ public class Space {
     public boolean isValid(){
         return this.isValid && (this.piece == null);
     }
+
+    /**
+     * Check the equality of two objects and see if the provided object
+     * is equal to the Space
+     * @param object
+     *      Object (hopefully a Space) to compare if it is equal to the Space
+     * @return
+     *      True if the Space piece, cellIDx, isValid, and color match the provided Object
+     *      False otherwise
+     */
+    @Override
+    public boolean equals(Object object){
+        if(object instanceof Space){
+            Space space = (Space) object;
+            if(piece == null){
+                return space.piece == null && (cellIdx == space.getCellIdx())
+                        && (isValid == space.isValid()) && color == space.color;
+            }
+            return piece.equals(space.piece) && (cellIdx == space.getCellIdx())
+                    && (isValid == space.isValid()) && color == space.color;
+        }
+        return false;
+    }
 }

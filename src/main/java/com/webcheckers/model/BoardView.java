@@ -55,7 +55,6 @@ public class BoardView implements Iterable<Row>{
         this.gameBoard[5] = new Row(row6);
         this.gameBoard[6] = new Row(row7);
         this.gameBoard[7] = new Row(row8);
-
     }
 
     //
@@ -156,4 +155,26 @@ public class BoardView implements Iterable<Row>{
         return new BoardIterator();
     }
 
+    /**
+     * Check the equality of two objects and see if the provided object
+     * is equal to the BoardView
+     * @param object
+     *      Object (hopefully a BoardView) to compare if it is equal to the BoardView
+     * @return
+     *      True if the BoardView  match the provided Object
+     *      False otherwise
+     */
+    @Override
+    public boolean equals(Object object){
+        if(object instanceof BoardView){
+            BoardView boardView = (BoardView) object;
+            for (int i = 0; i < BOARD_LENGTH; i++) {
+                if(!boardView.getRow(i).equals(gameBoard[i])){
+                    return false;
+                }
+            }
+            return true;
+        }
+        return false;
+    }
 }

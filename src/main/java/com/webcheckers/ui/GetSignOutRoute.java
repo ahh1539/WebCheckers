@@ -85,7 +85,7 @@ public class GetSignOutRoute implements Route {
 
             // The player leaves the playerLobby
             PlayerLobby.removePlayer(player);
-            System.out.println(PlayerLobby.);
+            System.out.println(PlayerLobby.getPlayer(player.getName()));
         }
         else if(playerLobby.hasPlayer(player)){
             PlayerLobby.removePlayer(player);

@@ -11,12 +11,12 @@ import java.util.Iterator;
 public class BoardViewTest {
 
     // holds player object to test
-    Player player = new Player("Friendly");
+    private Player player = new Player("Friendly");
 
     // holds player object to test
-    final BoardView CuT = new BoardView(player);
-    final BoardView CuT_copy = new BoardView(CuT);
-    final Iterator CuT_iterator = CuT.iterator();
+    private final BoardView CuT = new BoardView(player);
+    private final BoardView CuT_copy = new BoardView(CuT);
+    private final Iterator CuT_iterator = CuT.iterator();
     private final int BOARD_LENGTH = 8;
 
     @Test
@@ -40,7 +40,6 @@ public class BoardViewTest {
     @Test
     @DisplayName("CopyBoard equals Board")
     public void testCopyBoard(){
-        assertEquals(CuT, CuT_copy);
         for (int i = 0; i <BOARD_LENGTH ; i++) {
             assertEquals(CuT.getRow(i), CuT_copy.getRow(i));
         }
@@ -73,14 +72,14 @@ public class BoardViewTest {
             if ( i < 3){
                 for(Space space : CuT.getRow(i)){
                     if(space.getColor() == Space.Color.WHITE){
-                        assertTrue(space.getPiece().getColor() == Piece.Color.RED);
+                        assertTrue(space.getPiece().getColor() == Piece.Color.WHITE);
                     }
                 }
             }
             if ( i > 4 ){
                 for(Space space : CuT.getRow(i)){
                     if(space.getColor() == Space.Color.WHITE){
-                        assertTrue(space.getPiece().getColor() == Piece.Color.WHITE);
+                        assertTrue(space.getPiece().getColor() == Piece.Color.RED);
                     }
                 }
             }
