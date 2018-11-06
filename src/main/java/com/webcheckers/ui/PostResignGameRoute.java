@@ -45,7 +45,7 @@ public class PostResignGameRoute implements Route{
     @Override
     public Object handle(Request request, Response response) {
         LOG.finer("GetResignGame is invoked.");
-
+        System.out.println("resignresignresignresignresign");
         // Retrieves the HTTP session and necessary player/game info
         final Session session = request.session();
         Player player = session.attribute(PostSignInRoute.PLAYER);
@@ -71,6 +71,7 @@ public class PostResignGameRoute implements Route{
 
         // checks whether or not players successfully left the game
         if (!game.getWhitePlayer().inGame() || !game.getRedPlayer().inGame()){
+            System.out.println("looooooooooooooppppp1111111111111111");
             Message message = new Message(Message.Type.INFO, "true");
             String rJson = gson.toJson(message);
             return rJson;
@@ -78,6 +79,7 @@ public class PostResignGameRoute implements Route{
         else {
             Message message1 = new Message(Message.Type.ERROR, "false" );
             String rJson2 = gson.toJson(message1);
+            System.out.println("loooooooooooooopppppppppp2222222222222");
             return rJson2;
         }
     }
