@@ -41,6 +41,7 @@ public class Move implements Serializable {
 //        correctRowsPos = (startRowIndex+1 == endRowIndex);
     }
 
+
     public Position getStart(){
         return start;
     }
@@ -126,6 +127,14 @@ public class Move implements Serializable {
         Space startSpace = getStartSpace(board.getRow(this.startRowIndex));
         Space endSpace = getEndSpace(board.getRow(this.endRowIndex));
         Piece movingPiece = startSpace.getPiece();
+
+//        if (startSpace.isPieceNull(movingPiece) == true){
+//            System.out.println("true");
+//        }
+//        else {
+//            System.out.println("false");
+//        }
+
         Space targetSpace = board.getRow(targetRow).getSpace(targetCell);
 
         // Check if the piece is single
