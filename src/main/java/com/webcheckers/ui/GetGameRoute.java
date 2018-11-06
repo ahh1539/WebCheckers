@@ -83,16 +83,17 @@ public class GetGameRoute implements Route {
 
         Map<String, Object> vm = new HashMap<>();
         vm.put(TITLE_ATTR, TITLE);
-
+        System.out.println("===========================================");
         // Handles a null game object
         if (player.resigned() == true){
+            System.out.println("I was invoked");
             vm.put(MESSAGE, "Game is over fool");
             return templateEngine.render(new ModelAndView(vm, GetHomeRoute.ROUTE_NAME));
         }
         //if (game.hasWinner()){
         //    response.redirect(WebServer.HOME_URL);
         //}
-
+        System.out.println("++++++++++++++++++++++++++++++++++++++++");
         // Configures view model to set up template based on player and opponent info
         vm.put(BOARD_ATTR, game.getRedBoard());
         vm.put(BOARD_ATTR, game.getWhiteBoard());
