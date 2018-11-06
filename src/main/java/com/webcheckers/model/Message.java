@@ -1,9 +1,11 @@
 package com.webcheckers.model;
 
+import java.io.Serializable;
+
 /**
  * A Message for either informational or error message purposes
  */
-public class Message {
+public class Message implements Serializable {
 
     //
     // Attributes

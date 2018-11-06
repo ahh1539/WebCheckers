@@ -72,4 +72,10 @@ public class Piece {
         }
         return false;
     }
+
+    public Piece makeKingPiece() {
+        this.type = Type.KING;
+        return this;
+    }
+
 }

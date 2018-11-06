@@ -53,7 +53,7 @@ public class SpaceTester {
     }
 
     @Test
-    @DisplayName("dropping WHITE piece on valid space")
+    @DisplayName("dropping WHITE piece on invalid space")
     void testPieceDroppedInvalid(){
         Space space = new Space(false, 0);
         space.putWhitePiece();
