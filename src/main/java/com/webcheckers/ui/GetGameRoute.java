@@ -1,6 +1,7 @@
 package com.webcheckers.ui;
 
 import com.webcheckers.application.GameCenter;
+import com.webcheckers.application.GameLobby;
 import com.webcheckers.application.PlayerLobby;
 import com.webcheckers.model.Game;
 import com.webcheckers.model.Message;
@@ -78,6 +79,8 @@ public class GetGameRoute implements Route {
         Game game = this.gameCenter.getGameLobby().getGame(player);
 
 
+
+
         Map<String, Object> vm = new HashMap<>();
         vm.put(TITLE_ATTR, TITLE);
 
@@ -86,13 +89,13 @@ public class GetGameRoute implements Route {
             vm.put(MESSAGE, "Game is over fool");
             return templateEngine.render(new ModelAndView(vm, GetHomeRoute.ROUTE_NAME));
         }
-        if (game.hasWinner()){
-            response.redirect(WebServer.HOME_URL);
-        }
+        //if (game.hasWinner()){
+        //    response.redirect(WebServer.HOME_URL);
+        //}
 
         // Configures view model to set up template based on player and opponent info
-
-        vm.put(BOARD_ATTR, game.getBoard());
+        vm.put(BOARD_ATTR, game.getRedBoard());
+        vm.put(BOARD_ATTR, game.getWhiteBoard());
         vm.put(CURRENT_PLAYER_ATTR, player);
         vm.put(TITLE_ATTR, TITLE);
         vm.put(VIEW_MODE_ATTR, Game.ViewMode.PLAY);

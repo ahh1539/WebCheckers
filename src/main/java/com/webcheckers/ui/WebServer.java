@@ -57,7 +57,7 @@ public class WebServer {
 
   public static final String SIGN_IN_URL = "/signin";
 
-  public static final String GAME_START_URL = "/game";
+  public static final String GAME_START_URL = "/startGame";
 
   public static final String SIGN_OUT_URL = "/signout";
 
@@ -72,6 +72,8 @@ public class WebServer {
   public static final String BACKUP_MOVE_URL = "/backupMove";
 
   public static final String SUBMIT_TURN_URL = "/submitTurn";
+
+  public static final String GAME_URL = "/game";
 
   //
   // Attributes
@@ -168,6 +170,8 @@ public class WebServer {
     get(SIGN_OUT_URL, new GetSignOutRoute(templateEngine, gameCenter));
     // Request a game
     get(REQUEST_GAME_URL, new GetRequestGameRoute(templateEngine, gameCenter));
+
+    get(GAME_URL, new GetGameRoute(templateEngine,gameCenter));
 
 
     //Posts when the player is to resign because they are the inferior player
