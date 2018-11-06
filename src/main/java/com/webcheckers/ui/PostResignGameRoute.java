@@ -21,6 +21,8 @@ public class PostResignGameRoute implements Route{
 
     static final String TITLE_ATTR = "title";
     static final String TITLE = "Game Page";
+    static final String GAME = "/game";
+    static final String RESIGN_URL = "/resignGame";
 
 
 
@@ -45,7 +47,8 @@ public class PostResignGameRoute implements Route{
     @Override
     public Object handle(Request request, Response response) {
         LOG.finer("GetResignGame is invoked.");
-        System.out.println("resignresignresignresignresign");
+        System.out.println("RESIGN GAME WAS INVOKED");
+
         // Retrieves the HTTP session and necessary player/game info
         final Session session = request.session();
         Player player = session.attribute(PostSignInRoute.PLAYER);
@@ -59,19 +62,16 @@ public class PostResignGameRoute implements Route{
         if (player.getColor() == Player.Color.WHITE){
             game.setWinner(game.getRedPlayer());
             game.getRedPlayer().leaveGame();
-            game.getRedPlayer().hasResigned();
         }
         else {
             game.setWinner(game.getWhitePlayer());
             game.getWhitePlayer().leaveGame();
-            game.getWhitePlayer().hasResigned();
         }
-        player.hasResigned();
+        player.resigned();
         player.leaveGame();
 
-        // checks whether or not players successfully left the game
+        // checks whether or not players successfully left the game, returns Json representing this
         if (!game.getWhitePlayer().inGame() || !game.getRedPlayer().inGame()){
-            System.out.println("looooooooooooooppppp1111111111111111");
             Message message = new Message(Message.Type.INFO, "true");
             String rJson = gson.toJson(message);
             return rJson;
@@ -79,7 +79,6 @@ public class PostResignGameRoute implements Route{
         else {
             Message message1 = new Message(Message.Type.ERROR, "false" );
             String rJson2 = gson.toJson(message1);
-            System.out.println("loooooooooooooopppppppppp2222222222222");
             return rJson2;
         }
     }

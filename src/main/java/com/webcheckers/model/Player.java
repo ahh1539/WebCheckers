@@ -18,7 +18,6 @@ public class Player {
     private Color color;
     private boolean hasresigned = false;
 
-
     /**
      * Create a Player with the provided username. 0 total games and wins, they are not
      * currently in a game, and color defaults to RED
@@ -122,10 +121,17 @@ public class Player {
         return wins/totalGames;
     }
 
+    /**
+     * Void; when called it changes the status of the player to resigned
+     */
     public void hasResigned(){
         hasresigned = true;
     }
 
+    /**
+     *
+     * @return boolean representing whether or not player has resigned
+     */
     public boolean resigned(){
         return hasresigned;
     }

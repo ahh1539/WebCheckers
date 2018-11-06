@@ -54,7 +54,6 @@ public class GetStartGameRoute implements Route {
         LOG.finer("GetStartGameRoute is invoked.");
 
         // Retrieves the HTTP session and necessary player/game info
-
         final Session session = request.session();
         Player player = session.attribute(PostSignInRoute.PLAYER);
         player = PlayerLobby.getPlayer(player.getName());

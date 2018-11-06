@@ -46,11 +46,7 @@ public class PostCheckTurnRoute implements Route {
 
     @Override
     public Object handle(Request request, Response response) {
-
-//        Map<String, Object> vm = new HashMap<>();
-//
-//        vm.put(MESSAGE_ATTR, "true");
-//        vm.put(MESSAGE_TYPE_ATTR, Message.Type.INFO);
+        System.out.println("post check turn refresh");
 
         final Session session = request.session();
         Gson gson = new Gson();
