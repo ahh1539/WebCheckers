@@ -16,6 +16,7 @@ public class Player {
     private double wins;
     private boolean inGame;
     private Color color;
+    private boolean hasresigned = false;
 
 
     /**
@@ -119,6 +120,14 @@ public class Player {
      */
     public double getAverage(){
         return wins/totalGames;
+    }
+
+    public void hasResigned(){
+        hasresigned = true;
+    }
+
+    public boolean resigned(){
+        return hasresigned;
     }
 
     /**

@@ -81,7 +81,9 @@ public class GetGameRoute implements Route {
         vm.put(TITLE_ATTR, TITLE);
 
         // Handles a null game object
-
+        if (player.resigned() == true){
+            return templateEngine.render(new ModelAndView())
+        }
         if (game.hasWinner()){
             response.redirect(WebServer.HOME_URL);
         }
