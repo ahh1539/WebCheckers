@@ -124,6 +124,7 @@ public class Move implements Serializable {
         boolean valid = false;
         // Get the starting space and end space
         Space startSpace = getStartSpace(board.getRow(this.startRowIndex));
+        System.out.println("start space is " + startSpace);
         Space endSpace = getEndSpace(board.getRow(this.endRowIndex));
         Piece movingPiece = startSpace.getPiece();
         Space targetSpace = board.getRow(targetRow).getSpace(targetCell);
@@ -131,7 +132,7 @@ public class Move implements Serializable {
         // Check if the piece is single
         if(movingPiece.getType() == Piece.Type.SINGLE){
             // If it is Red
-            if(movingPiece.getColor() == Piece.Color.RED){
+            if(movingPiece.getColor() == Color.RED){
                 if((correctCellPos || correctCell) && correctRows){
                     if(endSpace.isValid()){
                         valid = true;
@@ -208,7 +209,7 @@ public class Move implements Serializable {
         // If the moving piece is single
         if (movingPiece.getType() == Piece.Type.SINGLE) {
             // If the moving piece is RED
-            if (movingPiece.getColor() == Piece.Color.RED) {
+            if (movingPiece.getColor() == Color.RED) {
                 // Check if move is a jump
                 if (isJumpRow && (isJumpCell || isJumpCellPos)) {
                     // Check if there is piece to capture

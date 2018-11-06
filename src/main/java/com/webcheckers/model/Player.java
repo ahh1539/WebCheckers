@@ -9,7 +9,7 @@ public class Player {
     //
     // Attributes
     //
-    public enum Color {RED, WHITE}
+    //public enum Color {RED, WHITE}
 
     private String name;
     private double totalGames;
@@ -49,6 +49,10 @@ public class Player {
      */
     public Color getColor() {
         return color;
+    }
+
+    public String toString(){
+        return name + " is "+ color;
     }
 
     /**

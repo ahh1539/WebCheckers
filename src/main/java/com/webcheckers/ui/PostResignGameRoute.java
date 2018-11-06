@@ -3,6 +3,7 @@ package com.webcheckers.ui;
 import com.google.gson.Gson;
 import com.webcheckers.application.GameCenter;
 import com.webcheckers.application.PlayerLobby;
+import com.webcheckers.model.Color;
 import com.webcheckers.model.Game;
 import com.webcheckers.model.Message;
 import com.webcheckers.model.Player;
@@ -56,7 +57,7 @@ public class PostResignGameRoute implements Route{
         //sets winner and loser for game and removes both players
         game.setLoser(player);
 
-        if (player.getColor() == Player.Color.WHITE){
+        if (player.getColor() == Color.WHITE){
             game.setWinner(game.getRedPlayer());
             game.getRedPlayer().leaveGame();
             game.getRedPlayer().hasResigned();

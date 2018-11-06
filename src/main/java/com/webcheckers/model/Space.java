@@ -11,9 +11,9 @@ public class Space {
     private Piece piece;
     private boolean isValid;
     private int cellIdx;
-    private Color color;
+    private SpaceColor spaceColor;
 
-    public enum Color{ BLACK, WHITE}
+    public enum SpaceColor{ BLACK, WHITE}
 
     /**
      * Create a Space object
@@ -26,7 +26,7 @@ public class Space {
         this.piece = null;
         this.cellIdx = cellIdx;
         this.isValid = isValid;
-        this.color = Color.BLACK;
+        this.spaceColor = SpaceColor.BLACK;
     }
 
     /**
@@ -37,7 +37,11 @@ public class Space {
         this.piece = other.piece;
         this.cellIdx = other.cellIdx;
         this.isValid = other.isValid;
-        this.color = other.color;
+        this.spaceColor = other.spaceColor;
+    }
+
+    public String toString(){
+        return " Piece: " + this.piece + ", position: (" + this.cellIdx + ")";
     }
 
     /**
@@ -62,7 +66,7 @@ public class Space {
      */
     public void putWhitePiece() {
         if(this.isValid) {
-            this.piece = new Piece(Piece.Color.WHITE, cellIdx);
+            this.piece = new Piece(Color.WHITE, cellIdx);
         }
         this.isValid = false;
     }
@@ -71,7 +75,7 @@ public class Space {
      */
     public void putRedPiece() {
         if(this.isValid) {
-            this.piece = new Piece(Piece.Color.RED, cellIdx);
+            this.piece = new Piece(Color.RED, cellIdx);
         }
         this.isValid = false;
     }
@@ -80,7 +84,7 @@ public class Space {
      * Make the Space color WHITE
      */
     public void makeSpaceWhite(){
-        this.color = Color.WHITE;
+        this.spaceColor = SpaceColor.WHITE;
     }
 
     /**
@@ -88,8 +92,8 @@ public class Space {
      * @return color
      *      The color {@link Color} of the space, either WHITE or BLACK
      */
-    public Color getColor(){
-        return this.color;
+    public SpaceColor getColor(){
+        return this.spaceColor;
     }
 
     /**

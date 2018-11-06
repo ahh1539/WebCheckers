@@ -13,8 +13,8 @@ import org.junit.jupiter.api.Test;
 @Tag("Model-tier")
 public class KingPieceTest {
 
-    private static final Piece.Color redColor = Piece.Color.RED;
-    private static final Piece.Color whiteColor = Piece.Color.WHITE;
+    private static final Color redColor = Color.RED;
+    private static final Color whiteColor = Color.WHITE;
 
     private static final int index = 0;
 

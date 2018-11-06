@@ -44,7 +44,7 @@ public class PostValidateMoveRoute implements Route {
         Player player = session.attribute(PostSignInRoute.PLAYER);
         Game game = gameCenter.getGameLobby().getGame(player);
         BoardView board;
-        if(player.getColor() == Player.Color.RED){
+        if(player.getColor() == Color.RED){
             board = game.getRedBoard();
         }
         else{

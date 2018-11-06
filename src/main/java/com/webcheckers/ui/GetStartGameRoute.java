@@ -2,6 +2,7 @@ package com.webcheckers.ui;
 
 import com.webcheckers.application.GameCenter;
 import com.webcheckers.application.PlayerLobby;
+import com.webcheckers.model.Color;
 import com.webcheckers.model.Game;
 import com.webcheckers.model.Player;
 import spark.*;
@@ -77,11 +78,11 @@ public class GetStartGameRoute implements Route {
 
         // Configures view model to set up template based on player and opponent info
 
-        if( player.getColor() == Player.Color.RED) {
+        if( player.getColor() == Color.RED) {
             LOG.finer("red board building");
             vm.put(BOARD_ATTR, game.getRedBoard());
         }
-        if( player.getColor() == Player.Color.WHITE) {
+        if( player.getColor() == Color.WHITE) {
             LOG.finer("white board building");
             vm.put(BOARD_ATTR, game.getWhiteBoard());
         }
