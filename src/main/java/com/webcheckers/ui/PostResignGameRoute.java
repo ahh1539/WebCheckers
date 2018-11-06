@@ -58,11 +58,14 @@ public class PostResignGameRoute implements Route{
         if (player.getColor() == Player.Color.WHITE){
             game.setWinner(game.getRedPlayer());
             game.getRedPlayer().leaveGame();
+            game.getRedPlayer().hasResigned();
         }
         else {
             game.setWinner(game.getWhitePlayer());
             game.getWhitePlayer().leaveGame();
+            game.getWhitePlayer().hasResigned();
         }
+        player.hasResigned();
         player.leaveGame();
 
         // checks whether or not players successfully left the game

@@ -3,6 +3,7 @@ package com.webcheckers.ui;
 import com.webcheckers.application.GameCenter;
 import com.webcheckers.application.PlayerLobby;
 import com.webcheckers.model.Game;
+import com.webcheckers.model.Message;
 import com.webcheckers.model.Player;
 import spark.*;
 
@@ -82,8 +83,8 @@ public class GetGameRoute implements Route {
 
         // Handles a null game object
         if (player.resigned() == true){
-            //vm.put(MESSAGE, )
-            return templateEngine.render(new ModelAndView())
+            vm.put(MESSAGE, "Game is over fool");
+            return templateEngine.render(new ModelAndView(vm, GetHomeRoute.ROUTE_NAME));
         }
         if (game.hasWinner()){
             response.redirect(WebServer.HOME_URL);
