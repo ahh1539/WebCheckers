@@ -179,7 +179,7 @@ public class WebServer {
     // Check whose turn it is
     post(CHECK_TURN_URL, new PostCheckTurnRoute(templateEngine, gameCenter));
     // Submit turn and change active color
-    post(SUBMIT_TURN_URL, new PostSubmitTurnRoute(gson));
+    post(SUBMIT_TURN_URL, new PostSubmitTurnRoute(templateEngine, gameCenter));
     // Undo move if it's not up to snuff
     post(BACKUP_MOVE_URL, new PostBackupMoveRoute(gson));
 
