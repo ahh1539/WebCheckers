@@ -46,7 +46,7 @@ public class PostValidateMoveRoute implements Route {
         final Move move = gson.fromJson(json, Move.class);
 
         // check if it's valid, and format response message to JSON
-        Message message = move.isValid();
+        Message message = move.isValidMessage();
         String rjson = gson.toJson(message);
 
         return rjson;
