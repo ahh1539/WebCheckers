@@ -41,10 +41,6 @@ public class Move implements Serializable {
         correctRowsPos = (startRowIndex+1 == endRowIndex);
     }
 
-    public Message isValid(){
-        return new Message(Message.Type.INFO, "good choice");
-    }
-
     public Position getStart(){
         return start;
     }
@@ -168,6 +164,18 @@ public class Move implements Serializable {
         }
         return valid;
     }
+
+    /**
+     * 
+     * @return
+     */
+    public Message isValidMessage(){
+        if(isValid()){
+            return new Message(Message.Type.INFO, "good choice");
+        }
+        return new Message(Message.Type.ERROR, "bad choice");
+    }
+
     /**
      * Checks if the current move is a jump move
      * @return returns True if the move is a jump move
