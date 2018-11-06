@@ -145,16 +145,14 @@ public class Move implements Serializable {
         // If the piece is a King
         else {
             // Check if it is regular jump
-            if (((correctRows && (correctCellPos ||
-                    correctCell)) || (correctRowsPos &&
-                    (correctCellPos || correctCell)))) {
+            if (((correctRows && (correctCellPos || correctCell)) ||
+                    (correctRowsPos && (correctCellPos || correctCell)))) {
                 if(endSpace.isValid()){
                     valid = true;
                 }
             }
-            else if((isJumpRow && (isJumpCell ||
-                    isJumpCellPos)) || (isJumpRowPos &&
-                    (isJumpCell || isJumpCellPos))) {
+            else if((isJumpRow && (isJumpCell || isJumpCellPos)) ||
+                    (isJumpRowPos && (isJumpCell || isJumpCellPos))) {
                 if(endSpace.isValid() && !targetSpace.isValid()){
                     if(targetSpace.getPiece().getColor() != startSpace.getPiece().getColor()) {
                         valid = true;
@@ -166,7 +164,7 @@ public class Move implements Serializable {
     }
 
     /**
-     * 
+     *
      * @return
      */
     public Message isValidMessage(){
@@ -225,5 +223,4 @@ public class Move implements Serializable {
         }
         return valid;
     }
-
 }
