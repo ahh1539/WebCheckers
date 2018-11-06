@@ -82,6 +82,7 @@ public class GetGameRoute implements Route {
 
         // Handles a null game object
         if (player.resigned() == true){
+            //vm.put(MESSAGE, )
             return templateEngine.render(new ModelAndView())
         }
         if (game.hasWinner()){
