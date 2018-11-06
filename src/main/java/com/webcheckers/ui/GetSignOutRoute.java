@@ -89,9 +89,7 @@ public class GetSignOutRoute implements Route {
         else if(playerLobby.hasPlayer(player)){
             PlayerLobby.removePlayer(player);
         }
-
-        //
-
+        
         vm.put(TITLE_ATTR, TITLE);
         vm.put(GetStartGameRoute.CURRENT_PLAYER_ATTR, null);
         vm.put(GetHomeRoute.NUM_PLAYERS, playerLobby.getNumberOfPlayers());
