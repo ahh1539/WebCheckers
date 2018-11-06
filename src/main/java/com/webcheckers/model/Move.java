@@ -140,6 +140,8 @@ public class Move implements Serializable {
      */
     public boolean isValid(BoardView board){
 
+        isValidSetup();
+
         boolean valid = false;
 
         // Get the starting space and end space
