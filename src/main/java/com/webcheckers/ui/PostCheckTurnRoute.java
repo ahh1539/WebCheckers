@@ -64,6 +64,7 @@ public class PostCheckTurnRoute implements Route {
 
         // if it is current player's turn, change messages values
         if(game.getActiveColor().equals(player.getColor())) {
+            LOG.info("activeColor == player's Color");
             message = new Message(Message.Type.INFO, "true");
         }
 

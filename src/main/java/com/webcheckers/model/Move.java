@@ -100,13 +100,13 @@ public class Move implements Serializable {
      * write out the logic and get it in written form for future reference.
      * @return
      */
-    public boolean isValid(){
+    public boolean isValid(BoardView board){
         boolean valid = false;
         // Get the starting space and end space
-        Space startSpace = getStartSpace(this.board.getRow(this.startRowIndex));
-        Space endSpace = getEndSpace(this.board.getRow(this.endRowIndex));
+        Space startSpace = getStartSpace(board.getRow(this.startRowIndex));
+        Space endSpace = getEndSpace(board.getRow(this.endRowIndex));
         Piece movingPiece = startSpace.getPiece();
-        Space targetSpace = this.board.getRow(targetRow).getSpace(targetCell);
+        Space targetSpace = board.getRow(targetRow).getSpace(targetCell);
 
         // Check if the piece is single
         if(movingPiece.getType() == Piece.Type.SINGLE){
@@ -167,8 +167,8 @@ public class Move implements Serializable {
      *
      * @return
      */
-    public Message isValidMessage(){
-        if(isValid()){
+    public Message isValidMessage(BoardView board){
+        if( isValid( board)){
             return new Message(Message.Type.INFO, "good choice");
         }
         return new Message(Message.Type.ERROR, "bad choice");

@@ -179,7 +179,7 @@ public class WebServer {
     // Posts the player username as they sign in
     post(SIGN_IN_URL, new PostSignInRoute(templateEngine, gameCenter));
     // Post a move to validate
-    post(VALIDATE_MOVE_URL, new PostValidateMoveRoute(gson));
+    post(VALIDATE_MOVE_URL, new PostValidateMoveRoute(templateEngine, gameCenter));
     // Check whose turn it is
     post(CHECK_TURN_URL, new PostCheckTurnRoute(templateEngine, gameCenter));
     // Submit turn and change active color
