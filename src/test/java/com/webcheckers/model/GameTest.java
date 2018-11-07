@@ -15,7 +15,7 @@ public class GameTest {
     @Test
     @DisplayName("Game is Initialized")
     public void testGame(){
-        assertTrue(CuT.getActiveColor() == Piece.Color.RED);
+        assertTrue(CuT.getActiveColor() == Color.RED);
         assertNull(CuT.getWinner());
     }
 
@@ -40,7 +40,7 @@ public class GameTest {
     @Test
     @DisplayName("GetPlayerColor works")
     public void testGetPlayerColor(){
-        whitePlayer.assignColor(Player.Color.WHITE);
+        whitePlayer.assignColor(Color.WHITE);
         assertEquals(CuT.getPlayerColor(redPlayer.getName()), redPlayer.getColor());
         assertEquals(CuT.getPlayerColor(whitePlayer.getName()), whitePlayer.getColor());
         assertNull(CuT.getPlayerColor("Garbage"));
@@ -84,7 +84,7 @@ public class GameTest {
     @Test
     @DisplayName("GetActiveColor works")
     public void testActiveColor(){
-        assertEquals(CuT.getActiveColor(), Piece.Color.RED);
+        assertEquals(CuT.getActiveColor(), Color.RED);
     }
 
     @Test
@@ -92,16 +92,16 @@ public class GameTest {
     public void testActiveColorIsWhite(){
         final Game CuT_copy = new Game(redPlayer, whitePlayer);
         CuT_copy.toggleActiveColor();
-        assertEquals(CuT_copy.getActiveColor(), Piece.Color.WHITE);
+        assertEquals(CuT_copy.getActiveColor(), Color.WHITE);
     }
 
     @Test
     @DisplayName("ToggleActiveColor works")
     public void testToggleActiveColor(){
         final Game CuT_copy = new Game(redPlayer, whitePlayer);
-        assertEquals(CuT_copy.getActiveColor(), Piece.Color.RED);
+        assertEquals(CuT_copy.getActiveColor(), Color.RED);
         CuT_copy.toggleActiveColor();
-        assertEquals(CuT_copy.getActiveColor(), Piece.Color.WHITE);
+        assertEquals(CuT_copy.getActiveColor(), Color.WHITE);
     }
     @Test
     @DisplayName("IsActive works")

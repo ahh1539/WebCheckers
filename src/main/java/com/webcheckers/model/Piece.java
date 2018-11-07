@@ -29,10 +29,6 @@ public class Piece {
         this.type = Type.SINGLE;
     }
 
-    public String toString(){
-        return "piece is " + color + " at index " + index;
-    }
-
     /**
      * Gets the type of the Piece
      * @return

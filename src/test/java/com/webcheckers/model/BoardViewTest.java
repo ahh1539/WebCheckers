@@ -50,15 +50,15 @@ public class BoardViewTest {
         for (int i = 0; i < BOARD_LENGTH; i++) {
             if ( i < 3){
                 for(Space space : CuT.getRow(i)){
-                    if(space.getColor() == Space.Color.WHITE){
-                        assertTrue(space.getPiece().getColor() == Piece.Color.WHITE);
+                    if(space.getColor() == Space.SpaceColor.WHITE){
+                        assertTrue(space.getPiece().getColor() == Color.WHITE);
                     }
                 }
             }
             if ( i > 4 ){
                 for(Space space : CuT.getRow(i)){
-                    if(space.getColor() == Space.Color.WHITE){
-                        assertTrue(space.getPiece().getColor() == Piece.Color.RED);
+                    if(space.getColor() == Space.SpaceColor.WHITE){
+                        assertTrue(space.getPiece().getColor() == Color.RED);
                     }
                 }
             }
@@ -71,15 +71,15 @@ public class BoardViewTest {
         for (int i = 0; i < BOARD_LENGTH; i++) {
             if ( i < 3){
                 for(Space space : CuT.getRow(i)){
-                    if(space.getColor() == Space.Color.WHITE){
-                        assertTrue(space.getPiece().getColor() == Piece.Color.WHITE);
+                    if(space.getColor() == Space.SpaceColor.WHITE){
+                        assertTrue(space.getPiece().getColor() == Color.WHITE);
                     }
                 }
             }
             if ( i > 4 ){
                 for(Space space : CuT.getRow(i)){
-                    if(space.getColor() == Space.Color.WHITE){
-                        assertTrue(space.getPiece().getColor() == Piece.Color.RED);
+                    if(space.getColor() == Space.SpaceColor.WHITE){
+                        assertTrue(space.getPiece().getColor() == Color.RED);
                     }
                 }
             }

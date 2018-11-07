@@ -145,14 +145,14 @@ public class Space {
             Space space = (Space) object;
             if(piece == null){
                 return space.piece == null && (cellIdx == space.getCellIdx())
-                        && (isValid == space.isValid()) && color == space.color;
+                        && (isValid == space.isValid()) && spaceColor == space.spaceColor;
             }
             return piece.equals(space.piece) && (cellIdx == space.getCellIdx())
-                    && (isValid == space.isValid()) && color == space.color;
+                    && (isValid == space.isValid()) && spaceColor == space.spaceColor;
         }
         return false;
     }
-
+/*
     @Override
     public String toString(){
         if (piece == null){
@@ -161,5 +161,5 @@ public class Space {
         }
         return "Space Object:\tPiece: " + piece.toString() + ", cellIdx: " + cellIdx + ", isValid: "
                 + isValid + ", color: " + color + "\n";
-    }
+    }*/
 }

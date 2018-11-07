@@ -94,7 +94,7 @@ public class MoveTest {
         // Validate that the space is initially empty, then has a red piece in it
         assertNull(startSpace.getPiece());
         startSpace.putRedPiece();
-        assertEquals(startSpace.getPiece().getColor(), Piece.Color.RED);
+        assertEquals(startSpace.getPiece().getColor(), Color.RED);
 
         // Validate that the end space is empty and a valid location
         assertNull(endSpace.getPiece());
@@ -136,7 +136,7 @@ public class MoveTest {
 
         final Move invalidCuT = new Move(validStart, invalidEnd);
         invalidCuT.setBoard(board);
-        assertFalse(invalidCuT.isValid());
+        assertFalse(invalidCuT.isValid(board));
     }
 
     @Test
@@ -163,7 +163,7 @@ public class MoveTest {
         assertTrue(validEndSpace.isValid());
         final Move validCuT = new Move(validStart, validEnd);
         validCuT.setBoard(board);
-        assertTrue(validCuT.isValid());
+        assertTrue(validCuT.isValid(board));
     }
 
     @Test
@@ -190,9 +190,9 @@ public class MoveTest {
         assertTrue(validEndSpace.isValid());
         final Move validCuT = new Move(validStart, validEnd);
         validCuT.setBoard(board);
-        assertTrue(validCuT.isValid());
-        assertEquals(validCuT.isValidMessage().getType(), Message.Type.INFO);
-        assertEquals(validCuT.isValidMessage().getText(), "good choice");
+        assertTrue(validCuT.isValid(board));
+        assertEquals(validCuT.isValidMessage(board).getType(), Message.Type.INFO);
+        assertEquals(validCuT.isValidMessage(board).getText(), "good choice");
     }
 
     @Test
@@ -213,9 +213,9 @@ public class MoveTest {
 
         final Move invalidCuT = new Move(validStart, invalidEnd);
         invalidCuT.setBoard(board);
-        assertFalse(invalidCuT.isValid());
-        assertEquals(invalidCuT.isValidMessage().getType(), Message.Type.ERROR);
-        assertEquals(invalidCuT.isValidMessage().getText(), "bad choice");
+        assertFalse(invalidCuT.isValid(board));
+        assertEquals(invalidCuT.isValidMessage(board).getType(), Message.Type.ERROR);
+        assertEquals(invalidCuT.isValidMessage(board).getText(), "bad choice");
     }
 
     @Test
@@ -242,7 +242,7 @@ public class MoveTest {
         assertTrue(validEndSpace.isValid());
         final Move validCuT = new Move(validStart, validEnd);
         validCuT.setBoard(board);
-        assertTrue(validCuT.isValid());
+        assertTrue(validCuT.isValid(board));
         assertFalse(validCuT.isJump());
     }
 }
