@@ -3,9 +3,15 @@ geometry: margin=1in
 ---
 # PROJECT Design Documentation
 
+> _The following template provides the headings for your Design
+> Documentation.  As you edit each section make sure you remove these
+> commentary 'blockquotes'; the lines that start with a > character
+> and appear in the generated PDF in italics._
+
 ## Team Information
 * Team name: Back of the Bus
 * Team members
+  * Elijah Parrish
   * Daria Chaplin
   * Alex Hurley
   * Lillian Kuhn
@@ -22,8 +28,8 @@ refine their checker playing skills.
 
 
 ### Purpose
-> The purpose of this project is to provide the players the ablity
-to log in and play one another online wherever they are.
+> _The purpose of this project is to provide the players the ablity
+to log in and play one another online wherever they are._
 
 ### Glossary and Acronyms
 > _Provide a table of terms and acronyms._
@@ -31,8 +37,6 @@ to log in and play one another online wherever they are.
 | Term | Definition |
 |------|------------|
 | VO | Value Object |
-| BV | BoardView    |
-|Player| A user who is signed in|
 
 
 ## Requirements
@@ -108,21 +112,58 @@ with the WebCheckers application.
 ![The WebCheckers Web Interface Statechart](state_diagram.png)
 
 
->The flow of the web pages from the user's perspective is as follows: When the user opens the home page
-they first see a simple welcome message and a button to sign in. They will also be presented
+_
+The flow of the web pages from the user's perspective is as follows: When the user opens the home page
+they first see a simple welcome message and a button to sign in, they will also be presented
 with the number of players who are signed in. When they click to sign in they will be redirected to the Signin
-page where they can post their username. They will then be redirected to home where, if they
-signed in successfully, they will see a list of other players names. 
-If they then click the name of another player then both players will be 
-redirected to the game screen where they can play the game of checkers.
-Once a winner has been decided they will be redirected to the home
-screen. If either player resigns during the game, both players will be redirected
-to the homepage.
-
+page where they can post their username. They will then be redirected to home. If they then click 
+the name of another player then both players will be redirected to the game screen 
+where they can play the game of checkers. Once a winner has been decided they will be redirected to the home
+screen.Inside of the game there will be the option to sign out or resign, both of which will result in that player 
+forfeiting the game to the other player, returning them back to the home page._
 
 
 ### UI Tier
+> _ Provide a summary of the Server-side UI tier of your architecture.
+> Describe the types of components in the tier and describe their
+> responsibilities.  This should be a narrative description, i.e. it has
+> a flow or "story line" that the reader can follow.
+_
+It all starts at GetHomeRoute this is the first thing the user will see
+as it displays the homepage.Before even signing in users are able to 
+see the number of current players. From the homepage the user is given
+the optionto signin which will invoke GetSignInRoute. GetSignInRoute displays 
+the signin.ftl page which has a user input box where they can input their username.
+Once the user inputs their username then PostSignInRoute is invoked. PostSignIn
+then requests the user input and checks to see that it meets the conditions. If 
+it passes all of the conditions the player is added to the playerLobby and the 
+page is redirected to GetHomeRoute again. Here the user can see other players, 
+and can click on their username to invoke GetRequestGameRoute, which checks if the
+requested player is already in a game or not, if so then it redirects to homepage,
+and returns an error message, otherwise a It calls to GetGameRoute with a hashmap
+of all the necessary information, inside of GetGameRoute the gameboard is displayed
+and it checks whether or not the player is in the game or has resigned. Inside of 
+the game If the user chooses to resign, PostResignRoute is called, inside of 
+Resign the player who initiates the resignation is set as the loser, and removed 
+from the game, and redirected to GetHomeRoute and the opposing player is then set
+as the winner of the game, removed from the game and redirected to GetHomeRoute as 
+well. Inside of a game when a player clicks signout PostResignGameRoute is also called, 
+but the player is also removed from playerLobby therefore effectivley deleting the 
+instance of that player. If a player signs out from outside of a homepage then 
+GetSignOutRoute is also called upon in which the player is simply removed from the
+playerLobby and effectivley removed from the server, then redirected to 
+GetHomeRoute._
 
+[link to sequence diagram][1]
+[link to second sequence diagram][2]
+[link to UML Diagram and statechart][3]
+[1]:https://www.lucidchart.com/invitations/accept/2b3504e3-8f91-4bd9-a148-9be0395c4971 "Title"
+[2]:https://www.lucidchart.com/invitations/accept/1530ef9f-49d6-461c-b51e-3e344254318a "Title"
+[3]:https://www.lucidchart.com/invitations/accept/b08abbb6-b75e-4da0-997a-94b82652cbb8 "Title"
+
+> _At appropriate places as part of this narrative provide one or more
+> static models (UML class structure or object diagrams) with some
+> details such as critical attributes and methods._
 
 > When a user signs in, they are directed back to the home screen, 
 and they see a list of possible opponents. They are considered 'waiting for
@@ -135,20 +176,38 @@ every 5 seconds.
 
 
 ### Application Tier
+> _ Our application tier is made up of three different classes:
+GameCenter, GameLobby, and PlayerLobby. GameLobby is where the game objects are 
+stored and we can access the games, searching by player etc. The playerLobby 
+is where the Player objects are stored we can use this to access and store
+players. GameCenter is a unification of both PlayerLobby and GameLobby
+so that you can access all the methods under both from just one Class._
 
-
-> The application consists simply of the Game- and PlayerLobby which 
-track the users currently online and the active games. The GameCenter 
-class in the Application tier contains the Game- and PlayerLobby.
 
 ### Model Tier
-
-> The base class for the Model is the game. Within the game, we have two 
-BoardViews representing the renderings for each player. Each BoardView
-is made of a collection of Rows, which are a collection of Spaces. The
-spaces can be white or black, and may contain a piece. The pieces may be
-single or king and their moving capabilities depend on whether or not they
-are kings.
+> _Our Model tier is the meat of this project. It includes ten 
+ classes. Boardview is what actually displays and puts together the board
+ it puts both the spaces and pieces into the gameboard effectivley making 
+ the board which the player sees. Game requires two players to instantiate 
+ Game holds all of the information pertaining to the game, it holds the two 
+ players and their colors it is also where a loser and winner are declared.
+ KingPiece changes a piece to the status of a king piece, it enables that
+ piece to have more functionality over other pieces in the game. Message is 
+ used for return types inside of the UI tier when sending Json information. It 
+ requires a Type (error or info) and a string identifying what was happening
+ Move controls the movement of the various pieces in the gameboard. It has a 
+ start and end index being where the piece started and where it ends up after 
+ the move will be made. The piece class make the piece object that is being 
+ moved by the player. It can be identified with a color and type ie. RED,KING.
+ The Player class makes a player object. The player object represents the player
+ making the moves and controlling all of the actions. The player type stores 
+ the number of wins, name of the player, total number of games and a boolean
+ value representing whether or not the player is in a game or not. Position is 
+ needed for the move class. It is the index of a specific place on the gameboard
+ it stores the row and cell of a certain place. Row makes the row object 
+ which is what the gameboard is made out of. The rows are made up of spaces.
+ Space represents the smallest mesurment unit in the gameboard. It is a single 
+ square in the gameboard Spaces store a piece and a color of the specific space._
 
 ### Design Improvements
 > _Discuss design improvements that you would make if the project were
@@ -187,31 +246,9 @@ the class's methods first, creating mock Objects to test with and creating
 > have not had any testing yet. Highlight the issues found during
 > acceptance testing and if there are any concerns._
 
-
-
->We achieved a code coverage of 98% for the application tier, 84% for the 
-UI tier, and 82% for the model tier. We were initially planning on aiming 
-a bit higher for the UI tier and especially the model tier, but due to time
- constraints and the complicated logic in the Move mode object in particular,
-  we fell slightly short of our initial coverage targets.
-
 ### Unit Testing and Code Coverage
 > _Discuss your unit testing strategy. Report on the code coverage
 > achieved from unit testing of the code base. Discuss the team's
 > coverage targets, why you selected those values, and how well your
 > code coverage met your targets. If there are any anomalies, discuss
 > those._
-
-> Our initial coverage targets were to have 90%+ coverage for the UI tier
- and 95%+ coverage for the model tier. Since the model objects are used
-  extensively throughout the application and most of our business logic 
-  fell in this tier, we felt it was important to most thoroughly test the
-   model tier. Despite falling slightly short of our original goals, the 
-   code coverage meets our targets fairly well. In the model tier, it is
-    mostly the Move object lacking some coverage and we will improve on 
-    this drastically in upcoming development.
-
-
-![Sequence Diagram](doc1.png)
-![Sequence diagram 2](doc2.png)
-![All others](doc3.png)
