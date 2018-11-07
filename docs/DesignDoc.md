@@ -54,11 +54,20 @@ resign, sign out, etc. all following rules of american checkers.
 
 ### MVP Features
 > _Provide a list of top-level Epics and/or Stories of the MVP._
+The application will allow different users to sign in and play a game of checkers over the 
+web. A user may choose an opponent from a list of available players, and the 2 players will 
+be sent to a game of checkers. The game plays according to the American rules, except that 
+the most complex move available must be made at each turn. Moving regular pieces and kings 
+works the same as in the classic American rules. A winner is declared when one player 
+captures all of their opponent's pieces or one player forces their opponent into a position 
+where they have no valid moves available. Either player can resign from the game during their 
+turn.
 
 ### Roadmap of Enhancements
-Spectator: add ability for other signed in users to spectate games
+_Spectator: add ability for other signed in users to spectate games
+
 Replay: ability for user to be able to watch previous games so that they can learn from 
-their mistakes
+their mistakes_
 
 
 
