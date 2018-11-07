@@ -1,4 +1,8 @@
 package com.webcheckers.application;
+import com.webcheckers.model.Move;
+
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 /**
@@ -11,6 +15,8 @@ public class GameCenter {
     //
     private PlayerLobby playerLobby;
     private GameLobby gameLobby;
+
+
 
     /**
      * Creates a GameCenter for coordinating the web app.
@@ -43,4 +49,6 @@ public class GameCenter {
     public GameLobby getGameLobby() {
         return gameLobby;
     }
+
+
 }
