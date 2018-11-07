@@ -48,13 +48,18 @@ This section describes the features of the application.
 > maybe Epics and critical Stories._
 
 ### Definition of MVP
-> _Provide a simple description of the Minimum Viable Product._
+
+A fully working webcheckers game with ability for players to play against each other,
+resign, sign out, etc. all following rules of american checkers.
 
 ### MVP Features
 > _Provide a list of top-level Epics and/or Stories of the MVP._
 
 ### Roadmap of Enhancements
-> _Provide a list of top-level features in the order you plan to consider them._
+Spectator: add ability for other signed in users to spectate games
+Replay: ability for user to be able to watch previous games so that they can learn from 
+their mistakes
+
 
 
 ## Application Domain
