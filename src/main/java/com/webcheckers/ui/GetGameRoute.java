@@ -74,18 +74,20 @@ public class GetGameRoute implements Route {
         // Retrieves the HTTP session and necessary player/game info
 
         final Session session = request.session();
-        Player player = session.attribute(PostSignInRoute.PLAYER);
-        PlayerLobby.getPlayer(player.getName()).joinGame();
-        Game game = this.gameCenter.getGameLobby().getGame(player);
-
-
-
 
         Map<String, Object> vm = new HashMap<>();
         vm.put(TITLE_ATTR, TITLE);
-        System.out.println("===========================================");
+        Player player = session.attribute(PostSignInRoute.PLAYER);
+        if (player == null) {
+            return templateEngine.render(new ModelAndView(vm, GetHomeRoute.ROUTE_NAME));
+        }
+        player.joinGame();
+        System.out.println(this.gameCenter);
+        System.out.println(this.gameCenter.getGameLobby());
+        Game game = this.gameCenter.getGameLobby().getGame(player);
+
         // Handles a null game object
-        if (player.resigned() == true){
+        if (player.resigned()){
             System.out.println("I was invoked");
             vm.put(MESSAGE, "Game is over fool");
             return templateEngine.render(new ModelAndView(vm, GetHomeRoute.ROUTE_NAME));

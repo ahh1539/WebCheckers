@@ -1,6 +1,6 @@
 package com.webcheckers.ui;
-
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
@@ -15,19 +15,16 @@ import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 
 import spark.*;
-import static org.mockito.Mockito.*;
-
 /**
- * Test class for GetSignInRoute (UI tier component)
+ * Test class for GetGameRoute (UI tier component)
  * @author Paula Register (per4521)
  */
 @Tag("UI-tier")
-public class GetSignOutRouteTest {
-
+public class GetGameRouteTest {
     /**
      * The component-under-test (CuT).
      */
-    private GetSignOutRoute CuT;
+    private GetGameRoute CuT;
 
     /**
      * Mock objects
@@ -38,7 +35,6 @@ public class GetSignOutRouteTest {
     private TemplateEngine engine;
     private PlayerLobby playerLobby;
     private Player player;
-    private GameLobby gameLobby;
     private GameCenter gameCenter;
 
     /**
@@ -48,53 +44,62 @@ public class GetSignOutRouteTest {
     public void setup(){
         request = mock(Request.class);
         session = mock(Session.class);
+        response = mock(Response.class);
         when(request.session()).thenReturn(session);
         engine = mock(TemplateEngine.class);
-
+        gameCenter = mock(GameCenter.class);
         // set up friendly objects
-        this.playerLobby = new PlayerLobby();
-        player = new Player("player");
-        this.playerLobby.addPlayer(player);
-        gameLobby = mock(GameLobby.class);
-        gameCenter = new GameCenter(playerLobby, gameLobby);
+        player = new Player("friendly");
+        this.playerLobby = mock(PlayerLobby.class);
+        GameLobby gameLobby = mock(GameLobby.class);
+        GameCenter gameCenter = mock(GameCenter.class);
 
         // create a unique CuT for each test
-        CuT = new GetSignOutRoute(engine, gameCenter);
+        CuT = new GetGameRoute(engine, gameCenter);
     }
 
     /**
-     * Test that the user is properly logged out when the GetSignOutRoute is called
+     * Test that the user
      */
     @Test
-    public void signOutTest(){
+    public void getGameTest() {
         final TemplateEngineTester testHelper = new TemplateEngineTester();
         when(engine.render(any(ModelAndView.class))).thenAnswer(testHelper.makeAnswer());
-        Player player = new Player("test");
-        Player opponent = new Player("opponent");
-        player.assignColor(Color.WHITE);
-        opponent.assignColor(Color.WHITE);
-
-        when(session.attribute(eq(PostSignInRoute.PLAYER))).thenReturn(player);
-        when(gameLobby.hasGame(eq(player))).thenReturn(true);
-        when(gameLobby.getGame(eq(player))).thenReturn(new Game(player,opponent));
-
         CuT.handle(request, response);
-
-
         // Analyze the results:
         //   * model is a non-null Map
         testHelper.assertViewModelExists();
         testHelper.assertViewModelIsaMap();
         //   * model contains all necessary View-Model data
 
-        testHelper.assertViewModelAttribute(GetSignOutRoute.TITLE_ATTR, GetSignOutRoute.TITLE);
-        //   * The player and playerList has been removed from the home view
-        testHelper.assertViewModelAttribute(GetHomeRoute.PLAYER, null);
-        testHelper.assertViewModelAttribute(GetHomeRoute.PLAYER_LIST, null);
-        //   * test view name as it redirects back to home
-        testHelper.assertViewName(GetHomeRoute.ROUTE_NAME);
-        //   * test that the number of players is correct
-        testHelper.assertViewModelAttribute(GetHomeRoute.NUM_PLAYERS, playerLobby.getNumberOfPlayers());
+        testHelper.assertViewModelAttribute(GetSignOutRoute.TITLE_ATTR, GetGameRoute.TITLE);
     }
 
+    /**
+     * Test that the user
+     */
+    @Test
+    public void getGameWithPlayerTest() {
+        final TemplateEngineTester testHelper = new TemplateEngineTester();
+        when(engine.render(any(ModelAndView.class))).thenAnswer(testHelper.makeAnswer());
+        Player player = new Player("test");
+        Player opponent = new Player("opponent");
+        player.assignColor(Color.WHITE);
+        opponent.assignColor(Color.WHITE);
+        GameLobby gameLobby = new GameLobby();
+        gameLobby.addGame(new Game(player, opponent));
+/*
+        when(session.attribute(eq(PostSignInRoute.PLAYER))).thenReturn(player);
+        when(gameCenter.getGameLobby()).thenReturn(gameLobby);
+*/
+
+        CuT.handle(request, response);
+        // Analyze the results:
+        //   * model is a non-null Map
+        testHelper.assertViewModelExists();
+        testHelper.assertViewModelIsaMap();
+        //   * model contains all necessary View-Model data
+
+        testHelper.assertViewModelAttribute(GetSignOutRoute.TITLE_ATTR, GetGameRoute.TITLE);
+    }
 }
