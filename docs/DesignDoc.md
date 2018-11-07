@@ -141,6 +141,13 @@ GetSignOutRoute is also called upon in which the player is simply removed from t
 playerLobby and effectivley removed from the server, then redirected to 
 GetHomeRoute._
 
+[link to sequence diagram][1]
+[link to second sequence diagram][2]
+[link to UML Diagram and statechart][3]
+[1]:https://www.lucidchart.com/invitations/accept/2b3504e3-8f91-4bd9-a148-9be0395c4971 "Title"
+[2]:https://www.lucidchart.com/invitations/accept/1530ef9f-49d6-461c-b51e-3e344254318a "Title"
+[3]:https://www.lucidchart.com/invitations/accept/b08abbb6-b75e-4da0-997a-94b82652cbb8 "Title"
+
 > _At appropriate places as part of this narrative provide one or more
 > static models (UML class structure or object diagrams) with some
 > details such as critical attributes and methods._
