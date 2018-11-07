@@ -28,15 +28,17 @@ refine their checker playing skills.
 
 
 ### Purpose
-> _The purpose of this project is to provide the players the ablity
+_The purpose of this project is to provide the players the ablity
 to log in and play one another online wherever they are._
 
 ### Glossary and Acronyms
-> _Provide a table of terms and acronyms._
+
 
 | Term | Definition |
 |------|------------|
 | VO | Value Object |
+| GB | GameBoard    |
+| P  | Player       |
 
 
 ## Requirements
@@ -241,3 +243,7 @@ so that you can access all the methods under both from just one Class._
 > coverage targets, why you selected those values, and how well your
 > code coverage met your targets. If there are any anomalies, discuss
 > those._
+
+![Sequence Diagram](doc1.png)
+![Sequence diagram 2](doc2.png)
+![All others](doc3.png)
