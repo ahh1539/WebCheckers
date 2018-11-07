@@ -151,7 +151,14 @@ to the homepage.
 > separate section for describing significant features. Place this after
 > you describe the design of the three tiers._
 
-> When a user 
+> When a user is signs in, they are directed back to the home screen, 
+and they see a list of possible opponents. They are considered 'waiting for
+a game' until they select an opponent or they are selected as an opponent.
+When 2 users enter a game, they take turns submitting moves. Moves 
+are validated and submitted through their respective routes, and the
+player's turn is finished when a move is submitted successfully and 
+reflected back to the user through the checkTurn route which is updated 
+every 5 seconds. T
 
 
 ### Application Tier
@@ -159,11 +166,21 @@ to the homepage.
 > section will follow the same instructions that are given for the UI
 > Tier above._
 
+> The application consists simply of the Game- and PlayerLobby which 
+track the users currently online and the active games. The GameCenter 
+class in the Application tier contains the Game- and PlayerLobby.
 
 ### Model Tier
 > _Provide a summary of the Application tier of your architecture. This
 > section will follow the same instructions that are given for the UI
 > Tier above._
+
+> The base class for the Model is the game. Within the game, we have two 
+BoardViews representing the renderings for each player. Each BoardView
+is made of a collection of Rows, which are a collection of Spaces. The
+spaces can be white or black, and may contain a piece. The pieces may be
+single or king and their moving capabilities depend on whether or not they
+are kings.
 
 ### Design Improvements
 > _Discuss design improvements that you would make if the project were
