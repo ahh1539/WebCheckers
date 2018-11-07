@@ -110,6 +110,16 @@ public class Row implements Iterable<Space>{
         return index;
     }
 
+    @Override
+    public String toString(){
+        StringBuilder stringBuilder = new StringBuilder();
+        for (int i = 0; i < ROW_LENGTH; i++) {
+            stringBuilder.append(row[i].toString());
+            stringBuilder.append("\n");
+        }
+        return stringBuilder.toString();
+    }
+
     /**
      * Creates a new RowIterator
      * @return

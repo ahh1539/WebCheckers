@@ -108,6 +108,15 @@ public class BoardView implements Iterable<Row>{
             }
         }
     }
+    @Override
+    public String toString(){
+        StringBuilder stringBuilder = new StringBuilder();
+        for (int i = 0; i < BOARD_LENGTH; i++) {
+            stringBuilder.append(gameBoard[i].toString());
+            stringBuilder.append("\n");
+        }
+        return stringBuilder.toString();
+    }
 
     /**
      * Provides a way to Iterate through each Row of the Board

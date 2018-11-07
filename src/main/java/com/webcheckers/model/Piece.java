@@ -72,6 +72,10 @@ public class Piece {
         }
         return false;
     }
+    @Override
+    public String toString(){
+        return "Piece Object:\tColor: " + color + ", index: " + index + ", Type: " + type + "\n";
+    }
 
     public Piece makeKingPiece() {
         this.type = Type.KING;

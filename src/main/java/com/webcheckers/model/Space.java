@@ -139,4 +139,14 @@ public class Space {
         }
         return false;
     }
+
+    @Override
+    public String toString(){
+        if (piece == null){
+            return "Space Object:\tPiece: null, cellIdx: " + cellIdx + ", isValid: "
+                    + isValid + ", color: " + color + "\n";
+        }
+        return "Space Object:\tPiece: " + piece.toString() + ", cellIdx: " + cellIdx + ", isValid: "
+                + isValid + ", color: " + color + "\n";
+    }
 }

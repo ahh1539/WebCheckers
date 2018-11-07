@@ -74,6 +74,9 @@ public class Move implements Serializable {
      * @return
      */
     public BoardView makeMove(){
+        if(this.board == null){
+            return null;
+        }
         BoardView copyBoard = new BoardView(this.board);
         Space startSpace = getStartSpace(copyBoard.getRow(this.startRowIndex));
         Space endSpace = getEndSpace(copyBoard.getRow(this.endRowIndex));
@@ -107,7 +110,6 @@ public class Move implements Serializable {
         Space endSpace = getEndSpace(this.board.getRow(this.endRowIndex));
         Piece movingPiece = startSpace.getPiece();
         Space targetSpace = this.board.getRow(targetRow).getSpace(targetCell);
-
         // Check if the piece is single
         if(movingPiece.getType() == Piece.Type.SINGLE){
             // If it is Red
@@ -184,7 +186,6 @@ public class Move implements Serializable {
         Space endSpace = getEndSpace(this.board.getRow(this.endRowIndex));
         Piece movingPiece = startSpace.getPiece();
         Space targetSpace = this.board.getRow(targetRow).getSpace(targetCell);
-
         // If the moving piece is single
         if (movingPiece.getType() == Piece.Type.SINGLE) {
             // If the moving piece is RED
