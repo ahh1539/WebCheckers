@@ -171,7 +171,7 @@ public class WebServer {
     // Request a game
     get(REQUEST_GAME_URL, new GetRequestGameRoute(templateEngine, gameCenter));
 
-    get(GAME_URL, new GetGameRoute(templateEngine,gameCenter));
+    get(GAME_URL, new GetGameRoute(templateEngine, gameCenter));
 
 
     //Posts when the player is to resign because they are the inferior player

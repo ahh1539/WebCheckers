@@ -57,6 +57,7 @@ public class PostValidateMoveRoute implements Route {
         final Move move = gson.fromJson(json, Move.class);
 
         // check if it's valid, and format response message to JSON
+        // adds vaild moves to arraylist in game
         Message message = move.isValidMessage(board);
         if (!(message.getType() == Message.Type.ERROR)){
             game.addMove(move);
