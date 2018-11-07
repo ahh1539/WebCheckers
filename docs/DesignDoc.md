@@ -188,9 +188,17 @@ are kings.
 > analysis of where there are problems in the code base which could be
 > addressed with design changes, and describe those suggested design
 > improvements. After completion of the Code metrics exercise, you
-> will also discuss the resutling metric measurements.  Indicate the
+> will also discuss the resulting metric measurements.  Indicate the
 > hot spots the metrics identified in your code base, and your
 > suggested design improvements to address those hot spots._
+
+> Originally, we had the Piece and Player classes implementing their own
+Color enumerations which made comparisons difficult in the long run.
+We switched to a public enumeration in the model package because the
+player's color was essentially the color of pieces they were assigned.
+There should be some abstractions in the Model tier which have not yet
+been flushed out, but would absolutely contribute to the effectiveness
+of the design.
 
 ## Testing
 > _This section will provide information about the testing performed
