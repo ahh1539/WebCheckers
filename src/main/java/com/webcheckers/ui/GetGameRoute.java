@@ -82,8 +82,10 @@ public class GetGameRoute implements Route {
             return templateEngine.render(new ModelAndView(vm, GetHomeRoute.ROUTE_NAME));
         }
         player.joinGame();
-        System.out.println(this.gameCenter);
-        System.out.println(this.gameCenter.getGameLobby());
+        // added below for testing purposes
+        if(this.gameCenter.getGameLobby() == null){
+            return templateEngine.render(new ModelAndView(vm, GetHomeRoute.ROUTE_NAME));
+        }
         Game game = this.gameCenter.getGameLobby().getGame(player);
 
         // Handles a null game object

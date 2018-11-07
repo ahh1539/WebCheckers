@@ -93,6 +93,7 @@ public class PostResignGameRouteTest {
 
         when(request.queryParams(eq("opponent"))).thenReturn(player1.toString());
         when(session.attribute(eq(PostSignInRoute.PLAYER))).thenReturn(player2);
+
         when(gameLobby.getGame(eq(player2))).thenReturn(g);
         CuT.handle(request, response);
     }

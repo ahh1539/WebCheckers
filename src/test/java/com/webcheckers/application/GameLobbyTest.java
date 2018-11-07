@@ -4,6 +4,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 import java.util.Map;
 
+import com.webcheckers.model.Color;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
@@ -68,6 +69,29 @@ public class GameLobbyTest {
         assertNotNull(CuT.getGame(number1));
     }
 
+    @Test
+    @DisplayName("getGameWhite")
+    public void testGetGameWhite(){
+        final Player player = new Player("Eli");
+        final Player player1 = new Player("Daria");
+        player.assignColor(Color.WHITE);
+        player1.assignColor(Color.WHITE);
+        player.joinGame();
+        player1.joinGame();
+        Game first = new Game(player, player1);
+        final GameLobby CuT = new GameLobby();
+        assertNull(CuT.getGame(player));
+        CuT.addGame(first);
+        assertNotNull(CuT.getGame(player));
+        assertNotNull(CuT.getGameBoard(player));
+    }
+
+    @Test
+    @DisplayName("getGameWhite")
+    public void testGetGameBoardNull(){
+        final GameLobby CuT = new GameLobby();
+        assertNull(CuT.getGameBoard(number1));
+    }
     @Test
     @DisplayName("removeGame")
     public void testRemoveGame(){

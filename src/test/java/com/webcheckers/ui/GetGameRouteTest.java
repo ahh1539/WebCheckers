@@ -36,6 +36,7 @@ public class GetGameRouteTest {
     private PlayerLobby playerLobby;
     private Player player;
     private GameCenter gameCenter;
+    private GameLobby gameLobby;
 
     /**
      * Setup new mock objects for each test.
@@ -48,6 +49,7 @@ public class GetGameRouteTest {
         when(request.session()).thenReturn(session);
         engine = mock(TemplateEngine.class);
         gameCenter = mock(GameCenter.class);
+        gameLobby = mock(GameLobby.class);
         // set up friendly objects
         player = new Player("friendly");
         this.playerLobby = mock(PlayerLobby.class);
@@ -82,16 +84,20 @@ public class GetGameRouteTest {
     public void getGameWithPlayerTest() {
         final TemplateEngineTester testHelper = new TemplateEngineTester();
         when(engine.render(any(ModelAndView.class))).thenAnswer(testHelper.makeAnswer());
-        Player player = new Player("test");
-        Player opponent = new Player("opponent");
-        player.assignColor(Color.WHITE);
-        opponent.assignColor(Color.WHITE);
-        GameLobby gameLobby = new GameLobby();
-        gameLobby.addGame(new Game(player, opponent));
-/*
-        when(session.attribute(eq(PostSignInRoute.PLAYER))).thenReturn(player);
+        Player player1 = new Player("user");
+        Player player2 = new Player("opp");
+        player1.assignColor(Color.WHITE);
+        player2.assignColor(Color.WHITE);
+
+        Game g = new Game(player1, player2);
+        player1.joinGame();
+        player2.joinGame();
+        playerLobby.addPlayer(player1);
+        playerLobby.addPlayer(player2);
+        when(request.queryParams(eq("opponent"))).thenReturn(player2.getName());
+        when(session.attribute(eq(PostSignInRoute.PLAYER))).thenReturn(player1);
+        when(session.attribute(eq(PostSignInRoute.PLAYER))).thenReturn(player1);
         when(gameCenter.getGameLobby()).thenReturn(gameLobby);
-*/
 
         CuT.handle(request, response);
         // Analyze the results:
