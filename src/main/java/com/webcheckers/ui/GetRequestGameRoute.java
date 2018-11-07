@@ -83,14 +83,14 @@ public class GetRequestGameRoute implements Route{
         gameLobby.addGame(game);
         Message message = new Message(Message.Type.ERROR, "Text");
 
-        vm.put(GetStartGameRoute.MESSAGE, message);
-        vm.put(GetStartGameRoute.CURRENT_PLAYER_ATTR, player1);
-        vm.put(GetStartGameRoute.VIEW_MODE_ATTR, Game.ViewMode.PLAY);
-        vm.put(GetStartGameRoute.RED_PLAYER_ATTR, player1);
-        vm.put(GetStartGameRoute.WHITE_PLAYER_ATTR, player2);
-        vm.put(GetStartGameRoute.ACTIVE_COLOR_ATTR, gameLobby.getGame(player1).getActiveColor());
-        vm.put(GetStartGameRoute.BOARD_ATTR, gameLobby.getGameBoard(player1));
+        vm.put(GetGameRoute.MESSAGE, message);
+        vm.put(GetGameRoute.CURRENT_PLAYER_ATTR, player1);
+        vm.put(GetGameRoute.VIEW_MODE_ATTR, Game.ViewMode.PLAY);
+        vm.put(GetGameRoute.RED_PLAYER_ATTR, player1);
+        vm.put(GetGameRoute.WHITE_PLAYER_ATTR, player2);
+        vm.put(GetGameRoute.ACTIVE_COLOR_ATTR, gameLobby.getGame(player1).getActiveColor());
+        vm.put(GetGameRoute.BOARD_ATTR, gameLobby.getGameBoard(player1));
 
-        return templateEngine.render(new ModelAndView(vm, GetStartGameRoute.GAME_NAME));
+        return templateEngine.render(new ModelAndView(vm, "/game.ftl"));
     }
 }
