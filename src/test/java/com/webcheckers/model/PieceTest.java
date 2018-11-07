@@ -13,8 +13,8 @@ import org.junit.jupiter.api.Test;
 @Tag("Model-tier")
 public class PieceTest {
 
-    private static final Piece.Color redColor = Piece.Color.RED;
-    private static final Piece.Color whiteColor = Piece.Color.WHITE;
+    private static final Color redColor = Color.RED;
+    private static final Color whiteColor = Color.WHITE;
 
     private static final int index = 0;
 
@@ -24,7 +24,7 @@ public class PieceTest {
     @Test
     public void testRedPiece(){
         final Piece CuT = new Piece(redColor, index);
-        assertEquals(Piece.Color.RED, CuT.getColor());
+        assertEquals(Color.RED, CuT.getColor());
         assertEquals(index, CuT.getIndex());
     }
 
@@ -34,7 +34,7 @@ public class PieceTest {
     @Test
     public void testWhiteSingle(){
         final Piece CuT = new Piece(whiteColor, index);
-        assertEquals(Piece.Color.WHITE, CuT.getColor());
+        assertEquals(Color.WHITE, CuT.getColor());
         assertEquals(index, CuT.getIndex());
     }
 

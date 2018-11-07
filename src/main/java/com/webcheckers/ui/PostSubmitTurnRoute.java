@@ -53,7 +53,9 @@ public class PostSubmitTurnRoute implements Route {
         if(true) {
             // if the turn is valid and processed
             msg = new Message(Message.Type.INFO, "Valid move successfully processed");
+            LOG.info("current player: " + player +", active color: " + game.getActiveColor());
             game.toggleActiveColor();
+            LOG.info("current player: " + player +", active color: " + game.getActiveColor());
 
         } else {
             // turn is invalid/not complex enough- need specific reason to be given, switch statements?

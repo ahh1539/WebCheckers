@@ -9,13 +9,14 @@ public class Player {
     //
     // Attributes
     //
-    public enum Color {RED, WHITE}
+    //public enum Color {RED, WHITE}
 
     private String name;
     private double totalGames;
     private double wins;
     private boolean inGame;
     private Color color;
+    private boolean hasresigned = false;
 
 
     /**
@@ -48,6 +49,10 @@ public class Player {
      */
     public Color getColor() {
         return color;
+    }
+
+    public String toString(){
+        return name + " is "+ color;
     }
 
     /**
@@ -119,6 +124,14 @@ public class Player {
      */
     public double getAverage(){
         return wins/totalGames;
+    }
+
+    public void hasResigned(){
+        hasresigned = true;
+    }
+
+    public boolean resigned(){
+        return hasresigned;
     }
 
     /**

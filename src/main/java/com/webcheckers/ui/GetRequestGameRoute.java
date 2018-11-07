@@ -3,6 +3,7 @@ package com.webcheckers.ui;
 import com.webcheckers.application.GameCenter;
 import com.webcheckers.application.GameLobby;
 import com.webcheckers.application.PlayerLobby;
+import com.webcheckers.model.Color;
 import com.webcheckers.model.Game;
 import com.webcheckers.model.Message;
 import com.webcheckers.model.Player;
@@ -55,7 +56,7 @@ public class GetRequestGameRoute implements Route{
         // Checks if the players are already in the lobby, if not it adds them.
         PlayerLobby playerLobby = gameCenter.getPlayerLobby();
         Player player2 = new Player(secondPlayer);
-        player2.assignColor(Player.Color.WHITE);
+        player2.assignColor(Color.WHITE);
         if(!playerLobby.hasPlayer(player1)){
             playerLobby.addPlayer(player1);
         }

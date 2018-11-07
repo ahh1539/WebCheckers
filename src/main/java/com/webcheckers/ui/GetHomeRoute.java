@@ -5,6 +5,7 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.logging.Logger;
 
+import com.webcheckers.model.Color;
 import com.webcheckers.application.GameCenter;
 import com.webcheckers.application.GameLobby;
 import com.webcheckers.application.PlayerLobby;
@@ -86,7 +87,7 @@ public class GetHomeRoute implements Route {
         // Check if the opponent is not null, then get the player from the PlayerLobby based on their username
         if(username != null){
           Player opponent = PlayerLobby.getPlayer(username);
-          opponent.assignColor(Player.Color.WHITE);
+          opponent.assignColor(Color.WHITE);
 
           if(!gameLobby.hasGame(opponent)){
 
