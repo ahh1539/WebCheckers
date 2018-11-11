@@ -3,15 +3,9 @@ geometry: margin=1in
 ---
 # PROJECT Design Documentation
 
-> _The following template provides the headings for your Design
-> Documentation.  As you edit each section make sure you remove these
-> commentary 'blockquotes'; the lines that start with a > character
-> and appear in the generated PDF in italics._
-
 ## Team Information
 * Team name: Back of the Bus
 * Team members
-  * Elijah Parrish
   * Daria Chaplin
   * Alex Hurley
   * Lillian Kuhn
@@ -28,8 +22,8 @@ refine their checker playing skills.
 
 
 ### Purpose
-> _The purpose of this project is to provide the players the ablity
-to log in and play one another online wherever they are._
+> The purpose of this project is to provide the players the ablity
+to log in and play one another online wherever they are.
 
 ### Glossary and Acronyms
 > _Provide a table of terms and acronyms._
@@ -41,27 +35,40 @@ to log in and play one another online wherever they are._
 
 ## Requirements
 
-This section describes the features of the application.
-
-> _In this section you do not need to be exhaustive and list every
-> story.  Focus on top-level features from the Vision document and
-> maybe Epics and critical Stories._
+>This application allows users to play a game of checkers.
 
 ### Definition of MVP
-> _Provide a simple description of the Minimum Viable Product._
+> The application will allow different users to sign in and play a game of checkers
+over the web. A user may choose an opponent from a list of available
+players, and the 2 players will be sent to a game of checkers. The game plays
+according to the American rules, except that the most complex move available
+must be made at each turn. Moving regular pieces and kings works the same
+as in the classic American rules. A winner is declared when one player 
+captures all of their opponent's pieces or one player forces their opponent
+into a position where they have no valid moves available. Either player
+can resign from the game during their turn. 
 
 ### MVP Features
-> _Provide a list of top-level Epics and/or Stories of the MVP._
+* Sign-In
+* Sign-Out
+* Resign
+* Start Game
+* Win Game
+* Make a Move
+
 
 ### Roadmap of Enhancements
-> _Provide a list of top-level features in the order you plan to consider them._
+* Spectator Mode
+    * A third person may watch 2 other players play a game
+* Replay Mode
+    * Players may rewatch the games they just finished playing
 
 
 ## Application Domain
 
 This model shows the general domain of the project
 
-![The WebCheckers Domain Model](domain_model.png)
+![The WebCheckers Domain Model](DomainModel.png)
 
 > The central entity of our application is the Checkers game, which is played on a board.
 The board is defined by Squares, which are in turn defined by their color and location. 
@@ -98,51 +105,48 @@ with the WebCheckers application.
 
 ![The WebCheckers Web Interface Statechart](state_diagram.png)
 
-> _Provide a summary of the application's user interface.  Describe, from
-> the user's perspective, the flow of the pages in the web application.
-The flow of the web pages from the user's perspective is as follows: When the user opens the home page
-they first see a simple welcome message and a button to sign in, they will also be presented
+
+>The flow of the web pages from the user's perspective is as follows: When the user opens the home page
+they first see a simple welcome message and a button to sign in. They will also be presented
 with the number of players who are signed in. When they click to sign in they will be redirected to the Signin
-page where they can post their username. They will then be redirected to home. If they then click 
-the name of another player then both players will be redirected to the game screen 
-where they can play the game of checkers. Once a winner has been decided they will be redirected to the home
-screen._
+page where they can post their username. They will then be redirected to home where, if they
+signed in successfully, they will see a list of other players names. 
+If they then click the name of another player then both players will be 
+redirected to the game screen where they can play the game of checkers.
+Once a winner has been decided they will be redirected to the home
+screen. If either player resigns during the game, both players will be redirected
+to the homepage.
+
 
 
 ### UI Tier
-> _Provide a summary of the Server-side UI tier of your architecture.
-> Describe the types of components in the tier and describe their
-> responsibilities.  This should be a narrative description, i.e. it has
-> a flow or "story line" that the reader can follow._
 
-> _At appropriate places as part of this narrative provide one or more
-> static models (UML class structure or object diagrams) with some
-> details such as critical attributes and methods._
 
-> _You must also provide any dynamic models, such as statechart and
-> sequence diagrams, as is relevant to a particular aspect of the design
-> that you are describing.  For example, in WebCheckers you might create
-> a sequence diagram of the `POST /validateMove` HTTP request processing
-> or you might show a statechart diagram if the Game component uses a
-> state machine to manage the game._
-
-> _If a dynamic model, such as a statechart describes a feature that is
-> not mostly in this tier and cuts across multiple tiers, you can
-> consider placing the narrative description of that feature in a
-> separate section for describing significant features. Place this after
-> you describe the design of the three tiers._
+> When a user signs in, they are directed back to the home screen, 
+and they see a list of possible opponents. They are considered 'waiting for
+a game' until they select an opponent or they are selected as an opponent.
+When 2 users enter a game, they take turns submitting moves. Moves 
+are validated and submitted through their respective routes, and the
+player's turn is finished when a move is submitted successfully and 
+reflected back to the user through the checkTurn route which is updated 
+every 5 seconds. T
 
 
 ### Application Tier
-> _Provide a summary of the Application tier of your architecture. This
-> section will follow the same instructions that are given for the UI
-> Tier above._
 
+
+> The application consists simply of the Game- and PlayerLobby which 
+track the users currently online and the active games. The GameCenter 
+class in the Application tier contains the Game- and PlayerLobby.
 
 ### Model Tier
-> _Provide a summary of the Application tier of your architecture. This
-> section will follow the same instructions that are given for the UI
-> Tier above._
+
+> The base class for the Model is the game. Within the game, we have two 
+BoardViews representing the renderings for each player. Each BoardView
+is made of a collection of Rows, which are a collection of Spaces. The
+spaces can be white or black, and may contain a piece. The pieces may be
+single or king and their moving capabilities depend on whether or not they
+are kings.
 
 ### Design Improvements
 > _Discuss design improvements that you would make if the project were
@@ -150,9 +154,17 @@ screen._
 > analysis of where there are problems in the code base which could be
 > addressed with design changes, and describe those suggested design
 > improvements. After completion of the Code metrics exercise, you
-> will also discuss the resutling metric measurements.  Indicate the
+> will also discuss the resulting metric measurements.  Indicate the
 > hot spots the metrics identified in your code base, and your
 > suggested design improvements to address those hot spots._
+
+> Originally, we had the Piece and Player classes implementing their own
+Color enumerations which made comparisons difficult in the long run.
+We switched to a public enumeration in the model package because the
+player's color was essentially the color of pieces they were assigned.
+There should be some abstractions in the Model tier which have not yet
+been flushed out, but would absolutely contribute to the effectiveness
+of the design.
 
 ## Testing
 > _This section will provide information about the testing performed

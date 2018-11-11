@@ -3,7 +3,6 @@ package com.webcheckers.ui;
 import com.google.gson.Gson;
 import com.webcheckers.application.GameCenter;
 import com.webcheckers.model.*;
-import freemarker.template.Template;
 import spark.*;
 
 import java.util.Objects;
@@ -13,8 +12,10 @@ public class PostValidateMoveRoute implements Route {
 
     // Attributes
     private static final Logger LOG = Logger.getLogger(GetSignInRoute.class.getName());
+
     private final TemplateEngine templateEngine;
     private final GameCenter gameCenter;
+
     private Gson gson;
 
     /**
@@ -57,6 +58,7 @@ public class PostValidateMoveRoute implements Route {
         final Move move = gson.fromJson(json, Move.class);
 
         // Check if it's valid, and format response message to JSON
+        // Add valid moves to arraylist in Game
         Message message = move.isValidMessage(board);
         if (!(message.getType() == Message.Type.ERROR)){
             game.addMove(move);
