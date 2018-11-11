@@ -66,6 +66,14 @@ public class Space {
     }
 
     /**
+     * Replaces current piece with a king piece of the same color
+     * @param kingPiece; the newly created king piece
+     */
+    public void replaceWithKing(KingPiece kingPiece) {
+        this.piece = kingPiece;
+    }
+
+    /**
      * Make the Space color WHITE
      */
     public void makeSpaceWhite(){
