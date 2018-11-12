@@ -28,11 +28,11 @@ refine their checker playing skills.
 
 
 ### Purpose
-> _The purpose of this project is to provide the players the ablity
+_The purpose of this project is to provide the players the ablity
 to log in and play one another online wherever they are._
 
 ### Glossary and Acronyms
-> _Provide a table of terms and acronyms._
+
 
 | Term | Definition |
 |------|------------|
