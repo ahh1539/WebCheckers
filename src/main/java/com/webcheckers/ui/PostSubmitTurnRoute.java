@@ -48,7 +48,6 @@ public class PostSubmitTurnRoute implements Route {
         final Session session = request.session();
 
 
-        System.out.println("SUBMIT TURN IS INVOKED");
         // get current player and game to compare active color with
         Player player = session.attribute(PostSignInRoute.PLAYER);
         Game game = gameCenter.getGameLobby().getGame(player);
