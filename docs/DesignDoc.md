@@ -157,29 +157,13 @@ GetSignOutRoute is also called upon in which the player is simply removed from t
 playerLobby and effectivley removed from the server, then redirected to 
 GetHomeRoute._
 
-[link to sequence diagram][1]
-[link to second sequence diagram][2]
-[link to UML Diagram and statechart][3]
-[1]:https://www.lucidchart.com/invitations/accept/2b3504e3-8f91-4bd9-a148-9be0395c4971 "Title"
-[2]:https://www.lucidchart.com/invitations/accept/1530ef9f-49d6-461c-b51e-3e344254318a "Title"
-[3]:https://www.lucidchart.com/invitations/accept/b08abbb6-b75e-4da0-997a-94b82652cbb8 "Title"
 
-> _At appropriate places as part of this narrative provide one or more
-> static models (UML class structure or object diagrams) with some
-> details such as critical attributes and methods._
-
-> _You must also provide any dynamic models, such as statechart and
-> sequence diagrams, as is relevant to a particular aspect of the design
-> that you are describing.  For example, in WebCheckers you might create
-> a sequence diagram of the `POST /validateMove` HTTP request processing
-> or you might show a statechart diagram if the Game component uses a
-> state machine to manage the game._
-
-> _If a dynamic model, such as a statechart describes a feature that is
-> not mostly in this tier and cuts across multiple tiers, you can
-> consider placing the narrative description of that feature in a
-> separate section for describing significant features. Place this after
-> you describe the design of the three tiers._
+When a user signs in, they are directed back to the home screen, and they see a list of 
+possible opponents. They are considered 'waiting for a game' until they select an opponent
+or they are selected as an opponent. When 2 users enter a game, they take turns submitting
+moves. Moves are validated and submitted through their respective routes, and the player's
+turn is finished when a move is submitted successfully and reflected back to the user through
+ the checkTurn route which is updated every 5 seconds.
 
 
 ### Application Tier
@@ -231,18 +215,25 @@ so that you can access all the methods under both from just one Class._
 > and the results of the testing._
 
 ### Acceptance Testing
-> _Report on the number of user stories that have passed all their
-> acceptance criteria tests, the number that have some acceptance
-> criteria tests failing, and the number of user stories that
-> have not had any testing yet. Highlight the issues found during
-> acceptance testing and if there are any concerns._
+Both sign in and resign routes as well as all the routes from sprint
+one all pass their acceptance criteria. Every class inside of the model
+and application tier all pass their acceptance criteria
 
 ### Unit Testing and Code Coverage
-> _Discuss your unit testing strategy. Report on the code coverage
-> achieved from unit testing of the code base. Discuss the team's
-> coverage targets, why you selected those values, and how well your
-> code coverage met your targets. If there are any anomalies, discuss
-> those._
+Our unit testing strategy has essentially been to broadly test all of the class's methods first, 
+creating mock Objects to test with and creating real objects only when necessary. Once those 
+methods have been guaranteed to work, we isolated specific user stories and use cases. For example,
+we tested the game logic of edge cases for the Red and White players throughout
+many of the classes, since we wanted to guarantee that all of the logic worked for both players.
+We achieved a code coverage of 98% for the application tier, 84% for the UI tier, and 82% for the model tier. 
+We were initially planning on aiming a bit higher for the UI tier and especially the model tier, but due to 
+time constraints and the complicated logic in the Move mode object in particular,  we fell slightly short of our
+initial coverage targets. Our initial coverage targets were to have 90%+ coverage for the UI tier and 95%+ coverage 
+for the model tier. Since the model objects are used extensively throughout the application and most of our business
+ logic fell in this tier, we felt it was important to most thoroughly test the model tier. Despite falling slightly 
+ short of our original goals, the code coverage meets our targets fairly well. In the model tier,
+ it is mostly the Move object lacking some coverage and we will improve on this drastically in upcoming development.
+ 
 
 ![Sequence Diagram](doc1.png)
 ![Sequence diagram 2](doc2.png)

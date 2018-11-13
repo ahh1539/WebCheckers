@@ -65,8 +65,11 @@ public class GetRequestGameRoute implements Route{
         if (PlayerLobby.getPlayer(player1.getName()).inGame()|| PlayerLobby.getPlayer(player2.getName()).inGame()){
             String msg = "The player you have selected is already in a game. Select another player.";
             Message message = new Message(Message.Type.ERROR, msg);
-            vm.put("errorMsg", msg);
-            response.redirect(WebServer.HOME_URL);
+            vm.put(GetHomeRoute.ERROR, GetHomeRoute.ERROR_IN_GAME);
+            //response.redirect(WebServer.HOME_URL);
+            vm.put(GetHomeRoute.PLAYER_LIST, playerLobby.getPlayerLobby());
+            vm.put(GetHomeRoute.LOBBY_ATTR, playerLobby);
+            vm.put(GetHomeRoute.PLAYER, player1);
             return templateEngine.render(new ModelAndView(vm, GetHomeRoute.ROUTE_NAME));
         }
 
