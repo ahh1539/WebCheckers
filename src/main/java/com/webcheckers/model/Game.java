@@ -19,6 +19,8 @@ public class Game {
     private BoardView redBoard;
     private BoardView whiteBoard;
 
+    private final int NUM_ROWS_COLS = 7;
+
     private List<Move> moves = new ArrayList<Move>();
 
     public enum ViewMode { PLAY, SPECTATOR, REPLAY }
@@ -210,16 +212,15 @@ public class Game {
         return this.winner;
     }
 
-    public void addMove(Move m){
-        moves.add(m);
-    }
-
     /**
-     * Updates both boards for a red player's turn
+     * Updates both boards for a red player's turn, adds move to list of moves
      * @param m
      *      the Move submitted
      */
     public void updateBoardRedTurn(Move m) {
+        // Adds move to the ongoing list of moves
+        moves.add(m);
+
         // RED BOARD
 
         // Removes red piece from given start space
@@ -232,20 +233,32 @@ public class Game {
         Space endSpace = endRow.getSpace(m.getEnd().getCell());
         endSpace.putPiece(piece);
 
-        // TODO: WHITE BOARD
+        // WHITE BOARD
+        // Overwrites all variables used for red board
 
         // Removes red piece from given start space
 
+        startRow = this.whiteBoard.getRow(NUM_ROWS_COLS - m.getStart().getRow());
+        startSpace = startRow.getSpace(NUM_ROWS_COLS - m.getStart().getCell());
+        piece = startSpace.removePiece();
+
         // Adds red piece to given end space
+
+        endRow = this.whiteBoard.getRow(NUM_ROWS_COLS - m.getEnd().getRow());
+        endSpace = endRow.getSpace(NUM_ROWS_COLS - m.getEnd().getCell());
+        endSpace.putPiece(piece);
 
     }
 
     /**
-     * Updates both boards for a white player's turn
+     * Updates both boards for a white player's turn, removes move from list of moves
      * @param m
      *      the Move submitted
      */
     public void updateBoardWhiteTurn(Move m) {
+        // Removes last move
+        moves.remove(moves.size() - 1);
+
         // WHITE BOARD
 
         // Removes white piece from given start space
@@ -258,11 +271,20 @@ public class Game {
         Space endSpace = endRow.getSpace(m.getEnd().getCell());
         endSpace.putPiece(piece);
 
-        // TODO: RED BOARD
+        // RED BOARD
+        // Overwrites all variables used for white board
 
         // Removes white piece from given start space
 
+        startRow = this.redBoard.getRow(NUM_ROWS_COLS - m.getStart().getRow());
+        startSpace = startRow.getSpace(NUM_ROWS_COLS - m.getStart().getCell());
+        piece = startSpace.removePiece();
+
         // Adds white piece to given end space
+
+        endRow = this.redBoard.getRow(NUM_ROWS_COLS - m.getEnd().getRow());
+        endSpace = endRow.getSpace(NUM_ROWS_COLS - m.getEnd().getCell());
+        endSpace.putPiece(piece);
 
     }
 
