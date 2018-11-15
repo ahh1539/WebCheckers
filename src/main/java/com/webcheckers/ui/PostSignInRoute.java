@@ -124,9 +124,10 @@ public class PostSignInRoute implements Route {
         // If it passed all the checks, add the player to the lobby
         playerLobby.addPlayer(player);
         session.attribute(PLAYER, player);
-        vm.put(GetStartGameRoute.CURRENT_PLAYER_ATTR, player);
+        vm.put(GetGameRoute.CURRENT_PLAYER_ATTR, player);
         vm.put(GetHomeRoute.LOBBY_ATTR, playerLobby);
         response.redirect(WebServer.HOME_URL);
+        System.out.println("i reached the return statement");
         return templateEngine.render(new ModelAndView(vm, GetHomeRoute.ROUTE_NAME));
     }
 }

@@ -2,9 +2,7 @@ package com.webcheckers.ui;
 
 import com.google.gson.Gson;
 import com.webcheckers.application.GameCenter;
-import com.webcheckers.model.Game;
-import com.webcheckers.model.Message;
-import com.webcheckers.model.Player;
+import com.webcheckers.model.*;
 import spark.*;
 
 import java.util.Objects;
@@ -15,6 +13,8 @@ public class PostValidateMoveRoute implements Route {
 
     private final TemplateEngine templateEngine;
     private final GameCenter gameCenter;
+
+    private Gson gson;
 
     /**
      * Create the Spark Route (UI controller) for the
@@ -36,7 +36,34 @@ public class PostValidateMoveRoute implements Route {
 
     @Override
     public Object handle(Request request, Response response) {
-        Message message = new Message(Message.Type.ERROR, "Invalid move");
-        return message;
+
+        // grab game from session
+        final Session session = request.session();
+
+        // get current player and game to compare active color with
+        Player player = session.attribute(PostSignInRoute.PLAYER);
+        Game game = gameCenter.getGameLobby().getGame(player);
+        BoardView board;
+        if(player.getColor() == Color.RED){
+            board = game.getRedBoard();
+        }
+        else{
+            board = game.getWhiteBoard();
+        }
+
+        // grab move from request
+        final Gson gson = new Gson();
+        final String json = request.body();
+        final Move move = gson.fromJson(json, Move.class);
+
+        // check if it's valid, and format response message to JSON
+        // adds vaild moves to arraylist in game
+        Message message = move.isValidMessage(board);
+        if (!(message.getType() == Message.Type.ERROR)){
+            game.addMove(move);
+        }
+        String rjson = gson.toJson(message);
+
+        return rjson;
     }
 }

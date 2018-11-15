@@ -57,8 +57,8 @@ public class RowTest {
         assertEquals(spaces.length, ROW_LENGTH);
 
         // Assert that the row alternates, white and black
-        assertEquals(spaces[EVEN_NUM].getColor(), Space.Color.BLACK);
-        assertEquals(spaces[ODD_NUM].getColor(), Space.Color.WHITE);
+        assertEquals(spaces[EVEN_NUM].getColor(), Space.SpaceColor.BLACK);
+        assertEquals(spaces[ODD_NUM].getColor(), Space.SpaceColor.WHITE);
     }
 
     /**
@@ -72,8 +72,8 @@ public class RowTest {
         assertEquals(ROW_LENGTH, spaces.length);
 
         // Assert that the row alternates, black and white
-        assertEquals(Space.Color.WHITE, spaces[EVEN_NUM].getColor());
-        assertEquals(Space.Color.BLACK, spaces[ODD_NUM].getColor());
+        assertEquals(Space.SpaceColor.WHITE, spaces[EVEN_NUM].getColor());
+        assertEquals(Space.SpaceColor.BLACK, spaces[ODD_NUM].getColor());
     }
 
     /**

@@ -11,7 +11,6 @@ geometry: margin=1in
 ## Team Information
 * Team name: Back of the Bus
 * Team members
-  * Elijah Parrish
   * Daria Chaplin
   * Alex Hurley
   * Lillian Kuhn
@@ -28,17 +27,15 @@ refine their checker playing skills.
 
 
 ### Purpose
-_The purpose of this project is to provide the players the ablity
+> _The purpose of this project is to provide the players the ablity
 to log in and play one another online wherever they are._
 
 ### Glossary and Acronyms
-
+> _Provide a table of terms and acronyms._
 
 | Term | Definition |
 |------|------------|
 | VO | Value Object |
-| GB | GameBoard    |
-| P  | Player       |
 
 
 ## Requirements
@@ -50,34 +47,37 @@ This section describes the features of the application.
 > maybe Epics and critical Stories._
 
 ### Definition of MVP
-
-A fully working webcheckers game with ability for players to play against each other,
-resign, sign out, etc. all following rules of american checkers.
+> The application will allow different users to sign in and play a game of checkers
+over the web. A user may choose an opponent from a list of available
+players, and the 2 players will be sent to a game of checkers. The game plays
+according to the American rules, except that the most complex move available
+must be made at each turn. Moving regular pieces and kings works the same
+as in the classic American rules. A winner is declared when one player 
+captures all of their opponent's pieces or one player forces their opponent
+into a position where they have no valid moves available. Either player
+can resign from the game during their turn. 
 
 ### MVP Features
-> _Provide a list of top-level Epics and/or Stories of the MVP._
-The application will allow different users to sign in and play a game of checkers over the 
-web. A user may choose an opponent from a list of available players, and the 2 players will 
-be sent to a game of checkers. The game plays according to the American rules, except that 
-the most complex move available must be made at each turn. Moving regular pieces and kings 
-works the same as in the classic American rules. A winner is declared when one player 
-captures all of their opponent's pieces or one player forces their opponent into a position 
-where they have no valid moves available. Either player can resign from the game during their 
-turn.
+* Sign-In
+* Sign-Out
+* Resign
+* Start Game
+* Win Game
+* Make a Move
+
 
 ### Roadmap of Enhancements
-_Spectator: add ability for other signed in users to spectate games
-
-Replay: ability for user to be able to watch previous games so that they can learn from 
-their mistakes_
-
+* Spectator Mode
+    * A third person may watch 2 other players play a game
+* Replay Mode
+    * Players may rewatch the games they just finished playing
 
 
 ## Application Domain
 
 This model shows the general domain of the project
 
-![The WebCheckers Domain Model](domain_model.png)
+![The WebCheckers Domain Model](DomainModel.png)
 
 > The central entity of our application is the Checkers game, which is played on a board.
 The board is defined by Squares, which are in turn defined by their color and location. 
@@ -115,90 +115,55 @@ with the WebCheckers application.
 ![The WebCheckers Web Interface Statechart](state_diagram.png)
 
 
-_
-The flow of the web pages from the user's perspective is as follows: When the user opens the home page
-they first see a simple welcome message and a button to sign in, they will also be presented
+>The flow of the web pages from the user's perspective is as follows: When the user opens the home page
+they first see a simple welcome message and a button to sign in. They will also be presented
 with the number of players who are signed in. When they click to sign in they will be redirected to the Signin
-page where they can post their username. They will then be redirected to home. If they then click 
-the name of another player then both players will be redirected to the game screen 
-where they can play the game of checkers. Once a winner has been decided they will be redirected to the home
-screen.Inside of the game there will be the option to sign out or resign, both of which will result in that player 
-forfeiting the game to the other player, returning them back to the home page._
+page where they can post their username. They will then be redirected to home where, if they
+signed in successfully, they will see a list of other players names. 
+If they then click the name of another player then both players will be 
+redirected to the game screen where they can play the game of checkers.
+Once a winner has been decided they will be redirected to the home
+screen. If either player resigns during the game, both players will be redirected
+to the homepage.
+
 
 
 ### UI Tier
-> _ Provide a summary of the Server-side UI tier of your architecture.
+> _Provide a summary of the Server-side UI tier of your architecture.
 > Describe the types of components in the tier and describe their
 > responsibilities.  This should be a narrative description, i.e. it has
-> a flow or "story line" that the reader can follow.
-_
-It all starts at GetHomeRoute this is the first thing the user will see
-as it displays the homepage.Before even signing in users are able to 
-see the number of current players. From the homepage the user is given
-the optionto signin which will invoke GetSignInRoute. GetSignInRoute displays 
-the signin.ftl page which has a user input box where they can input their username.
-Once the user inputs their username then PostSignInRoute is invoked. PostSignIn
-then requests the user input and checks to see that it meets the conditions. If 
-it passes all of the conditions the player is added to the playerLobby and the 
-page is redirected to GetHomeRoute again. Here the user can see other players, 
-and can click on their username to invoke GetRequestGameRoute, which checks if the
-requested player is already in a game or not, if so then it redirects to homepage,
-and returns an error message, otherwise a It calls to GetGameRoute with a hashmap
-of all the necessary information, inside of GetGameRoute the gameboard is displayed
-and it checks whether or not the player is in the game or has resigned. Inside of 
-the game If the user chooses to resign, PostResignRoute is called, inside of 
-Resign the player who initiates the resignation is set as the loser, and removed 
-from the game, and redirected to GetHomeRoute and the opposing player is then set
-as the winner of the game, removed from the game and redirected to GetHomeRoute as 
-well. Inside of a game when a player clicks signout PostResignGameRoute is also called, 
-but the player is also removed from playerLobby therefore effectivley deleting the 
-instance of that player. If a player signs out from outside of a homepage then 
-GetSignOutRoute is also called upon in which the player is simply removed from the
-playerLobby and effectivley removed from the server, then redirected to 
-GetHomeRoute._
+> a flow or "story line" that the reader can follow._
 
+> _At appropriate places as part of this narrative provide one or more
+> static models (UML class structure or object diagrams) with some
+> details such as critical attributes and methods._
 
-When a user signs in, they are directed back to the home screen, and they see a list of 
-possible opponents. They are considered 'waiting for a game' until they select an opponent
-or they are selected as an opponent. When 2 users enter a game, they take turns submitting
-moves. Moves are validated and submitted through their respective routes, and the player's
-turn is finished when a move is submitted successfully and reflected back to the user through
- the checkTurn route which is updated every 5 seconds.
+> _You must also provide any dynamic models, such as statechart and
+> sequence diagrams, as is relevant to a particular aspect of the design
+> that you are describing.  For example, in WebCheckers you might create
+> a sequence diagram of the `POST /validateMove` HTTP request processing
+> or you might show a statechart diagram if the Game component uses a
+> state machine to manage the game._
+
+> _If a dynamic model, such as a statechart describes a feature that is
+> not mostly in this tier and cuts across multiple tiers, you can
+> consider placing the narrative description of that feature in a
+> separate section for describing significant features. Place this after
+> you describe the design of the three tiers._
+
+> When a user 
 
 
 ### Application Tier
-> _ Our application tier is made up of three different classes:
-GameCenter, GameLobby, and PlayerLobby. GameLobby is where the game objects are 
-stored and we can access the games, searching by player etc. The playerLobby 
-is where the Player objects are stored we can use this to access and store
-players. GameCenter is a unification of both PlayerLobby and GameLobby
-so that you can access all the methods under both from just one Class._
+> _Provide a summary of the Application tier of your architecture. This
+> section will follow the same instructions that are given for the UI
+> Tier above._
 
 
 ### Model Tier
-> _Our Model tier is the meat of this project. It includes ten 
- classes. Boardview is what actually displays and puts together the board
- it puts both the spaces and pieces into the gameboard effectivley making 
- the board which the player sees. Game requires two players to instantiate 
- Game holds all of the information pertaining to the game, it holds the two 
- players and their colors it is also where a loser and winner are declared.
- KingPiece changes a piece to the status of a king piece, it enables that
- piece to have more functionality over other pieces in the game. Message is 
- used for return types inside of the UI tier when sending Json information. It 
- requires a Type (error or info) and a string identifying what was happening
- Move controls the movement of the various pieces in the gameboard. It has a 
- start and end index being where the piece started and where it ends up after 
- the move will be made. The piece class make the piece object that is being 
- moved by the player. It can be identified with a color and type ie. RED,KING.
- The Player class makes a player object. The player object represents the player
- making the moves and controlling all of the actions. The player type stores 
- the number of wins, name of the player, total number of games and a boolean
- value representing whether or not the player is in a game or not. Position is 
- needed for the move class. It is the index of a specific place on the gameboard
- it stores the row and cell of a certain place. Row makes the row object 
- which is what the gameboard is made out of. The rows are made up of spaces.
- Space represents the smallest mesurment unit in the gameboard. It is a single 
- square in the gameboard Spaces store a piece and a color of the specific space._
+> _Provide a summary of the Application tier of your architecture. This
+> section will follow the same instructions that are given for the UI
+> Tier above._
 
 ### Design Improvements
 > _Discuss design improvements that you would make if the project were
@@ -215,26 +180,15 @@ so that you can access all the methods under both from just one Class._
 > and the results of the testing._
 
 ### Acceptance Testing
-Both sign in and resign routes as well as all the routes from sprint
-one all pass their acceptance criteria. Every class inside of the model
-and application tier all pass their acceptance criteria
+> _Report on the number of user stories that have passed all their
+> acceptance criteria tests, the number that have some acceptance
+> criteria tests failing, and the number of user stories that
+> have not had any testing yet. Highlight the issues found during
+> acceptance testing and if there are any concerns._
 
 ### Unit Testing and Code Coverage
-Our unit testing strategy has essentially been to broadly test all of the class's methods first, 
-creating mock Objects to test with and creating real objects only when necessary. Once those 
-methods have been guaranteed to work, we isolated specific user stories and use cases. For example,
-we tested the game logic of edge cases for the Red and White players throughout
-many of the classes, since we wanted to guarantee that all of the logic worked for both players.
-We achieved a code coverage of 98% for the application tier, 84% for the UI tier, and 82% for the model tier. 
-We were initially planning on aiming a bit higher for the UI tier and especially the model tier, but due to 
-time constraints and the complicated logic in the Move mode object in particular,  we fell slightly short of our
-initial coverage targets. Our initial coverage targets were to have 90%+ coverage for the UI tier and 95%+ coverage 
-for the model tier. Since the model objects are used extensively throughout the application and most of our business
- logic fell in this tier, we felt it was important to most thoroughly test the model tier. Despite falling slightly 
- short of our original goals, the code coverage meets our targets fairly well. In the model tier,
- it is mostly the Move object lacking some coverage and we will improve on this drastically in upcoming development.
- 
-
-![Sequence Diagram](doc1.png)
-![Sequence diagram 2](doc2.png)
-![All others](doc3.png)
+> _Discuss your unit testing strategy. Report on the code coverage
+> achieved from unit testing of the code base. Discuss the team's
+> coverage targets, why you selected those values, and how well your
+> code coverage met your targets. If there are any anomalies, discuss
+> those._

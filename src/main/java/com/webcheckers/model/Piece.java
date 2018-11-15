@@ -5,7 +5,7 @@ package com.webcheckers.model;
  */
 public class Piece {
 
-    public enum Color {RED, WHITE}
+    //public enum Color {RED, WHITE}
     public enum Type {SINGLE, KING}
 
     //
@@ -27,6 +27,10 @@ public class Piece {
         this.color = color;
         this.index = idx;
         this.type = Type.SINGLE;
+    }
+
+    public String toString(){
+        return "piece is " + color + " at index " + index;
     }
 
     /**
@@ -80,4 +84,11 @@ public class Piece {
         }
         return false;
     }
+
+    public Piece makeKingPiece() {
+        this.type = Type.KING;
+        return this;
+    }
+
+
 }

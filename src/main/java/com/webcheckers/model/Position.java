@@ -3,7 +3,7 @@ package com.webcheckers.model;
 public class Position {
 
     // Attributes
-    // TODO: limit possible values to 0 - 7 inclusive
+    // TODO: limit possible values to 0 - 7 inclusive *** throw exception??
 
     private int row;
     private int cell;
