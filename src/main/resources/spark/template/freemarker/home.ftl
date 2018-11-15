@@ -27,12 +27,12 @@
       <#else>
         <h3>Current Players</h3>
           <#if errorMsg??>
-            <p style="color:darkred">${errorMsg.text}</p>
+            <p>${errorMsg}</p>
           </#if>
           <#if players??>
             <#list players as player>
               <#if player.name != currentPlayer.name>
-                <p><a href="/requestGame?opponent=${player.name}">${player.name}</a></p>
+                <p><a href="/game?opponent=${player.name}">${player.name}</a></p>
               <#else>
                 <p>${player.name}</p>
               </#if>
