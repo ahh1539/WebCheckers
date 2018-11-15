@@ -89,13 +89,11 @@ public class GetGameRouteTest {
         player1.assignColor(Color.WHITE);
         player2.assignColor(Color.WHITE);
 
-        Game g = new Game(player1, player2);
         player1.joinGame();
         player2.joinGame();
         playerLobby.addPlayer(player1);
         playerLobby.addPlayer(player2);
         when(request.queryParams(eq("opponent"))).thenReturn(player2.getName());
-        when(session.attribute(eq(PostSignInRoute.PLAYER))).thenReturn(player1);
         when(session.attribute(eq(PostSignInRoute.PLAYER))).thenReturn(player1);
         when(gameCenter.getGameLobby()).thenReturn(gameLobby);
 

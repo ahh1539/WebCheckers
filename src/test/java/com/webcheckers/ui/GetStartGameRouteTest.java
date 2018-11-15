@@ -1,6 +1,7 @@
 package com.webcheckers.ui;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 import com.webcheckers.application.GameCenter;
@@ -66,12 +67,13 @@ public class GetStartGameRouteTest {
         when(engine.render(any(ModelAndView.class))).thenAnswer(testHelper.makeAnswer());
 
         when(session.attribute(PostSignInRoute.PLAYER)).thenReturn(first);
+        when(request.queryParams(eq("opponent"))).thenReturn(second.getName());
         startGame.handle(request,response);
 
 
         testHelper.assertViewModelExists();
         testHelper.assertViewModelIsaMap();
-        testHelper.assertViewModelAttribute(GetStartGameRoute.WHITE_PLAYER_ATTR, null);
+        testHelper.assertViewModelAttribute(GetStartGameRoute.WHITE_PLAYER_ATTR, second);
         testHelper.assertViewModelAttribute(GetStartGameRoute.TITLE_ATTR, GetStartGameRoute.TITLE);
     }
 }

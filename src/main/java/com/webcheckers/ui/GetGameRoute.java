@@ -69,20 +69,27 @@ public class GetGameRoute implements Route {
         redirect the player back to the Home page with a message that informs the player how the game ended.
          */
 
+
+        Map<String, Object> vm = new HashMap<>();
+        vm.put(TITLE_ATTR, TITLE);
         LOG.finer("GetGameRoute is invoked.");
 
         // Retrieves the HTTP session and necessary player/game info
 
         final Session session = request.session();
         Player player = session.attribute(PostSignInRoute.PLAYER);
-        PlayerLobby.getPlayer(player.getName()).joinGame();
+        if(player == null){
+            return templateEngine.render(new ModelAndView(vm, GetHomeRoute.ROUTE_NAME));
+        }
+        Player playerLobbyPlayer = PlayerLobby.getPlayer(player.getName());
+        if(playerLobbyPlayer == null){
+            return templateEngine.render(new ModelAndView(vm, GetHomeRoute.ROUTE_NAME));
+        }
+        playerLobbyPlayer.joinGame();
         Game game = this.gameCenter.getGameLobby().getGame(player);
 
 
 
-
-        Map<String, Object> vm = new HashMap<>();
-        vm.put(TITLE_ATTR, TITLE);
         // Handles a null game object
 
         if (player.inGame() == false){
