@@ -16,7 +16,7 @@ public class Player {
     private double wins;
     private boolean inGame;
     private Color color;
-
+    private boolean hasresigned = false;
 
     /**
      * Create a Player with the provided username. 0 total games and wins, they are not
@@ -119,6 +119,21 @@ public class Player {
      */
     public double getAverage(){
         return wins/totalGames;
+    }
+
+    /**
+     * Void; when called it changes the status of the player to resigned
+     */
+    public void hasResigned(){
+        hasresigned = true;
+    }
+
+    /**
+     *
+     * @return boolean representing whether or not player has resigned
+     */
+    public boolean resigned(){
+        return hasresigned;
     }
 
     /**

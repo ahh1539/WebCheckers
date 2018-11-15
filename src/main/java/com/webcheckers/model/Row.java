@@ -17,39 +17,53 @@ public class Row implements Iterable<Space>{
 
 
     /**
-     * Create a Row made of red and white Spaces
+     * Create a Row made of black and white Spaces
      * @param index
      *      The index of the Row
      */
     public Row(int index){
         this.index = index;
 
-        int idx = ROW_LENGTH * index;
+
         if( index % 2 == 0){
             for( int i = 0; i < ROW_LENGTH; i++){
                 if( i % 2 == 1){
-                    row[i] = new Space(true,  idx);
+                    row[i] = new Space(true,  i);
                     row[i].makeSpaceWhite();
-                    idx++;
                 }
                 else{
-                    row[i] = new Space(false,  idx);
-                    idx++;
+                    row[i] = new Space(false,  i);
                 }
             }
         }
         else{
             for( int i = 0; i < ROW_LENGTH; i++){
                 if( i % 2 == 0){
-                    row[i] = new Space(true, idx);
+                    row[i] = new Space(true, i);
                     row[i].makeSpaceWhite();
                 }
                 else{
-                    row[i] = new Space(false,  idx);
-                    idx++;
+                    row[i] = new Space(false,  i);
                 }
             }
         }
+    }
+
+    public Row (Row other) {
+        this.index = other.index;
+        this.row = new Space[ROW_LENGTH];
+        for (int i = 0; i < ROW_LENGTH; i++) {
+            this.row[i] = new Space(other.getSpace(i));
+        }
+    }
+
+    /**
+     * Return the Space object at the index
+     * @param index Location of the Space object to get
+     * @return The Space object at index
+     */
+    public Space getSpace(int index){
+        return this.row[index];
     }
 
     /**
