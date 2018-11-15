@@ -214,5 +214,56 @@ public class Game {
         moves.add(m);
     }
 
+    /**
+     * Updates both boards for a red player's turn
+     * @param m
+     *      the Move submitted
+     */
+    public void updateBoardRedTurn(Move m) {
+        // RED BOARD
+
+        // Removes red piece from given start space
+        Row startRow = this.redBoard.getRow(m.getStart().getRow());
+        Space startSpace = startRow.getSpace(m.getStart().getCell());
+        Piece piece = startSpace.removePiece();
+
+        // Adds red piece to given end space
+        Row endRow = this.redBoard.getRow(m.getEnd().getRow());
+        Space endSpace = endRow.getSpace(m.getEnd().getCell());
+        endSpace.putPiece(piece);
+
+        // TODO: WHITE BOARD
+
+        // Removes red piece from given start space
+
+        // Adds red piece to given end space
+
+    }
+
+    /**
+     * Updates both boards for a white player's turn
+     * @param m
+     *      the Move submitted
+     */
+    public void updateBoardWhiteTurn(Move m) {
+        // WHITE BOARD
+
+        // Removes white piece from given start space
+        Row startRow = this.whiteBoard.getRow(m.getStart().getRow());
+        Space startSpace = startRow.getSpace(m.getStart().getCell());
+        Piece piece = startSpace.removePiece();
+
+        // Adds white piece to given end space
+        Row endRow = this.whiteBoard.getRow(m.getEnd().getRow());
+        Space endSpace = endRow.getSpace(m.getEnd().getCell());
+        endSpace.putPiece(piece);
+
+        // TODO: RED BOARD
+
+        // Removes white piece from given start space
+
+        // Adds white piece to given end space
+
+    }
 
 }
