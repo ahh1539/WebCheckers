@@ -1,6 +1,7 @@
 package com.webcheckers.ui;
 
 import com.google.gson.Gson;
+import com.webcheckers.model.Message;
 import spark.*;
 
 import java.util.logging.Logger;
@@ -25,7 +26,21 @@ public class PostBackupMoveRoute implements Route{
 
     @Override
     public Object handle(Request request, Response response) {
-        // TODO: implement this
-        return null;
+
+        Message msg;
+
+        // TODO (from docs): "update the player's turn in the user's game state"
+
+        // TODO: add in actual conditionals, tell user what the action did
+        if(true) {
+            // backup was successful
+            msg = new Message(Message.Type.INFO, "Successful backup");
+        } else {
+            // backup failed
+            msg = new Message(Message.Type.ERROR, "Backup failed");
+        }
+
+        gson = new Gson();
+        return gson.toJson(msg);
     }
 }
