@@ -61,7 +61,6 @@ public class WebServer {
 
   public static final String SIGN_OUT_URL = "/signout";
 
-  public static final String REQUEST_GAME_URL = "/requestGame";
 
   public static final String VALIDATE_MOVE_URL = "/validateMove";
 
@@ -164,7 +163,7 @@ public class WebServer {
     // Signs player out
     get(SIGN_OUT_URL, new GetSignOutRoute(templateEngine, gameCenter));
     // Request a game
-    get(REQUEST_GAME_URL, new GetRequestGameRoute(templateEngine, gameCenter));
+    //get(REQUEST_GAME_URL, new GetRequestGameRoute(templateEngine, gameCenter));
 
     //Posts when the player is to resign because they are the inferior player
     post(RESIGN_GAME_URL, new PostResignGameRoute(templateEngine, gameCenter));
