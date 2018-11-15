@@ -1,7 +1,4 @@
-
 package com.webcheckers.ui;
-
-import static com.webcheckers.ui.GetGameRoute.CURRENT_PLAYER_ATTR;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.mock;
@@ -14,23 +11,20 @@ import com.webcheckers.model.Color;
 import com.webcheckers.model.Game;
 import com.webcheckers.model.Player;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 
 import spark.*;
-
-
 /**
- * Test class for GetSignInRoute (UI tier component)
+ * Test class for GetRequestGameRoute (UI tier component)
+ * @author Paula Register (per4521)
  */
-
 @Tag("UI-tier")
-public class GetHomeRouteTest {
+public class GetRequestGameRouteTest {
     /**
      * The component-under-test (CuT).
      */
-    private GetHomeRoute CuT;
+    private GetRequestGameRoute CuT;
 
     /**
      * Mock objects
@@ -41,6 +35,7 @@ public class GetHomeRouteTest {
     private TemplateEngine engine;
     private PlayerLobby playerLobby;
     private Player player;
+    private GameLobby gameLobby;
 
     /**
      * Setup new mock objects for each test.
@@ -51,65 +46,56 @@ public class GetHomeRouteTest {
         session = mock(Session.class);
         when(request.session()).thenReturn(session);
         engine = mock(TemplateEngine.class);
-
+        response = mock(Response.class);
         // set up friendly objects
         this.playerLobby = new PlayerLobby();
         player = new Player("player");
         this.playerLobby.addPlayer(player);
-        GameLobby gameLobby = new GameLobby();
+        gameLobby = mock(GameLobby.class);
         GameCenter gameCenter = new GameCenter(playerLobby, gameLobby);
 
         // create a unique CuT for each test
-        CuT = new GetHomeRoute(engine, gameCenter);
+        CuT = new GetRequestGameRoute(engine, gameCenter);
     }
-    /*
-     * Test that the GameHomeRoute will show current players only if signed in
+    /**
+     * Test that the GetRequestGameRoute works
      */
     @Test
-    public void showPlayers()
-    {
-        final TemplateEngineTester testHelper = new TemplateEngineTester();
-
-        //Mock of the 'render' method
-        when(engine.render(any(ModelAndView.class))).thenAnswer(testHelper.makeAnswer());
-
-        //Invoke the test (ignore the output)
-        CuT.handle(request, response);
-
-        //Analyze the content passed into the render method
-        testHelper.assertViewModelExists();
-        testHelper.assertViewModelIsaMap();
-        testHelper.assertViewModelAttributeIsAbsent(CURRENT_PLAYER_ATTR);
-    }
-
-    /*
-     * Test that GameHomeRoute will create a new game only if the Opponent is
-     * free to play.
-     */
-    @Test
-    public void freeToPlay() {
+    public void getRequestGameRouteTest(){
         final TemplateEngineTester testHelper = new TemplateEngineTester();
         when(engine.render(any(ModelAndView.class))).thenAnswer(testHelper.makeAnswer());
         Player player1 = new Player("user");
         Player player2 = new Player("opp");
-        player1.assignColor(Color.WHITE);
-        player2.assignColor(Color.WHITE);
-
         Game g = new Game(player1, player2);
-        player1.joinGame();
-        player2.joinGame();
-        playerLobby.addPlayer(player1);
-        playerLobby.addPlayer(player2);
-
-        when(request.queryParams(eq("opponent"))).thenReturn(player2.getName());
-        when(session.attribute(eq(PostSignInRoute.PLAYER))).thenReturn(player1);
-
-        //Invoke the test (ignore the output)
+        when(request.queryParams(eq("opponent"))).thenReturn(player1.toString());
+        when(session.attribute(eq(PostSignInRoute.PLAYER))).thenReturn(player2);
+        when(gameLobby.getGame(eq(player2))).thenReturn(g);
         CuT.handle(request, response);
 
-        //Analyze the content passed into the render method
+        // Analyze the results:
+        //   * model is a non-null Map
         testHelper.assertViewModelExists();
         testHelper.assertViewModelIsaMap();
     }
+    /**
+     * Test that the GetRequestGameRoute works if a player is in a game already
+     */
+    @Test
+    public void getRequestGameRouteTestInGame(){
+        final TemplateEngineTester testHelper = new TemplateEngineTester();
+        when(engine.render(any(ModelAndView.class))).thenAnswer(testHelper.makeAnswer());
+        Player player1 = new Player("user");
+        Player player2 = new Player("opp");
+        player2.joinGame();
+        Game g = new Game(player1, player2);
+        when(request.queryParams(eq("opponent"))).thenReturn(player1.toString());
+        when(session.attribute(eq(PostSignInRoute.PLAYER))).thenReturn(player2);
+        when(gameLobby.getGame(eq(player2))).thenReturn(g);
+        CuT.handle(request, response);
 
+        // Analyze the results:
+        //   * model is a non-null Map
+        testHelper.assertViewModelExists();
+        testHelper.assertViewModelIsaMap();
+    }
 }

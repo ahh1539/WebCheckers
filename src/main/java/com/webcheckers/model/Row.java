@@ -58,6 +58,32 @@ public class Row implements Iterable<Space>{
     }
 
     /**
+     * Check the equality of two objects and see if the provided object
+     * is equal to the Row
+     * @param object
+     *      Object (hopefully a Row) to compare if it is equal to the Row
+     * @return
+     *      True if the index and individual Spaces match the provided Object index and Spaces
+     *      False otherwise
+     */
+    @Override
+    public boolean equals(Object object){
+        if(object instanceof Row){
+            Row row = (Row) object;
+            if(index != row.getIndex()){
+                return false;
+            }
+            Space[] rows = row.getRow();
+            for (int i = 0; i < ROW_LENGTH; i++) {
+                if(!rows[i].equals(this.row[i])){
+                    return false;
+                }
+            }
+            return true;
+        }
+        return false;
+    }
+    /**
      * Return the Space object at the index
      * @param index Location of the Space object to get
      * @return The Space object at index
@@ -82,6 +108,16 @@ public class Row implements Iterable<Space>{
      */
     public int getIndex() {
         return index;
+    }
+
+    @Override
+    public String toString(){
+        StringBuilder stringBuilder = new StringBuilder();
+        for (int i = 0; i < ROW_LENGTH; i++) {
+            stringBuilder.append(row[i].toString());
+            stringBuilder.append("\n");
+        }
+        return stringBuilder.toString();
     }
 
     /**

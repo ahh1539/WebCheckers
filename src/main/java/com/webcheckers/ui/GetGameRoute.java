@@ -83,7 +83,6 @@ public class GetGameRoute implements Route {
 
         Map<String, Object> vm = new HashMap<>();
         vm.put(TITLE_ATTR, TITLE);
-        System.out.println("GET GAME ROUTE WAS CALLED TO");
         // Handles a null game object
 
         if (player.inGame() == false){

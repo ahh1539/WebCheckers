@@ -3,7 +3,6 @@ package com.webcheckers.application;
 import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.BeforeEach;
 import com.webcheckers.model.Player;
 
 
@@ -13,18 +12,18 @@ import com.webcheckers.model.Player;
  */
 
 
-public class PlayerLobbyTest extends java.lang.Object {
+public class PlayerLobbyTest {
 
-    Player first = new Player("Alex");
-    Player second = new Player("Daria");
-    Player third = new Player("Eli");
-    PlayerLobby lobby = new PlayerLobby();
+    private Player first = new Player("Alex");
+    private Player second = new Player("Daria");
+    private Player third = new Player("Eli");
+    private PlayerLobby lobby = new PlayerLobby();
 
 
     @Test
     @DisplayName("Object is a PlayerLobby")
     void testPlayerLobbyConstructor(){
-        assertTrue(lobby instanceof PlayerLobby);
+        assertNotNull(lobby);
     }
 
     @Test
@@ -37,7 +36,7 @@ public class PlayerLobbyTest extends java.lang.Object {
     @Test
     @DisplayName("Correct player returned")
     void testGetPlayernull(){
-        assertTrue(lobby.getPlayer("Eli") == null, "Successfully found player");
+        assertTrue(lobby.getPlayer(third.getName()) == null, "Successfully found player");
     }
 
     @Test

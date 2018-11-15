@@ -13,8 +13,8 @@ import org.junit.jupiter.api.Test;
 @Tag("Model-tier")
 public class KingPieceTest {
 
-    private static final Piece.Color redColor = Piece.Color.RED;
-    private static final Piece.Color whiteColor = Piece.Color.WHITE;
+    private static final Color redColor = Color.RED;
+    private static final Color whiteColor = Color.WHITE;
 
     private static final int index = 0;
 
@@ -24,8 +24,7 @@ public class KingPieceTest {
     @Test
     public void test_red_king(){
         final KingPiece CuT = new KingPiece(redColor, index);
-        // commented out while trying to figure out why it's broken!
-        //assertEquals(Piece.Color.RED, CuT.getColor());
+        assertEquals(Color.RED, CuT.getColor());
         assertEquals(index, CuT.getIndex());
     }
 
@@ -36,7 +35,7 @@ public class KingPieceTest {
     public void test_white_king(){
         final KingPiece CuT = new KingPiece(whiteColor, index);
         // temporarily broken
-        //assertEquals(Piece.Color.WHITE, CuT.getColor());
+        assertEquals(Color.WHITE, CuT.getColor());
         assertEquals(index, CuT.getIndex());
     }
 
@@ -47,8 +46,12 @@ public class KingPieceTest {
     public void test_equals_true(){
         final KingPiece CuT = new KingPiece(redColor, index);
         final KingPiece CuT2 = new KingPiece(redColor, index);
+        final KingPiece CuT3 = new KingPiece(whiteColor, index);
+
         // commented out while fixing getColor() issues
-        //assertTrue(CuT.equals(CuT2));
+        assertTrue(CuT.equals(CuT2));
+        assertFalse(CuT.equals(CuT3));
+        assertFalse(CuT.equals("garbage"));
     }
 
     /**

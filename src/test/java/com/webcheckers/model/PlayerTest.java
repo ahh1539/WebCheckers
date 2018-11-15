@@ -28,14 +28,14 @@ public class PlayerTest {
     @Test
     @DisplayName("Default player color = RED")
     void testDefaultColor(){
-        assertEquals(Player.Color.RED, player.getColor());
+        assertEquals(Color.RED, player.getColor());
     }
 
     @Test
     @DisplayName("Changing color to WHITE")
     void testChangingToWhite(){
-        player.assignColor(Player.Color.WHITE);
-        assertEquals(Player.Color.WHITE, player.getColor());
+        player.assignColor(Color.WHITE);
+        assertEquals(Color.WHITE, player.getColor());
     }
 
     @Test

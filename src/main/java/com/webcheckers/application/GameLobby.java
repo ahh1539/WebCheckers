@@ -1,6 +1,7 @@
 package com.webcheckers.application;
 
 import com.webcheckers.model.BoardView;
+import com.webcheckers.model.Color;
 import com.webcheckers.model.Game;
 import com.webcheckers.model.Player;
 
@@ -65,11 +66,11 @@ public class GameLobby {
      */
     public BoardView getGameBoard(Player player){
         for(Game game : gameLobby){
-            if(game.hasGame(player) && player.getColor() == Player.Color.RED){
+            if(game.hasGame(player) && player.getColor() == Color.RED){
                 System.out.println("getting red board");
                 return game.getRedBoard();
             }
-            else if(game.hasGame(player) && player.getColor() == Player.Color.WHITE){
+            else if(game.hasGame(player) && player.getColor() == Color.WHITE){
                 System.out.println("getting white board");
                 return game.getWhiteBoard();
             }

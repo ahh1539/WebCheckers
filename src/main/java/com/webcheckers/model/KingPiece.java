@@ -9,7 +9,7 @@ public class KingPiece extends Piece {
 
     private Color color;
     private int index;
-    private Type type = Type.KING;
+    private Type type;
 
 
 
@@ -22,6 +22,9 @@ public class KingPiece extends Piece {
      */
     public KingPiece(Color color, int idx) {
         super(color, idx);
+        this.color = color;
+        this.index = idx;
+        this.type = Type.KING;
     }
 
 

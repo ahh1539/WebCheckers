@@ -24,14 +24,14 @@ public class SpaceTester {
     void testMakeWhite(){
         Space space = new Space(true, 0);
         space.makeSpaceWhite();
-        assertEquals(Space.Color.WHITE, space.getColor());
+        assertEquals(Space.SpaceColor.WHITE, space.getColor());
     }
 
     @Test
     @DisplayName("default color")
     void testPieceColor(){
         Space space = new Space(true, 0);
-        assertEquals(Space.Color.BLACK, space.getColor());
+        assertEquals(Space.SpaceColor.BLACK, space.getColor());
     }
 
     @Test
@@ -39,7 +39,7 @@ public class SpaceTester {
     void testRedPieceDroppedValid(){
         Space space = new Space(true, 0);
         space.putRedPiece();
-        assertTrue(space.getPiece().getColor() == Piece.Color.RED);
+        assertTrue(space.getPiece().getColor() == Color.RED);
         assertFalse(space.isValid());
     }
 
@@ -48,7 +48,7 @@ public class SpaceTester {
     void testWhitePieceDroppedValid(){
         Space space = new Space(true, 0);
         space.putWhitePiece();
-        assertTrue(space.getPiece().getColor() == Piece.Color.WHITE);
+        assertTrue(space.getPiece().getColor() == Color.WHITE);
         assertFalse(space.isValid());
     }
 

@@ -44,6 +44,7 @@ public class PostSignInRoute implements Route {
     /**
      * Make an error message when the username is invalid.
      */
+
     static String makeBadArgMessage(final String usernameStr) {
         return String.format("Usernames must be alphanumeric, spaces optional. '%s' is invalid.", usernameStr);
     }
@@ -82,7 +83,7 @@ public class PostSignInRoute implements Route {
         this.templateEngine = templateEngine;
     }
 
-    private ModelAndView error(final Map<String, Object> vm, final String message) {
+    protected ModelAndView error(final Map<String, Object> vm, final String message) {
         vm.put(MESSAGE_ATTR, message);
         vm.put(MESSAGE_TYPE_ATTR, ERROR_TYPE);
         return new ModelAndView(vm, VIEW_NAME);
@@ -106,27 +107,31 @@ public class PostSignInRoute implements Route {
         // retrieve request parameter
         final String username = request.queryParams(USERNAME);
 
+        final String usr = username.replaceAll("\\s+","");
+
         // Check if the username is alphanumeric
         Pattern p = Pattern.compile("[^a-zA-Z0-9\\s]");
-        boolean isAlphaNumeric = !p.matcher(username).find();
+
+        boolean isAlphaNumeric = !p.matcher(usr).find();
 
         if(!isAlphaNumeric){
-            return templateEngine.render(error(vm, makeBadArgMessage(username)));
+            return templateEngine.render(error(vm, makeBadArgMessage(usr)));
         }
 
         // Check if the player's name has been taken
-        Player player = new Player(username);
+        Player player = new Player(usr);
         PlayerLobby playerLobby = gameCenter.getPlayerLobby();
         if(playerLobby.hasPlayer(player)){
-            return templateEngine.render(error(vm, makeInvalidArgMessage(username)));
+            return templateEngine.render(error(vm, makeInvalidArgMessage(usr)));
         }
 
         // If it passed all the checks, add the player to the lobby
         playerLobby.addPlayer(player);
         session.attribute(PLAYER, player);
-        vm.put(GetStartGameRoute.CURRENT_PLAYER_ATTR, player);
+        vm.put(GetGameRoute.CURRENT_PLAYER_ATTR, player);
         vm.put(GetHomeRoute.LOBBY_ATTR, playerLobby);
         response.redirect(WebServer.HOME_URL);
+        System.out.println("i reached the return statement");
         return templateEngine.render(new ModelAndView(vm, GetHomeRoute.ROUTE_NAME));
     }
 }

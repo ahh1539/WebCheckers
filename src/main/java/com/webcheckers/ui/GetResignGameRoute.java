@@ -1,6 +1,5 @@
 package com.webcheckers.ui;
 
-import com.google.gson.Gson;
 import com.webcheckers.application.GameCenter;
 import com.webcheckers.application.PlayerLobby;
 import com.webcheckers.model.Color;
@@ -14,26 +13,32 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.logging.Logger;
 
-public class PostResignGameRoute implements Route{
+public class GetResignGameRoute implements Route{
 
     private static final Logger LOG = Logger.getLogger(GetStartGameRoute.class.getName());
     private final TemplateEngine templateEngine;
     private final GameCenter gameCenter;
 
+    static final String GAME_NAME = "game.ftl";
     static final String TITLE_ATTR = "title";
     static final String TITLE = "Game Page";
-    static final String GAME = "/game";
-    static final String RESIGN_URL = "/resignGame";
+    static final String BOARD_ATTR = "board";
+    static final String CURRENT_PLAYER_ATTR = "currentPlayer";
+    static final String RED_PLAYER_ATTR = "redPlayer";
+    static final String WHITE_PLAYER_ATTR = "whitePlayer";
+    static final String ACTIVE_COLOR_ATTR = "activeColor";
+    static final String VIEW_MODE_ATTR = "viewMode";
+
+    static final String MESSAGE = "message";
 
 
-
-    public PostResignGameRoute(final TemplateEngine templateEngine, final GameCenter gameCenter) {
+    public GetResignGameRoute(final TemplateEngine templateEngine, final GameCenter gameCenter) {
         // Validation and configuration
         Objects.requireNonNull(templateEngine, "templateEngine must not be null");
         Objects.requireNonNull(gameCenter, "gameCenter must not be null");
         this.templateEngine = templateEngine;
         this.gameCenter = gameCenter;
-        LOG.config("PostResignGameRoute is initialized.");
+        LOG.config("GetResignGameRoute is initialized.");
     }
     /**
      * Render the WebCheckers Start Game page.
@@ -43,23 +48,21 @@ public class PostResignGameRoute implements Route{
      * @param response
      *   the HTTP response
      * @return
-     *   message stating sucessful resignation
+     *   the rendered HTML for the Home page
      */
     @Override
-    public Object handle(Request request, Response response) {
+    public Message handle(Request request, Response response) {
         LOG.finer("GetResignGame is invoked.");
-        System.out.println("RESIGN GAME WAS INVOKED");
 
         // Retrieves the HTTP session and necessary player/game info
+
         final Session session = request.session();
         Player player = session.attribute(PostSignInRoute.PLAYER);
 
-        Gson gson = new Gson();
+
         Game game = this.gameCenter.getGameLobby().getGame(player);
 
-        //sets winner and loser for game and removes both players
         game.setLoser(player);
-
         if (player.getColor() == Color.WHITE){
             game.setWinner(game.getRedPlayer());
             game.getRedPlayer().leaveGame();
@@ -68,20 +71,14 @@ public class PostResignGameRoute implements Route{
             game.setWinner(game.getWhitePlayer());
             game.getWhitePlayer().leaveGame();
         }
-        player.resigned();
         player.leaveGame();
 
-        // checks whether or not players successfully left the game, returns Json representing this
-        if (!game.getWhitePlayer().inGame() || !game.getRedPlayer().inGame()){
-            Message message = new Message(Message.Type.INFO, "true");
-            String rJson = gson.toJson(message);
-            return rJson;
-        }
-        else {
-            Message message1 = new Message(Message.Type.ERROR, "false" );
-            String rJson2 = gson.toJson(message1);
-            return rJson2;
-        }
+
+
+        // Handles a null game object
+
+        response.redirect(WebServer.HOME_URL);
+        return new Message(Message.Type.INFO, "Player sucessfully resigned" );
     }
 }
 

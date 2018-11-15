@@ -27,7 +27,7 @@ public class BoardView implements Iterable<Row>{
         for(int i = 0; i < BOARD_LENGTH; i++) {
             this.gameBoard[i] = new Row(i);
         }
-        if( player.getColor() == Player.Color.RED) {
+        if( player.getColor() == Color.RED) {
             placeRedPieces();
         }
         else{
@@ -55,7 +55,6 @@ public class BoardView implements Iterable<Row>{
         this.gameBoard[5] = new Row(row6);
         this.gameBoard[6] = new Row(row7);
         this.gameBoard[7] = new Row(row8);
-
     }
 
     //
@@ -73,14 +72,14 @@ public class BoardView implements Iterable<Row>{
         for(int i = 0; i < BOARD_LENGTH; i++ ){
             if( i < 3){
                 for (Space space: gameBoard[i]) {
-                    if (space.getColor() == Space.Color.WHITE) {
+                    if (space.getColor() == Space.SpaceColor.WHITE) {
                         space.putWhitePiece();
                     }
                 }
             }
             if( i > 4){
                 for (Space space: gameBoard[i]) {
-                    if (space.getColor() == Space.Color.WHITE) {
+                    if (space.getColor() == Space.SpaceColor.WHITE) {
                         space.putRedPiece();
                     }
                 }
@@ -95,19 +94,28 @@ public class BoardView implements Iterable<Row>{
         for(int i = 0; i < BOARD_LENGTH; i++ ){
             if( i < 3){
                 for (Space space: gameBoard[i]) {
-                    if (space.getColor() == Space.Color.WHITE) {
+                    if (space.getColor() == Space.SpaceColor.WHITE) {
                         space.putRedPiece();
                     }
                 }
             }
             if( i > 4){
                 for (Space space: gameBoard[i]) {
-                    if (space.getColor() == Space.Color.WHITE) {
+                    if (space.getColor() == Space.SpaceColor.WHITE) {
                         space.putWhitePiece();
                     }
                 }
             }
         }
+    }
+    @Override
+    public String toString(){
+        StringBuilder stringBuilder = new StringBuilder();
+        for (int i = 0; i < BOARD_LENGTH; i++) {
+            stringBuilder.append(gameBoard[i].toString());
+            stringBuilder.append("\n");
+        }
+        return stringBuilder.toString();
     }
 
     /**
@@ -156,4 +164,26 @@ public class BoardView implements Iterable<Row>{
         return new BoardIterator();
     }
 
+    /**
+     * Check the equality of two objects and see if the provided object
+     * is equal to the BoardView
+     * @param object
+     *      Object (hopefully a BoardView) to compare if it is equal to the BoardView
+     * @return
+     *      True if the BoardView  match the provided Object
+     *      False otherwise
+     */
+    @Override
+    public boolean equals(Object object){
+        if(object instanceof BoardView){
+            BoardView boardView = (BoardView) object;
+            for (int i = 0; i < BOARD_LENGTH; i++) {
+                if(!boardView.getRow(i).equals(gameBoard[i])){
+                    return false;
+                }
+            }
+            return true;
+        }
+        return false;
+    }
 }

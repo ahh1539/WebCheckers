@@ -1,6 +1,7 @@
 package com.webcheckers.model;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 /**
@@ -14,9 +15,11 @@ public class Game {
     private Player redPlayer;
     private Player whitePlayer;
     private Player winner;
-    private Piece.Color activeColor;
+    private Color activeColor;
     private BoardView redBoard;
     private BoardView whiteBoard;
+
+    private List<Move> moves = new ArrayList<Move>();
 
     public enum ViewMode { PLAY, SPECTATOR, REPLAY }
 
@@ -36,7 +39,7 @@ public class Game {
 
         this.redPlayer = redPlayer;
         this.whitePlayer = whitePlayer;
-        this.activeColor = Piece.Color.RED;
+        this.activeColor = Color.RED;
         this.winner = null;
         this.redBoard = new BoardView(redPlayer);
         this.whiteBoard = new BoardView(whitePlayer);
@@ -60,12 +63,12 @@ public class Game {
         return whitePlayer;
     }
 
-    public Player.Color getPlayerColor(String username){
+    public Color getPlayerColor(String username){
         if(username.equals(redPlayer.getName())){
-            return Player.Color.RED;
+            return Color.RED;
         }
         else if( username.equals(whitePlayer.getName())){
-            return Player.Color.WHITE;
+            return Color.WHITE;
         }
         else{
             return null;
@@ -137,7 +140,7 @@ public class Game {
      * @return
      *      The activeColor, either RED or WHITE
      */
-    public Piece.Color getActiveColor(){
+    public Color getActiveColor(){
         return this.activeColor;
     }
 
@@ -150,8 +153,8 @@ public class Game {
      *      False otherwise
      */
     public boolean isActive(Player player){
-        boolean isRedPlayer = player.equals(this.redPlayer) && this.activeColor.equals(Piece.Color.RED);
-        boolean isWhitePlayer = player.equals(this.whitePlayer) && this.activeColor.equals(Piece.Color.WHITE);
+        boolean isRedPlayer = player.equals(this.redPlayer) && this.activeColor.equals(Color.RED);
+        boolean isWhitePlayer = player.equals(this.whitePlayer) && this.activeColor.equals(Color.WHITE);
         return isRedPlayer || isWhitePlayer;
     }
 
@@ -159,11 +162,11 @@ public class Game {
      * Sets the activeColor to the opposite color
      */
     public void toggleActiveColor(){
-        if(this.activeColor == Piece.Color.RED){
-            this.activeColor = Piece.Color.WHITE;
+        if(this.activeColor == Color.RED){
+            this.activeColor = Color.WHITE;
         }
         else{
-            this.activeColor = Piece.Color.RED;
+            this.activeColor = Color.RED;
         }
     }
 
@@ -205,6 +208,10 @@ public class Game {
      */
     public Player getWinner() {
         return this.winner;
+    }
+
+    public void addMove(Move m){
+        moves.add(m);
     }
 
 
