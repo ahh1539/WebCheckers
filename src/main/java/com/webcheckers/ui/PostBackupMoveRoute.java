@@ -2,6 +2,7 @@ package com.webcheckers.ui;
 
 import com.google.gson.Gson;
 import com.webcheckers.application.GameCenter;
+import com.webcheckers.model.Color;
 import com.webcheckers.model.Game;
 import com.webcheckers.model.Message;
 import com.webcheckers.model.Player;
@@ -40,9 +41,16 @@ public class PostBackupMoveRoute implements Route{
         Game game = gameCenter.getGameLobby().getGame(player);
         Message msg;
 
-        // TODO (from docs): "update the player's turn in the user's game state"
+        // Updates the Game's copies of the board to reflect backed up move
 
-        // TODO: add in actual conditionals, tell user what the action did
+        if(player.getColor().equals(Color.RED)) {
+            game.backupRedTurn();
+        } else {
+            game.backupWhiteTurn();
+        }
+
+        // TODO: determine success of backup function, add descriptive messages
+
         if(true) {
             // backup was successful
             msg = new Message(Message.Type.INFO, "Successful backup");
