@@ -9,14 +9,14 @@ public class Player {
     //
     // Attributes
     //
-    public enum Color {RED, WHITE}
+    //public enum Color {RED, WHITE}
 
     private String name;
     private double totalGames;
     private double wins;
     private boolean inGame;
     private Color color;
-
+    private boolean hasresigned = false;
 
     /**
      * Create a Player with the provided username. 0 total games and wins, they are not
@@ -48,6 +48,10 @@ public class Player {
      */
     public Color getColor() {
         return color;
+    }
+
+    public String toString(){
+        return name + " is "+ color;
     }
 
     /**
@@ -119,6 +123,21 @@ public class Player {
      */
     public double getAverage(){
         return wins/totalGames;
+    }
+
+    /**
+     * Void; when called it changes the status of the player to resigned
+     */
+    public void hasResigned(){
+        hasresigned = true;
+    }
+
+    /**
+     *
+     * @return boolean representing whether or not player has resigned
+     */
+    public boolean resigned(){
+        return hasresigned;
     }
 
     /**

@@ -5,6 +5,7 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.logging.Logger;
 
+import com.webcheckers.model.Color;
 import com.webcheckers.application.GameCenter;
 import com.webcheckers.application.GameLobby;
 import com.webcheckers.application.PlayerLobby;
@@ -89,6 +90,7 @@ public class GetHomeRoute implements Route {
         // Check if the opponent is not null, then get the player from the PlayerLobby based on their username
         if(username != null){
           Player opponent = PlayerLobby.getPlayer(username);
+          opponent.assignColor(Color.WHITE);
 
           if(!gameLobby.hasGame(opponent)){
 
@@ -96,13 +98,13 @@ public class GetHomeRoute implements Route {
             Game game = new Game(player, opponent);
             gameLobby.addGame(game);
 
-            vm.put(GetStartGameRoute.VIEW_MODE_ATTR, Game.ViewMode.PLAY);
-            vm.put(GetStartGameRoute.RED_PLAYER_ATTR, player);
-            vm.put(GetStartGameRoute.WHITE_PLAYER_ATTR, opponent);
-            vm.put(GetStartGameRoute.ACTIVE_COLOR_ATTR, game.getActiveColor());
-            vm.put(GetStartGameRoute.BOARD_ATTR, gameLobby.getGameBoard(player));
+            vm.put(GetGameRoute.VIEW_MODE_ATTR, Game.ViewMode.PLAY);
+            vm.put(GetGameRoute.RED_PLAYER_ATTR, player);
+            vm.put(GetGameRoute.WHITE_PLAYER_ATTR, opponent);
+            vm.put(GetGameRoute.ACTIVE_COLOR_ATTR, game.getActiveColor());
+            vm.put(GetGameRoute.BOARD_ATTR, gameLobby.getGameBoard(player));
 
-            return templateEngine.render(new ModelAndView(vm, GetStartGameRoute.GAME_NAME));
+            return templateEngine.render(new ModelAndView(vm, GetGameRoute.GAME_NAME));
 
           }
 
@@ -111,16 +113,17 @@ public class GetHomeRoute implements Route {
         if(gameLobby.hasGame(player)){
 
           Game game = gameLobby.getGame(player);
+          player.assignColor(game.getPlayerColor(player.getName()));
 
           if(!game.hasWinner()){
 
-            vm.put(GetStartGameRoute.VIEW_MODE_ATTR, "PLAY");
-            vm.put(GetStartGameRoute.RED_PLAYER_ATTR, game.getRedPlayer());
-            vm.put(GetStartGameRoute.WHITE_PLAYER_ATTR, game.getWhitePlayer());
-            vm.put(GetStartGameRoute.ACTIVE_COLOR_ATTR, game.getActiveColor());
-            vm.put(GetStartGameRoute.BOARD_ATTR, gameLobby.getGameBoard(player));
 
-            return templateEngine.render(new ModelAndView(vm, GetStartGameRoute.GAME_NAME));
+            vm.put(GetGameRoute.VIEW_MODE_ATTR, "PLAY");
+            vm.put(GetGameRoute.RED_PLAYER_ATTR, game.getRedPlayer());
+            vm.put(GetGameRoute.WHITE_PLAYER_ATTR, game.getWhitePlayer());
+            vm.put(GetGameRoute.ACTIVE_COLOR_ATTR, game.getActiveColor());
+            vm.put(GetGameRoute.BOARD_ATTR, gameLobby.getGameBoard(player));
+            return templateEngine.render(new ModelAndView(vm, GetGameRoute.GAME_NAME));
 
           }
         }

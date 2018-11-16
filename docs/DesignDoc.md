@@ -11,7 +11,6 @@ geometry: margin=1in
 ## Team Information
 * Team name: Back of the Bus
 * Team members
-  * Elijah Parrish
   * Daria Chaplin
   * Alex Hurley
   * Lillian Kuhn
@@ -51,33 +50,37 @@ This section describes the features of the application.
 
 ### Definition of MVP
 
-A fully working webcheckers game with ability for players to play against each other,
-resign, sign out, etc. all following rules of american checkers.
+> The application will allow different users to sign in and play a game of checkers
+over the web. A user may choose an opponent from a list of available
+players, and the 2 players will be sent to a game of checkers. The game plays
+according to the American rules, except that the most complex move available
+must be made at each turn. Moving regular pieces and kings works the same
+as in the classic American rules. A winner is declared when one player 
+captures all of their opponent's pieces or one player forces their opponent
+into a position where they have no valid moves available. Either player
+can resign from the game during their turn. 
 
 ### MVP Features
-> _Provide a list of top-level Epics and/or Stories of the MVP._
-The application will allow different users to sign in and play a game of checkers over the 
-web. A user may choose an opponent from a list of available players, and the 2 players will 
-be sent to a game of checkers. The game plays according to the American rules, except that 
-the most complex move available must be made at each turn. Moving regular pieces and kings 
-works the same as in the classic American rules. A winner is declared when one player 
-captures all of their opponent's pieces or one player forces their opponent into a position 
-where they have no valid moves available. Either player can resign from the game during their 
-turn.
+* Sign-In
+* Sign-Out
+* Resign
+* Start Game
+* Win Game
+* Make a Move
+
 
 ### Roadmap of Enhancements
-_Spectator: add ability for other signed in users to spectate games
-
-Replay: ability for user to be able to watch previous games so that they can learn from 
-their mistakes_
-
+* Spectator Mode
+    * A third person may watch 2 other players play a game
+* Replay Mode
+    * Players may rewatch the games they just finished playing
 
 
 ## Application Domain
 
 This model shows the general domain of the project
 
-![The WebCheckers Domain Model](domain_model.png)
+![The WebCheckers Domain Model](DomainModel.png)
 
 > The central entity of our application is the Checkers game, which is played on a board.
 The board is defined by Squares, which are in turn defined by their color and location. 
@@ -115,19 +118,21 @@ with the WebCheckers application.
 ![The WebCheckers Web Interface Statechart](state_diagram.png)
 
 
-_
-The flow of the web pages from the user's perspective is as follows: When the user opens the home page
-they first see a simple welcome message and a button to sign in, they will also be presented
+>The flow of the web pages from the user's perspective is as follows: When the user opens the home page
+they first see a simple welcome message and a button to sign in. They will also be presented
 with the number of players who are signed in. When they click to sign in they will be redirected to the Signin
-page where they can post their username. They will then be redirected to home. If they then click 
-the name of another player then both players will be redirected to the game screen 
-where they can play the game of checkers. Once a winner has been decided they will be redirected to the home
-screen.Inside of the game there will be the option to sign out or resign, both of which will result in that player 
-forfeiting the game to the other player, returning them back to the home page._
+page where they can post their username. They will then be redirected to home where, if they
+signed in successfully, they will see a list of other players names. 
+If they then click the name of another player then both players will be 
+redirected to the game screen where they can play the game of checkers.
+Once a winner has been decided they will be redirected to the home
+screen. If either player resigns during the game, both players will be redirected
+to the homepage.
+
 
 
 ### UI Tier
-> _ Provide a summary of the Server-side UI tier of your architecture.
+> _Provide a summary of the Server-side UI tier of your architecture.
 > Describe the types of components in the tier and describe their
 > responsibilities.  This should be a narrative description, i.e. it has
 > a flow or "story line" that the reader can follow.

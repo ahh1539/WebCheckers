@@ -4,7 +4,8 @@ import java.util.Iterator;
 import java.util.NoSuchElementException;
 
 /**
- * An array of Iterable Rows comprised of Spaces that make up the board. Creates the board with Red and White Spaces.
+ * An array of Iterable Rows comprised of Spaces that make up the board.
+ * Creates the board with Red and White Spaces.
  */
 public class BoardView implements Iterable<Row>{
 
@@ -21,33 +22,64 @@ public class BoardView implements Iterable<Row>{
     /**
      * Creates a new Board with 8 Rows then places the Pieces in the correct spots.
      */
-    public BoardView() {
+    public BoardView(Player player) {
         this.gameBoard = new Row[BOARD_LENGTH];
         for(int i = 0; i < BOARD_LENGTH; i++) {
             this.gameBoard[i] = new Row(i);
         }
-        placePieces();
+        if( player.getColor() == Color.RED) {
+            placeRedPieces();
+        }
+        else{
+            System.out.println("placing white pieces");
+            placeWhitePieces();
+        }
+    }
+
+    /**
+     * Create a copy of the Board object for use by the Move object
+     * @param other The board to make a copy of
+     */
+    public BoardView(BoardView other) {
+        this(other.getRow(0), other.getRow(1), other.getRow(2), other.getRow(3),
+                other.getRow(4), other.getRow(5), other.getRow(6), other.getRow(7));
+    }
+
+    public BoardView(Row row1,Row row2,Row row3,Row row4,Row row5,Row row6,Row row7,Row row8){
+        this.gameBoard = new Row[BOARD_LENGTH];
+        this.gameBoard[0] = new Row(row1);
+        this.gameBoard[1] = new Row(row2);
+        this.gameBoard[2] = new Row(row3);
+        this.gameBoard[3] = new Row(row4);
+        this.gameBoard[4] = new Row(row5);
+        this.gameBoard[5] = new Row(row6);
+        this.gameBoard[6] = new Row(row7);
+        this.gameBoard[7] = new Row(row8);
     }
 
     //
     // Public Methods
     //
 
+    public Row getRow(int index){
+        return this.gameBoard[index];
+    }
+
     /**
      * Initializes all pieces on the board and places them according to the colors of the Spaces.
      */
-    public void placePieces(){
+    public void placeRedPieces(){
         for(int i = 0; i < BOARD_LENGTH; i++ ){
             if( i < 3){
                 for (Space space: gameBoard[i]) {
-                    if (space.getColor() == Space.Color.WHITE) {
+                    if (space.getColor() == Space.SpaceColor.WHITE) {
                         space.putWhitePiece();
                     }
                 }
             }
             if( i > 4){
                 for (Space space: gameBoard[i]) {
-                    if (space.getColor() == Space.Color.WHITE) {
+                    if (space.getColor() == Space.SpaceColor.WHITE) {
                         space.putRedPiece();
                     }
                 }
@@ -55,7 +87,36 @@ public class BoardView implements Iterable<Row>{
         }
     }
 
-    //TODO add functions to place pieces differently for different player
+    /**
+     * Initializes all pieces on the board and places them according to the colors of the Spaces.
+     */
+    public void placeWhitePieces(){
+        for(int i = 0; i < BOARD_LENGTH; i++ ){
+            if( i < 3){
+                for (Space space: gameBoard[i]) {
+                    if (space.getColor() == Space.SpaceColor.WHITE) {
+                        space.putRedPiece();
+                    }
+                }
+            }
+            if( i > 4){
+                for (Space space: gameBoard[i]) {
+                    if (space.getColor() == Space.SpaceColor.WHITE) {
+                        space.putWhitePiece();
+                    }
+                }
+            }
+        }
+    }
+    @Override
+    public String toString(){
+        StringBuilder stringBuilder = new StringBuilder();
+        for (int i = 0; i < BOARD_LENGTH; i++) {
+            stringBuilder.append(gameBoard[i].toString());
+            stringBuilder.append("\n");
+        }
+        return stringBuilder.toString();
+    }
 
     /**
      * Provides a way to Iterate through each Row of the Board
@@ -103,4 +164,26 @@ public class BoardView implements Iterable<Row>{
         return new BoardIterator();
     }
 
+    /**
+     * Check the equality of two objects and see if the provided object
+     * is equal to the BoardView
+     * @param object
+     *      Object (hopefully a BoardView) to compare if it is equal to the BoardView
+     * @return
+     *      True if the BoardView  match the provided Object
+     *      False otherwise
+     */
+    @Override
+    public boolean equals(Object object){
+        if(object instanceof BoardView){
+            BoardView boardView = (BoardView) object;
+            for (int i = 0; i < BOARD_LENGTH; i++) {
+                if(!boardView.getRow(i).equals(gameBoard[i])){
+                    return false;
+                }
+            }
+            return true;
+        }
+        return false;
+    }
 }

@@ -11,9 +11,9 @@ public class Space {
     private Piece piece;
     private boolean isValid;
     private int cellIdx;
-    private Color color;
+    private SpaceColor spaceColor;
 
-    public enum Color{ BLACK, WHITE}
+    public enum SpaceColor{ BLACK, WHITE}
 
     /**
      * Create a Space object
@@ -26,7 +26,22 @@ public class Space {
         this.piece = null;
         this.cellIdx = cellIdx;
         this.isValid = isValid;
-        this.color = Color.BLACK;
+        this.spaceColor = SpaceColor.BLACK;
+    }
+
+    /**
+     * Copy constructor for Space. Creates a new Space object from other
+     * @param other The Space object to copy
+     */
+    public Space(Space other){
+        this.piece = other.piece;
+        this.cellIdx = other.cellIdx;
+        this.isValid = other.isValid;
+        this.spaceColor = other.spaceColor;
+    }
+
+    public String toString(){
+        return " Piece: " + this.piece + ", position: (" + this.cellIdx + ")";
     }
 
     /**
@@ -51,7 +66,7 @@ public class Space {
      */
     public void putWhitePiece() {
         if(this.isValid) {
-            this.piece = new Piece(Piece.Color.WHITE, cellIdx);
+            this.piece = new Piece(Color.WHITE, cellIdx);
         }
         this.isValid = false;
     }
@@ -60,7 +75,7 @@ public class Space {
      */
     public void putRedPiece() {
         if(this.isValid) {
-            this.piece = new Piece(Piece.Color.RED, cellIdx);
+            this.piece = new Piece(Color.RED, cellIdx);
         }
         this.isValid = false;
     }
@@ -77,7 +92,7 @@ public class Space {
      * Make the Space color WHITE
      */
     public void makeSpaceWhite(){
-        this.color = Color.WHITE;
+        this.spaceColor = SpaceColor.WHITE;
     }
 
     /**
@@ -85,8 +100,8 @@ public class Space {
      * @return color
      *      The color {@link Color} of the space, either WHITE or BLACK
      */
-    public Color getColor(){
-        return this.color;
+    public SpaceColor getColor(){
+        return this.spaceColor;
     }
 
     /**
@@ -97,6 +112,24 @@ public class Space {
         this.isValid = true;
     }
 
+//    public boolean isPieceNull(Piece p){
+//        if (p == null){
+//            return true;
+//        }
+//        else {
+//            return false;
+//        }
+//    }
+
+    /**
+     * Puts Piece object in this space
+     * @param piece Piece object to put
+     */
+    public void putPiece(Piece piece){
+        this.piece = piece;
+        this.isValid = false;
+    }
+
     /**
      * Returns a boolean of whether the space is valid or not
      * @return True if the space is valid and does not currently contain a piece
@@ -104,4 +137,37 @@ public class Space {
     public boolean isValid(){
         return this.isValid && (this.piece == null);
     }
+
+    /**
+     * Check the equality of two objects and see if the provided object
+     * is equal to the Space
+     * @param object
+     *      Object (hopefully a Space) to compare if it is equal to the Space
+     * @return
+     *      True if the Space piece, cellIDx, isValid, and color match the provided Object
+     *      False otherwise
+     */
+    @Override
+    public boolean equals(Object object){
+        if(object instanceof Space){
+            Space space = (Space) object;
+            if(piece == null){
+                return space.piece == null && (cellIdx == space.getCellIdx())
+                        && (isValid == space.isValid()) && spaceColor == space.spaceColor;
+            }
+            return piece.equals(space.piece) && (cellIdx == space.getCellIdx())
+                    && (isValid == space.isValid()) && spaceColor == space.spaceColor;
+        }
+        return false;
+    }
+/*
+    @Override
+    public String toString(){
+        if (piece == null){
+            return "Space Object:\tPiece: null, cellIdx: " + cellIdx + ", isValid: "
+                    + isValid + ", color: " + color + "\n";
+        }
+        return "Space Object:\tPiece: " + piece.toString() + ", cellIdx: " + cellIdx + ", isValid: "
+                + isValid + ", color: " + color + "\n";
+    }*/
 }

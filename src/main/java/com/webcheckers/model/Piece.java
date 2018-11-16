@@ -5,7 +5,7 @@ package com.webcheckers.model;
  */
 public class Piece {
 
-    public enum Color {RED, WHITE}
+    //public enum Color {RED, WHITE}
     public enum Type {SINGLE, KING}
 
     //
@@ -80,4 +80,15 @@ public class Piece {
         }
         return false;
     }
+    @Override
+    public String toString(){
+        return "Piece Object:\tColor: " + color + ", index: " + index + ", Type: " + type + "\n";
+    }
+
+    public Piece makeKingPiece() {
+        this.type = Type.KING;
+        return this;
+    }
+
+
 }

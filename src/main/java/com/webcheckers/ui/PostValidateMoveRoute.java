@@ -9,9 +9,7 @@ import java.util.Objects;
 import java.util.logging.Logger;
 
 public class PostValidateMoveRoute implements Route {
-
-    // Attributes
-    private static final Logger LOG = Logger.getLogger(PostValidateMoveRoute.class.getName());
+    private static final Logger LOG = Logger.getLogger(GetSignInRoute.class.getName());
 
     private final TemplateEngine templateEngine;
     private final GameCenter gameCenter;
@@ -20,31 +18,32 @@ public class PostValidateMoveRoute implements Route {
 
     /**
      * Create the Spark Route (UI controller) for the
-     * {@code POST /validateMove} HTTP request.
+     * {@code GET /} HTTP request.
      *
      * @param templateEngine
      *   the HTML template rendering engine
      */
     public PostValidateMoveRoute(final TemplateEngine templateEngine, final GameCenter gameCenter) {
-        // Validation
+        // validation
         Objects.requireNonNull(templateEngine, "templateEngine must not be null");
         Objects.requireNonNull(gameCenter, "gameCenter must not be null");
-        // Configuration
+        //
         this.templateEngine = templateEngine;
         this.gameCenter = gameCenter;
+        //
         LOG.config("PostValidateMoveRoute is initialized.");
     }
 
     @Override
     public Object handle(Request request, Response response) {
-        // Grab game from session
+
+        // grab game from session
         final Session session = request.session();
 
-        // Get current player and game to compare active color with
+        // get current player and game to compare active color with
         Player player = session.attribute(PostSignInRoute.PLAYER);
         Game game = gameCenter.getGameLobby().getGame(player);
         BoardView board;
-
         if(player.getColor() == Color.RED){
             board = game.getRedBoard();
         }
@@ -52,18 +51,23 @@ public class PostValidateMoveRoute implements Route {
             board = game.getWhiteBoard();
         }
 
-        // Grab move from request
+        // grab move from request
         final Gson gson = new Gson();
         final String json = request.body();
         final Move move = gson.fromJson(json, Move.class);
 
-        // Check if it's valid, and format response message to JSON
-        // Add valid moves to arraylist in Game
+        // check if it's valid, and format response message to JSON
+        // adds valid moves to arraylist in game
+        if(move == null){
+            Message message = new Message(Message.Type.ERROR, "Move is null");
+            return gson.toJson(message);
+        }
         Message message = move.isValidMessage(board);
         if (!(message.getType() == Message.Type.ERROR)){
             game.addMove(move);
         }
+        String rjson = gson.toJson(message);
 
-        return gson.toJson(message);
+        return rjson;
     }
 }

@@ -57,7 +57,7 @@ public class WebServer {
 
   public static final String SIGN_IN_URL = "/signin";
 
-  public static final String GAME_START_URL = "/game";
+  public static final String GAME_START_URL = "/startGame";
 
   public static final String SIGN_OUT_URL = "/signout";
 
@@ -68,6 +68,12 @@ public class WebServer {
   public static final String RESIGN_GAME_URL = "/resignGame";
 
   public static final String CHECK_TURN_URL = "/checkTurn";
+
+  public static final String BACKUP_MOVE_URL = "/backupMove";
+
+  public static final String SUBMIT_TURN_URL = "/submitTurn";
+
+  public static final String GAME_URL = "/game";
 
   //
   // Attributes
@@ -156,23 +162,32 @@ public class WebServer {
 
     // Shows the Checkers game Home page.
     get(HOME_URL, new GetHomeRoute(templateEngine, gameCenter));
-
     // Shows the Sign In page.
     get(SIGN_IN_URL, new GetSignInRoute(templateEngine));
     // Shows the game page.
-    get(GAME_START_URL, new GetStartGameRoute(templateEngine, gameCenter));
+
+    //get(GAME_START_URL, new GetStartGameRoute(templateEngine, gameCenter));
     // Signs player out
+
     get(SIGN_OUT_URL, new GetSignOutRoute(templateEngine, gameCenter));
     // Request a game
     get(REQUEST_GAME_URL, new GetRequestGameRoute(templateEngine, gameCenter));
 
+    //returns gameboard
+    get(GAME_URL, new GetGameRoute(templateEngine,gameCenter));
+
     //Posts when the player is to resign because they are the inferior player
     post(RESIGN_GAME_URL, new PostResignGameRoute(templateEngine, gameCenter));
-
     // Posts the player username as they sign in
     post(SIGN_IN_URL, new PostSignInRoute(templateEngine, gameCenter));
     // Post a move to validate
     post(VALIDATE_MOVE_URL, new PostValidateMoveRoute(templateEngine, gameCenter));
+    // Check whose turn it is
+    post(CHECK_TURN_URL, new PostCheckTurnRoute(templateEngine, gameCenter));
+    // Submit turn and change active color
+    post(SUBMIT_TURN_URL, new PostSubmitTurnRoute(templateEngine, gameCenter));
+    // Undo move if it's not up to snuff
+    post(BACKUP_MOVE_URL, new PostBackupMoveRoute(gson));
 
 
     LOG.config("WebServer is initialized.");

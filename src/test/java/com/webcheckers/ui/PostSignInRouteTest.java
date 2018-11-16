@@ -10,6 +10,10 @@ import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 import spark.*;
 
+import javax.jws.WebParam;
+
+import java.util.Map;
+
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.eq;
@@ -90,12 +94,7 @@ public class PostSignInRouteTest {
         testHelper.assertViewModelExists();
         testHelper.assertViewModelIsaMap();
         //   * model contains all necessary View-Model data
-        testHelper.assertViewModelAttribute(
-                GetSignInRoute.TITLE_ATTR, GetSignInRoute.TITLE);
-        //testHelper.assertViewModelAttribute(
-          //      GetStartGameRoute.CURRENT_PLAYER_ATTR, );
-        //testHelper.assertViewModelAttribute(
-         //       GetHomeRoute.LOBBY_ATTR, PostSignInRoute.ERROR_TYPE);
+        testHelper.assertViewModelAttribute(GetSignInRoute.TITLE_ATTR, GetSignInRoute.TITLE);
         //   * test view name
         testHelper.assertViewName(GetHomeRoute.ROUTE_NAME);
 
@@ -106,6 +105,26 @@ public class PostSignInRouteTest {
 
     }
 
+    @Test
+    public void testMakeBadArgMessage(){
+        String response = CuT.makeBadArgMessage("test");
+        String expectedResponse = "Usernames must be alphanumeric, spaces optional. 'test' is invalid.";
+        assertEquals(response,expectedResponse);
+    }
 
+    @Test
+    public void testMakeInvalidArgMessage(){
+        String response = CuT.makeInvalidArgMessage("test");
+        String expectedResponse = "test is already in use - try again.";
+        assertEquals(response,expectedResponse);
+    }
+
+    @Test
+    public void testError(){
+        final TemplateEngineTester testHelper = new TemplateEngineTester();
+        when(engine.render(any(ModelAndView.class))).thenAnswer(testHelper.makeAnswer());
+        Map<String, Object> vm = mock(Map.class);
+        CuT.error(vm, "test");
+    }
 
 }

@@ -2,6 +2,7 @@ package com.webcheckers.ui;
 
 import com.webcheckers.application.GameCenter;
 import com.webcheckers.application.PlayerLobby;
+import com.webcheckers.model.Color;
 import com.webcheckers.model.Game;
 import com.webcheckers.model.Message;
 import com.webcheckers.model.Player;
@@ -62,7 +63,7 @@ public class GetResignGameRoute implements Route{
         Game game = this.gameCenter.getGameLobby().getGame(player);
 
         game.setLoser(player);
-        if (player.getColor() == Player.Color.WHITE){
+        if (player.getColor() == Color.WHITE){
             game.setWinner(game.getRedPlayer());
             game.getRedPlayer().leaveGame();
         }
