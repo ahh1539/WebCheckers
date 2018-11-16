@@ -73,8 +73,6 @@ public class GetResignGameRoute implements Route{
         }
         player.leaveGame();
 
-
-
         // Handles a null game object
 
         response.redirect(WebServer.HOME_URL);

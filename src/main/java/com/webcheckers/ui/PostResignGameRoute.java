@@ -46,7 +46,6 @@ public class PostResignGameRoute implements Route{
     @Override
     public Object handle(Request request, Response response) {
         LOG.finer("GetResignGame is invoked.");
-        System.out.println("resignresignresignresignresign");
         // Retrieves the HTTP session and necessary player/game info
         final Session session = request.session();
         Player player = session.attribute(PostSignInRoute.PLAYER);

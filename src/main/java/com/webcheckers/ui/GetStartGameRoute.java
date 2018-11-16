@@ -6,6 +6,7 @@ import com.webcheckers.application.PlayerLobby;
 import com.webcheckers.model.Game;
 import com.webcheckers.model.Message;
 import com.webcheckers.model.Player;
+import com.webcheckers.model.Color;
 import spark.*;
 
 import java.util.HashMap;
@@ -65,9 +66,11 @@ public class GetStartGameRoute implements Route {
 
         Player player1 =  session.attribute(PostSignInRoute.PLAYER);
         String secondPlayer = request.queryParams("opponent");
-
-        // Checks if the players are already in the lobby, if not it adds them.
         Player player2 = new Player(secondPlayer);
+        player2.assignColor(Color.WHITE);
+
+        //TODO outsource this to a different class make a method to do this
+        // Checks if the players are already in the lobby, if not it adds them.
         if(!playerLobby.hasPlayer(player1)){
             playerLobby.addPlayer(player1);
         }
@@ -106,7 +109,25 @@ public class GetStartGameRoute implements Route {
 
         // Configures view model for new game
         gameLobby.addGame(game);
+
+        if(game == null){
+            vm.put(TITLE_ATTR, TITLE);
+            vm.put(GetHomeRoute.NUM_PLAYERS, this.gameCenter.getPlayerLobby().getNumberOfPlayers());
+            vm.put(CURRENT_PLAYER_ATTR, player1);
+            vm.put(GetHomeRoute.LOBBY_ATTR, this.gameCenter.getPlayerLobby().getPlayerLobby());
+            return templateEngine.render(new ModelAndView(vm, GetHomeRoute.ROUTE_NAME));
+        }
+
         Message message = new Message(Message.Type.ERROR, "Text");
+
+        if( player1.getColor() == Color.RED) {
+            LOG.finer("red board building");
+            vm.put(BOARD_ATTR, game.getRedBoard());
+        }
+        if( player1.getColor() == Color.WHITE) {
+            LOG.finer("white board building");
+            vm.put(BOARD_ATTR, game.getWhiteBoard());
+        }
 
         vm.put(GetStartGameRoute.MESSAGE, message);
         vm.put(GetStartGameRoute.CURRENT_PLAYER_ATTR, player1);
@@ -114,20 +135,13 @@ public class GetStartGameRoute implements Route {
         vm.put(GetStartGameRoute.RED_PLAYER_ATTR, player1);
         vm.put(GetStartGameRoute.WHITE_PLAYER_ATTR, player2);
         vm.put(GetStartGameRoute.ACTIVE_COLOR_ATTR, gameLobby.getGame(player1).getActiveColor());
-        vm.put(GetStartGameRoute.BOARD_ATTR, gameLobby.getGameBoard(player1));
 
         return templateEngine.render(new ModelAndView(vm, GetStartGameRoute.GAME_NAME));
 
 
-//        // Handles a null game object
-//
-//        if(game == null){
-//            vm.put(TITLE_ATTR, TITLE);
-//            vm.put(GetHomeRoute.NUM_PLAYERS, this.gameCenter.getPlayerLobby().getNumberOfPlayers());
-//            vm.put(CURRENT_PLAYER_ATTR, player);
-//            vm.put(GetHomeRoute.LOBBY_ATTR, this.gameCenter.getPlayerLobby().getPlayerLobby());
-//            return templateEngine.render(new ModelAndView(vm, GetHomeRoute.ROUTE_NAME));
-//        }
+        // Handles a null game object
+
+
 
     }
 }
