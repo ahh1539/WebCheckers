@@ -42,10 +42,11 @@ public class PostValidateMoveRoute implements Route {
 
         // Get current player and game to compare active color with
         Player player = session.attribute(PostSignInRoute.PLAYER);
+        Color playerColor = player.getColor();
         Game game = gameCenter.getGameLobby().getGame(player);
         BoardView board;
 
-        if(player.getColor() == Color.RED){
+        if(playerColor.equals(Color.RED)){
             board = game.getRedBoard();
         }
         else{
@@ -61,7 +62,11 @@ public class PostValidateMoveRoute implements Route {
         // Add valid moves to arraylist in Game
         Message message = move.isValidMessage(board);
         if (!(message.getType() == Message.Type.ERROR)){
-            game.addMove(move);
+            if (playerColor.equals(Color.RED)) {
+                game.updateBoardRedTurn(move);
+            } else {
+                game.updateBoardWhiteTurn(move);
+            }
         }
 
         return gson.toJson(message);
