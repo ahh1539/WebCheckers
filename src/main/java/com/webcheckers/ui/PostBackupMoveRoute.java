@@ -1,14 +1,19 @@
 package com.webcheckers.ui;
 
 import com.google.gson.Gson;
+import com.webcheckers.application.GameCenter;
+import com.webcheckers.model.Game;
 import com.webcheckers.model.Message;
+import com.webcheckers.model.Player;
 import spark.*;
 
+import java.util.Objects;
 import java.util.logging.Logger;
 
 public class PostBackupMoveRoute implements Route{
 
     // Attributes
+    private final GameCenter gameCenter;
     private static final Logger LOG = Logger.getLogger(PostBackupMoveRoute.class.getName());
     private Gson gson;
 
@@ -16,17 +21,23 @@ public class PostBackupMoveRoute implements Route{
      * Create the Spark Route (UI controller) for the
      * {@code POST /backupMove} HTTP request.
      *
-     * @param gson
-     *   gson object to hold necessary message
+     * @param gameCenter
+     *      used to obtain Game being updated
      */
-    public PostBackupMoveRoute(final Gson gson) {
-        // No configuration required, set up logger
+    public PostBackupMoveRoute(final GameCenter gameCenter) {
+        // Validation and configuration
+        Objects.requireNonNull(gameCenter, "gameCenter must not be null");
+        this.gameCenter = gameCenter;
+        // Set up logger
         LOG.config("PostBackupMoveRoute is initialized.");
     }
 
     @Override
     public Object handle(Request request, Response response) {
 
+        final Session session = request.session();
+        Player player = session.attribute(PostSignInRoute.PLAYER);
+        Game game = gameCenter.getGameLobby().getGame(player);
         Message msg;
 
         // TODO (from docs): "update the player's turn in the user's game state"
