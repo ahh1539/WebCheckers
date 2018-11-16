@@ -58,6 +58,10 @@ public class Game {
         pieces.remove(piece);
     }
 
+    public void addMove(Move move){
+        moves.add(move);
+    }
+
     /**
      * Gets the Red Player from the Game
      * @return
