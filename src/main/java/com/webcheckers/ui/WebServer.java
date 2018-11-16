@@ -185,7 +185,7 @@ public class WebServer {
     // Submit turn and change active color
     post(SUBMIT_TURN_URL, new PostSubmitTurnRoute(templateEngine, gameCenter));
     // Undo move if it's not up to snuff
-    post(BACKUP_MOVE_URL, new PostBackupMoveRoute(gson));
+    post(BACKUP_MOVE_URL, new PostBackupMoveRoute(gameCenter));
 
 
     LOG.config("WebServer is initialized.");
