@@ -55,7 +55,6 @@ public class GetStartGameRoute implements Route {
     @Override
     public Object handle(Request request, Response response) {
         LOG.finer("GetStartGameRoute is invoked.");
-        System.out.println("reached herereeeeeeeee");
         Map<String, Object> vm = new HashMap<>();
         vm.put(TITLE_ATTR, TITLE);
         final Session session = request.session();
@@ -66,12 +65,11 @@ public class GetStartGameRoute implements Route {
 
         Player player1 = session.attribute(PostSignInRoute.PLAYER);
 
-
-        System.out.println("making new game or refreshing current one");
-        // Checks if there is already a game, if so it refreshes the game state
-//        if (player1.resigned()){
-//            response.redirect(WebServer.HOME_URL);
-//        }
+         //Checks if there is already a game, if so it refreshes the game state
+        if (player1.resigned()){
+            response.redirect(WebServer.HOME_URL);
+            return templateEngine.render(new ModelAndView(vm, GetStartGameRoute.GAME_NAME));
+        }
         if (gameLobby.hasGame(player1)) {
             Game game = gameLobby.getGame(player1);
             if (player1.getColor() == Color.RED) {

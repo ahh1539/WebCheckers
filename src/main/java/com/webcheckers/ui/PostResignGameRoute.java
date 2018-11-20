@@ -55,7 +55,8 @@ public class PostResignGameRoute implements Route{
 
         //sets winner and loser for game and removes both players
         game.setLoser(player);
-
+        Player red = game.getRedPlayer();
+        Player white = game.getWhitePlayer();
         if (player.getColor() == Color.WHITE){
             game.setWinner(game.getRedPlayer());
             game.getRedPlayer().leaveGame();
@@ -70,7 +71,7 @@ public class PostResignGameRoute implements Route{
         player.leaveGame();
 
         // checks whether or not players successfully left the game
-        if (!game.getWhitePlayer().inGame() || !game.getRedPlayer().inGame()){
+        if (!white.inGame() || !red.inGame()){
             System.out.println("looooooooooooooppppp1111111111111111");
             Message message = new Message(Message.Type.INFO, "true");
             String rJson = gson.toJson(message);
