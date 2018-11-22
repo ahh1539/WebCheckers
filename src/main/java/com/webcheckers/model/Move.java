@@ -1,5 +1,4 @@
 package com.webcheckers.model;
-
 import java.io.Serializable;
 
 /**
@@ -42,20 +41,12 @@ public class Move implements Serializable {
         this.end = end;
     }
 
-    /**
-     * Accessor method for start
-     * @return start
-     *   beginning position of piece
-     */
+    // Returns the start location's Position
     public Position getStart(){
         return start;
     }
 
-    /**
-     * Accessor method for end
-     * @return end
-     *   final position of piece
-     */
+    // Returns the end location's Position
     public Position getEnd(){
         return end;
     }
@@ -116,17 +107,22 @@ public class Move implements Serializable {
         Position start = this.getStart();
         Position end = this.getEnd();
 
-        // Applies various rules to determine info about attempted move
+        // Different spaces and rows required to perform logic
         startRowIndex = this.start.getRow();
         endRowIndex = this.end.getRow();
         startCell =  this.start.getCell();
         endCell = this.end.getCell();
         targetRow = (startRowIndex + endRowIndex) / 2;
         targetCell = (startCell + endCell) / 2;
+
+        // Logic stored in these variables
+        // "Pos" indicates movement forwards or rightwards
+
         isJumpRow = (startRowIndex - 2) == endRowIndex;
         isJumpCell = (startCell - 2 == endCell);
         isJumpRowPos = (startRowIndex + 2) == endRowIndex;
         isJumpCellPos = (startCell + 2 == endCell);
+
         correctRows = (startRowIndex - 1 == endRowIndex);
         correctCell = (startCell-1 == endCell);
         correctCellPos = (startCell+1 == endCell);
