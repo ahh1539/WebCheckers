@@ -153,34 +153,15 @@ public class Move implements Serializable {
 
         // Check if the piece is single
         if(movingPiece.getType() == Piece.Type.SINGLE){
-            // If it is Red
-            if(movingPiece.getColor() == Color.RED){
-                if((correctCellPos || correctCell) && correctRows){
-                    if(endSpace.isValid()){
-                        valid = true;
-                    }
-                }
-                else if (isJumpRow && (isJumpCell || isJumpCellPos)){
-                    if(endSpace.isValid() && !targetSpace.isValid()){
-                        if(targetSpace.getPiece().getColor() != movingPiece.getColor()){
-                            valid = true;
-                        }
-                    }
+            if((correctCellPos || correctCell) && correctRows){
+                if(endSpace.isValid()){
+                    valid = true;
                 }
             }
-            // If it is White
-            else{
-                if(correctRowsPos && (correctCellPos || correctCell)){
-                    if(endSpace.isValid()) {
+            else if (isJumpRow && (isJumpCell || isJumpCellPos)){
+                if(endSpace.isValid() && !targetSpace.isValid()){
+                    if(targetSpace.getPiece().getColor() != movingPiece.getColor()){
                         valid = true;
-                    }
-                }
-                // check if jump
-                else if (isJumpRowPos && (isJumpCell || isJumpCellPos)){
-                    if(endSpace.isValid() && !targetSpace.isValid()){
-                        if (targetSpace.getPiece().getColor() != startSpace.getPiece().getColor()){
-                            valid = true;
-                        }
                     }
                 }
             }
