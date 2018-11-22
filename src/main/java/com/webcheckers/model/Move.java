@@ -72,33 +72,6 @@ public class Move implements Serializable {
     }
 
     /**
-     * Transfer the successfully validated move to a copy of the board
-     * @return
-     *   new BoardView with changes made
-     */
-    public BoardView makeMove(){
-        BoardView copyBoard = new BoardView(this.board);
-        Space startSpace = getStartSpace(copyBoard.getRow(this.startRowIndex));
-        Space endSpace = getEndSpace(copyBoard.getRow(this.endRowIndex));
-        Piece movingPiece = startSpace.getPiece();
-        Space targetSpace = copyBoard.getRow(targetRow).getSpace(targetCell);
-
-        // Remove piece at starting position and place piece at ending position
-        startSpace.removePiece();
-        endSpace.putPiece(movingPiece);
-
-        // Check if move is a jump
-        if(this.isJump()) {
-            // Capture piece
-            targetSpace.removePiece();
-        }
-        if((endRowIndex == 7 || endRowIndex == 0) && endSpace.getPiece().getType() == Piece.Type.SINGLE) {
-            endSpace.putPiece(movingPiece.makeKingPiece());
-        }
-        return copyBoard;
-    }
-
-    /**
      * Helper function to set up values for use in isValid
      */
     private void isValidSetup() {
