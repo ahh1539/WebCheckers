@@ -18,6 +18,8 @@ public class Game {
     private Color activeColor;
     private BoardView redBoard;
     private BoardView whiteBoard;
+    private int redCaptured = 0;
+    private int whiteCaptured = 0;
 
     private final int NUM_ROWS_COLS = 7;
 
@@ -218,6 +220,44 @@ public class Game {
      *      The current list of moves
      */
     public List<Move> getMoves() { return this.moves; }
+
+    /**
+     * Completes removal of white captured piece and adds to captured count
+     * @param target
+     *      location of piece being captured
+     */
+    public void whiteCaptured(Position target) {
+        whiteCaptured++;
+
+        // Remove from red board
+        Row targetRow = this.redBoard.getRow(target.getRow());
+        Space targetSpace = targetRow.getSpace(target.getCell());
+        targetSpace.removePiece();
+
+        // Remove from white board
+        targetRow = this.whiteBoard.getRow(NUM_ROWS_COLS - target.getRow());
+        targetSpace = targetRow.getSpace(NUM_ROWS_COLS - target.getCell());
+        targetSpace.removePiece();
+    }
+
+    /**
+     * Completes removal of red captured piece and adds to captured count
+     * @param target
+     *      location of piece being captured
+     */
+    public void redCaptured(Position target) {
+        redCaptured++;
+
+        // Remove from white board
+        Row targetRow = this.whiteBoard.getRow(target.getRow());
+        Space targetSpace = targetRow.getSpace(target.getCell());
+        targetSpace.removePiece();
+
+        // Remove from red board
+        targetRow = this.redBoard.getRow(NUM_ROWS_COLS - target.getRow());
+        targetSpace = targetRow.getSpace(NUM_ROWS_COLS - target.getCell());
+        targetSpace.removePiece();
+    }
 
     /**
      * Updates both boards for a red player's turn, adds move to list of moves,
