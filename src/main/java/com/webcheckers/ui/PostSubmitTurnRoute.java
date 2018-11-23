@@ -2,13 +2,13 @@ package com.webcheckers.ui;
 
 import com.google.gson.Gson;
 import com.webcheckers.application.GameCenter;
-import com.webcheckers.model.Game;
-import com.webcheckers.model.Message;
-import com.webcheckers.model.Player;
+import com.webcheckers.model.*;
 import spark.*;
 import static spark.Spark.halt;
 
+import java.lang.*;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.logging.Logger;
@@ -47,18 +47,34 @@ public class PostSubmitTurnRoute implements Route {
 
         final Session session = request.session();
 
+        // Get current player and game to compare active color with
 
-        // get current player and game to compare active color with
         Player player = session.attribute(PostSignInRoute.PLAYER);
         Game game = gameCenter.getGameLobby().getGame(player);
         Message msg;
 
+        // Checks for a captured piece and removes
+
+        List<Move> moves = game.getMoves();
+        Move lastMove = moves.get(moves.size() - 1);
+        Position start = lastMove.getStart();
+        Position end = lastMove.getEnd();
+
+        if(Math.abs(start.getRow() - end.getRow()) > 1) {
+            // Quick implementation of single jump capture
+            int targetRow = Math.abs(start.getRow() + end.getRow()) / 2;
+            int targetCell = Math.abs(start.getCell() + end.getCell()) / 2;
+            Position target = new Position(targetRow, targetCell);
+
+            if(player.getColor().equals(Color.RED)) {
+                game.whiteCaptured(target);
+            } else {
+                game.redCaptured(target);
+            }
+        }
+
         // TODO: complete implementation with specific message based on validateMove results
         // TODO: Refresh /game if not error
-
-        Map<String, Object> vm = new HashMap<>();
-        //vm.put(TITLE_ATTR, TITLE);
-
 
         if(true) {
 
