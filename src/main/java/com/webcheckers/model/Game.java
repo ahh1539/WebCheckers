@@ -213,7 +213,15 @@ public class Game {
     }
 
     /**
-     * Updates both boards for a red player's turn, adds move to list of moves
+     * Gets the list of moves made so far in the game
+     * @return
+     *      The current list of moves
+     */
+    public List<Move> getMoves() { return this.moves; }
+
+    /**
+     * Updates both boards for a red player's turn, adds move to list of moves,
+     *  makes pieces into kings as necessary
      * @param m
      *      the Move submitted
      */
@@ -261,7 +269,8 @@ public class Game {
     }
 
     /**
-     * Updates both boards for a white player's turn, removes move from list of moves
+     * Updates both boards for a white player's turn, removes move from list of moves,
+     *  makes pieces into kings as necessary
      * @param m
      *      the Move submitted
      */
