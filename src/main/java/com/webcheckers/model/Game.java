@@ -233,6 +233,11 @@ public class Game {
         Space endSpace = endRow.getSpace(m.getEnd().getCell());
         endSpace.putPiece(piece);
 
+        // Checks for new king piece
+        if(piece.getType().equals(Piece.Type.SINGLE) && endRow.getIndex() == 0) {
+            endSpace.putPiece(piece.makeKingPiece());
+        }
+
         // WHITE BOARD
         // Overwrites all variables used for red board
 
@@ -247,6 +252,11 @@ public class Game {
         endRow = this.whiteBoard.getRow(NUM_ROWS_COLS - m.getEnd().getRow());
         endSpace = endRow.getSpace(NUM_ROWS_COLS - m.getEnd().getCell());
         endSpace.putPiece(piece);
+
+        // Checks for new king piece
+        if(piece.getType().equals(Piece.Type.SINGLE) && endRow.getIndex() == NUM_ROWS_COLS) {
+            endSpace.putPiece(piece.makeKingPiece());
+        }
 
     }
 
@@ -271,6 +281,11 @@ public class Game {
         Space endSpace = endRow.getSpace(m.getEnd().getCell());
         endSpace.putPiece(piece);
 
+        // Checks for new king piece
+        if(piece.getType().equals(Piece.Type.SINGLE) && endRow.getIndex() == 0) {
+            endSpace.putPiece(piece.makeKingPiece());
+        }
+
         // RED BOARD
         // Overwrites all variables used for white board
 
@@ -285,6 +300,11 @@ public class Game {
         endRow = this.redBoard.getRow(NUM_ROWS_COLS - m.getEnd().getRow());
         endSpace = endRow.getSpace(NUM_ROWS_COLS - m.getEnd().getCell());
         endSpace.putPiece(piece);
+
+        // Checks for new king piece
+        if(piece.getType().equals(Piece.Type.SINGLE) && endRow.getIndex() == NUM_ROWS_COLS) {
+            endSpace.putPiece(piece.makeKingPiece());
+        }
 
     }
 
