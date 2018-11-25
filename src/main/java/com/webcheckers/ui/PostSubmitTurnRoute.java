@@ -21,7 +21,6 @@ public class PostSubmitTurnRoute implements Route {
 
     // Attributes
     private static final Logger LOG = Logger.getLogger(PostSubmitTurnRoute.class.getName());
-    private Gson gson;
 
     /**
      * Create the Spark Route (UI controller) for the
@@ -73,8 +72,8 @@ public class PostSubmitTurnRoute implements Route {
 
             if(Math.abs(start.getRow() - end.getRow()) > 1) {
                 // Quick implementation of single jump capture
-                int targetRow = Math.abs(start.getRow() + end.getRow()) / 2;
-                int targetCell = Math.abs(start.getCell() + end.getCell()) / 2;
+                int targetRow = start.getRow() + end.getRow() / 2;
+                int targetCell = start.getCell() + end.getCell() / 2;
                 Position target = new Position(targetRow, targetCell);
 
                 // Need to determine all targets and call capture method for each
@@ -94,8 +93,7 @@ public class PostSubmitTurnRoute implements Route {
                     "Please backup your move and try again.");
         }
 
-        gson = new Gson();
-        String rJSON = gson.toJson(msg);
-        return rJSON;
+        Gson gson = new Gson();
+        return gson.toJson(msg);
     }
 }
