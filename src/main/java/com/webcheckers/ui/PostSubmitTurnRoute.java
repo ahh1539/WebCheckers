@@ -72,8 +72,8 @@ public class PostSubmitTurnRoute implements Route {
 
             if(Math.abs(start.getRow() - end.getRow()) > 1) {
                 // Quick implementation of single jump capture
-                int targetRow = start.getRow() + end.getRow() / 2;
-                int targetCell = start.getCell() + end.getCell() / 2;
+                int targetRow = (start.getRow() + end.getRow()) / 2;
+                int targetCell = (start.getCell() + end.getCell()) / 2;
                 Position target = new Position(targetRow, targetCell);
 
                 // Need to determine all targets and call capture method for each
