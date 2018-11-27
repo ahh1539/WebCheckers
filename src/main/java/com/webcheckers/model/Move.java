@@ -106,7 +106,7 @@ public class Move implements Serializable {
             targetSpace.removePiece();
         }
         if((endRowIndex == 7 || endRowIndex == 0) && endSpace.getPiece().getType() == Piece.Type.SINGLE) {
-            endSpace.putPiece(movingPiece.makeKingPiece());
+            endSpace.putPiece(movingPiece.makeKing()); //changed to makeKing from makeKingPiece
         }
         return copyBoard;
     }
