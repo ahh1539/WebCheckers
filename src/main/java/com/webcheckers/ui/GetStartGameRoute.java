@@ -65,11 +65,13 @@ public class GetStartGameRoute implements Route {
 
         Player player1 = session.attribute(PostSignInRoute.PLAYER);
 
-         //Checks if there is already a game, if so it refreshes the game state
+         //Checks is player has resigned, if so it returns to homepage
         if (player1.resigned()){
             response.redirect(WebServer.HOME_URL);
             return templateEngine.render(new ModelAndView(vm, GetStartGameRoute.GAME_NAME));
         }
+
+        // Checks to see if a player is already in a game and then refreshes that game if so
         if (gameLobby.hasGame(player1)) {
             Game game = gameLobby.getGame(player1);
             if (player1.getColor() == Color.RED) {
@@ -80,7 +82,6 @@ public class GetStartGameRoute implements Route {
                 LOG.finer("white board building");
                 vm.put(BOARD_ATTR, game.getWhiteBoard());
             }
-            //vm.put(GetStartGameRoute.MESSAGE, message);
             vm.put(GetStartGameRoute.CURRENT_PLAYER_ATTR, player1);
             vm.put(GetStartGameRoute.VIEW_MODE_ATTR, Game.ViewMode.PLAY);
             vm.put(GetStartGameRoute.RED_PLAYER_ATTR, game.getRedPlayer());
