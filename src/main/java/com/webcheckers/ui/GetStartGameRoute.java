@@ -1,10 +1,12 @@
 package com.webcheckers.ui;
 
 import com.webcheckers.application.GameCenter;
+import com.webcheckers.application.GameLobby;
 import com.webcheckers.application.PlayerLobby;
-import com.webcheckers.model.Color;
 import com.webcheckers.model.Game;
+import com.webcheckers.model.Message;
 import com.webcheckers.model.Player;
+import com.webcheckers.model.Color;
 import spark.*;
 
 import java.util.HashMap;
@@ -53,45 +55,80 @@ public class GetStartGameRoute implements Route {
     @Override
     public Object handle(Request request, Response response) {
         LOG.finer("GetStartGameRoute is invoked.");
-
-        // Retrieves the HTTP session and necessary player/game info
-
-        final Session session = request.session();
-        Player player = session.attribute(PostSignInRoute.PLAYER);
-        player = PlayerLobby.getPlayer(player.getName());
-        LOG.info("player color start game:" + player.getColor());
-        PlayerLobby.getPlayer(player.getName()).joinGame();
-        Game game = this.gameCenter.getGameLobby().getGame(player);
-
         Map<String, Object> vm = new HashMap<>();
         vm.put(TITLE_ATTR, TITLE);
+        final Session session = request.session();
+        GameLobby gameLobby = gameCenter.getGameLobby();
+        PlayerLobby playerLobby = gameCenter.getPlayerLobby();
 
-        // Handles a null game object
+        // Sets up player and opponent player based on selection
 
-        if(game == null){
-            vm.put(TITLE_ATTR, TITLE);
-            vm.put(GetHomeRoute.NUM_PLAYERS, this.gameCenter.getPlayerLobby().getNumberOfPlayers());
-            vm.put(CURRENT_PLAYER_ATTR, player);
-            vm.put(GetHomeRoute.LOBBY_ATTR, this.gameCenter.getPlayerLobby().getPlayerLobby());
-            return templateEngine.render(new ModelAndView(vm, GetHomeRoute.ROUTE_NAME));
+        Player player1 = session.attribute(PostSignInRoute.PLAYER);
+
+         //Checks is player has resigned, if so it returns to homepage
+        if (player1.resigned()){
+            response.redirect(WebServer.HOME_URL);
+            return templateEngine.render(new ModelAndView(vm, GetStartGameRoute.GAME_NAME));
         }
 
-        // Configures view model to set up template based on player and opponent info
+        // Checks to see if a player is already in a game and then refreshes that game if so
+        if (gameLobby.hasGame(player1)) {
+            Game game = gameLobby.getGame(player1);
+            if (player1.getColor() == Color.RED) {
+                LOG.finer("red board building");
+                vm.put(BOARD_ATTR, game.getRedBoard());
+            }
+            if (player1.getColor() == Color.WHITE) {
+                LOG.finer("white board building");
+                vm.put(BOARD_ATTR, game.getWhiteBoard());
+            }
+            vm.put(GetStartGameRoute.CURRENT_PLAYER_ATTR, player1);
+            vm.put(GetStartGameRoute.VIEW_MODE_ATTR, Game.ViewMode.PLAY);
+            vm.put(GetStartGameRoute.RED_PLAYER_ATTR, game.getRedPlayer());
+            vm.put(GetStartGameRoute.WHITE_PLAYER_ATTR, game.getWhitePlayer());
+            vm.put(GetStartGameRoute.ACTIVE_COLOR_ATTR, gameLobby.getGame(player1).getActiveColor());
+            return templateEngine.render(new ModelAndView(vm, GetStartGameRoute.GAME_NAME));
 
-        if( player.getColor() == Color.RED) {
-            LOG.finer("red board building");
-            vm.put(BOARD_ATTR, game.getRedBoard());
+        } else {
+            //creates a new game
+            String secondPlayer = request.queryParams("opponent");
+            System.out.println(secondPlayer);
+            Player player2 = new Player(secondPlayer);
+            if (PlayerLobby.getPlayer(player2.getName()).inGame()) {
+                String msg = "The player you have selected is already in a game. Select another player.";
+                vm.put(GetHomeRoute.ERROR, msg);
+                vm.put(GetHomeRoute.PLAYER_LIST, playerLobby.getPlayerLobby());
+                vm.put(GetHomeRoute.LOBBY_ATTR, playerLobby);
+                vm.put(GetHomeRoute.PLAYER, player1);
+                return templateEngine.render(new ModelAndView(vm, GetHomeRoute.ROUTE_NAME));
+            }
+            player2.assignColor(Color.WHITE);
+            Game game = new Game(player1, player2);
+            PlayerLobby.getPlayer(player1.getName()).joinGame();
+            PlayerLobby.getPlayer(player2.getName()).joinGame();
+
+            // Configures view model for new game
+            gameLobby.addGame(game);
+
+            Message message = new Message(Message.Type.error, "Text");
+
+            if (player1.getColor() == Color.RED) {
+                LOG.finer("red board building");
+                vm.put(BOARD_ATTR, game.getRedBoard());
+            }
+            if (player1.getColor() == Color.WHITE) {
+                LOG.finer("white board building");
+                vm.put(BOARD_ATTR, game.getWhiteBoard());
+            }
+
+            vm.put(GetStartGameRoute.MESSAGE, message);
+            vm.put(GetStartGameRoute.CURRENT_PLAYER_ATTR, player1);
+            vm.put(GetStartGameRoute.VIEW_MODE_ATTR, Game.ViewMode.PLAY);
+            vm.put(GetStartGameRoute.RED_PLAYER_ATTR, player1);
+            vm.put(GetStartGameRoute.WHITE_PLAYER_ATTR, player2);
+            vm.put(GetStartGameRoute.ACTIVE_COLOR_ATTR, gameLobby.getGame(player1).getActiveColor());
+
+            return templateEngine.render(new ModelAndView(vm, GetStartGameRoute.GAME_NAME));
         }
-        if( player.getColor() == Color.WHITE) {
-            LOG.finer("white board building");
-            vm.put(BOARD_ATTR, game.getWhiteBoard());
-        }
-        vm.put(CURRENT_PLAYER_ATTR, player);
-        vm.put(TITLE_ATTR, TITLE);
-        vm.put(VIEW_MODE_ATTR, Game.ViewMode.PLAY);
-        vm.put(RED_PLAYER_ATTR, game.getRedPlayer());
-        vm.put(WHITE_PLAYER_ATTR, game.getWhitePlayer());
-        vm.put(ACTIVE_COLOR_ATTR, game.getActiveColor());
-        return templateEngine.render(new ModelAndView(vm , GetStartGameRoute.GAME_NAME));
     }
 }

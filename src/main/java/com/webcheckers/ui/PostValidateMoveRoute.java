@@ -15,7 +15,6 @@ public class PostValidateMoveRoute implements Route {
 
     private final TemplateEngine templateEngine;
     private final GameCenter gameCenter;
-
     private Gson gson;
 
     /**

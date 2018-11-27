@@ -60,6 +60,14 @@ public class Piece {
     }
 
     /**
+     * Creates a KingPiece version of the Piece with the same attributes
+     * @return the newly king'd piece
+     */
+    public KingPiece makeKing() {
+        return new KingPiece(this.color, this.index);
+    }
+
+    /**
      * Check the equality of two objects and see if the provided object
      * is equal to the Piece
      * @param object
