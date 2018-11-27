@@ -11,7 +11,7 @@ import spark.*;
 import java.util.Objects;
 import java.util.logging.Logger;
 
-public class PostBackupMoveRoute implements Route{
+public class PostBackupMoveRoute implements Route {
 
     // Attributes
     private final GameCenter gameCenter;
@@ -22,8 +22,7 @@ public class PostBackupMoveRoute implements Route{
      * Create the Spark Route (UI controller) for the
      * {@code POST /backupMove} HTTP request.
      *
-     * @param gameCenter
-     *      used to obtain Game being updated
+     * @param gameCenter used to obtain Game being updated
      */
     public PostBackupMoveRoute(final GameCenter gameCenter) {
         // Validation and configuration
@@ -43,7 +42,7 @@ public class PostBackupMoveRoute implements Route{
 
         // Updates the Game's copies of the board to reflect backed up move
 
-        if(player.getColor().equals(Color.RED)) {
+        if (player.getColor().equals(Color.RED)) {
             game.backupRedTurn();
         } else {
             game.backupWhiteTurn();
@@ -51,7 +50,7 @@ public class PostBackupMoveRoute implements Route{
 
         // TODO: determine success of backup function, add descriptive messages
 
-        if(true) {
+        if (true) {
             // backup was successful
             msg = new Message(Message.Type.info, "Successful backup");
         } else {

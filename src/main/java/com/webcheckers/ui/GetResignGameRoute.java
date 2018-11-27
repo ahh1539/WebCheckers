@@ -10,7 +10,7 @@ import spark.*;
 import java.util.Objects;
 import java.util.logging.Logger;
 
-public class GetResignGameRoute implements Route{
+public class GetResignGameRoute implements Route {
 
     private static final Logger LOG = Logger.getLogger(GetStartGameRoute.class.getName());
     private final TemplateEngine templateEngine;
@@ -37,15 +37,13 @@ public class GetResignGameRoute implements Route{
         this.gameCenter = gameCenter;
         LOG.config("GetResignGameRoute is initialized.");
     }
+
     /**
      * Render the WebCheckers Start Game page.
      *
-     * @param request
-     *   the HTTP request
-     * @param response
-     *   the HTTP response
-     * @return
-     *   the rendered HTML for the Home page
+     * @param request  the HTTP request
+     * @param response the HTTP response
+     * @return the rendered HTML for the Home page
      */
     @Override
     public Message handle(Request request, Response response) {
@@ -55,16 +53,15 @@ public class GetResignGameRoute implements Route{
 
         final Session session = request.session();
         Player player = session.attribute(PostSignInRoute.PLAYER);
-
+        System.out.println("do i ever reach this land");
 
         Game game = this.gameCenter.getGameLobby().getGame(player);
 
         game.setLoser(player);
-        if (player.getColor() == Color.WHITE){
+        if (player.getColor() == Color.WHITE) {
             game.setWinner(game.getRedPlayer());
             game.getRedPlayer().leaveGame();
-        }
-        else {
+        } else {
             game.setWinner(game.getWhitePlayer());
             game.getWhitePlayer().leaveGame();
         }
@@ -73,7 +70,7 @@ public class GetResignGameRoute implements Route{
         // Handles a null game object
 
         response.redirect(WebServer.HOME_URL);
-        return new Message(Message.Type.info, "Player sucessfully resigned" );
+        return new Message(Message.Type.info, "Player sucessfully resigned");
     }
 }
 

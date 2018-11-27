@@ -28,8 +28,7 @@ public class PostCheckTurnRoute implements Route {
      * Create the Spark Route (UI controller) for the
      * {@code GET /} HTTP request.
      *
-     * @param templateEngine
-     *   the HTML template rendering engine
+     * @param templateEngine the HTML template rendering engine
      */
     public PostCheckTurnRoute(final TemplateEngine templateEngine, final GameCenter gameCenter) {
         // validation
@@ -60,10 +59,10 @@ public class PostCheckTurnRoute implements Route {
         // default behavior returns Not My Turn values
         Message message = new Message(Message.Type.error, "false");
         LOG.info(message.getText());
-        LOG.info("curr: "+ player + ", active: " + game.getActiveColor());
+        LOG.info("curr: " + player + ", active: " + game.getActiveColor());
 
         // if it is current player's turn, change messages values
-        if(game.getActiveColor() == player.getColor()) {
+        if (game.getActiveColor() == player.getColor()) {
             LOG.info("activeColor == player's Color");
             message = new Message(Message.Type.info, "true");
         }
