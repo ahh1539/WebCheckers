@@ -10,6 +10,7 @@ import com.webcheckers.application.GameCenter;
 import com.webcheckers.application.GameLobby;
 import com.webcheckers.application.PlayerLobby;
 import com.webcheckers.model.Game;
+import com.webcheckers.model.Message;
 import com.webcheckers.model.Player;
 //import javafx.geometry.Pos;
 import spark.*;
@@ -30,6 +31,8 @@ public class GetHomeRoute implements Route {
   static final String PLAYER = "currentPlayer";
   static final String PLAYER_LIST = "players";
   static final String NUM_PLAYERS = "numPlayers";
+  static final String ERROR = "errorMsg";
+  static final String ERROR_IN_GAME = "The player you have selected is already in a game. Select another player.";
 
   private final TemplateEngine templateEngine;
   private final GameCenter gameCenter;
