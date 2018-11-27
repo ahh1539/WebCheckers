@@ -52,7 +52,8 @@ public class PostResignGameRoute implements Route{
         Game game = this.gameCenter.getGameLobby().getGame(player);
 
         //sets winner and loser for game and removes both players
-        game.setLoser(player);
+        if(player.getColor() == Color.RED) game.setWinner(game.getWhitePlayer());
+        else game.setWinner(game.getRedPlayer());
 
         if (player.getColor() == Color.WHITE){
             game.setWinner(game.getRedPlayer());

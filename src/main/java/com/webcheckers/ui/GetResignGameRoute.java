@@ -59,7 +59,6 @@ public class GetResignGameRoute implements Route{
 
         Game game = this.gameCenter.getGameLobby().getGame(player);
 
-        game.setLoser(player);
         if (player.getColor() == Color.WHITE){
             game.setWinner(game.getRedPlayer());
             game.getRedPlayer().leaveGame();
