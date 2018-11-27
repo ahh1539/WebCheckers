@@ -168,12 +168,6 @@ public class WebServer {
     get(GAME_URL, new GetStartGameRoute(templateEngine, gameCenter));
     // Signs player out
     get(SIGN_OUT_URL, new GetSignOutRoute(templateEngine, gameCenter));
-    // Request a game
-    //get(REQUEST_GAME_URL, new GetRequestGameRoute(templateEngine, gameCenter));
-
-    //get(GAME_URL, new GetGameRoute(templateEngine, gameCenter));
-
-
     //Posts when the player is to resign because they are the inferior player
     post(RESIGN_GAME_URL, new PostResignGameRoute(templateEngine, gameCenter));
     // Posts the player username as they sign in
