@@ -2,6 +2,7 @@ package com.webcheckers.ui;
 
 import com.google.gson.Gson;
 import com.webcheckers.application.GameCenter;
+import com.webcheckers.application.PlayerLobby;
 import com.webcheckers.model.Color;
 import com.webcheckers.model.Game;
 import com.webcheckers.model.Message;
@@ -42,6 +43,7 @@ public class PostResignGameRoute implements Route {
         LOG.finer("GetResignGame is invoked.");
         // Retrieves the HTTP session and necessary player/game info
         final Session session = request.session();
+        PlayerLobby pl = gameCenter.getPlayerLobby();
         Player player = session.attribute(PostSignInRoute.PLAYER);
 
         Gson gson = new Gson();
@@ -51,14 +53,15 @@ public class PostResignGameRoute implements Route {
         game.setLoser(player);
         Player red = game.getRedPlayer();
         Player white = game.getWhitePlayer();
+
         if (player.getColor() == Color.WHITE) {
-            game.setWinner(game.getRedPlayer());
-            game.getRedPlayer().leaveGame();
-            game.getRedPlayer().hasResigned();
+            game.setWinner(red);
+            red.hasResigned();
+            red.leaveGame();
         } else {
-            game.setWinner(game.getWhitePlayer());
-            game.getWhitePlayer().leaveGame();
-            game.getWhitePlayer().hasResigned();
+            game.setWinner(white);
+            white.leaveGame();
+            white.hasResigned();
         }
         player.hasResigned();
         player.leaveGame();

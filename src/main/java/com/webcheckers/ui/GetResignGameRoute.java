@@ -53,7 +53,7 @@ public class GetResignGameRoute implements Route {
 
         final Session session = request.session();
         Player player = session.attribute(PostSignInRoute.PLAYER);
-
+        System.out.println("do i ever reach this land");
 
         Game game = this.gameCenter.getGameLobby().getGame(player);
 
