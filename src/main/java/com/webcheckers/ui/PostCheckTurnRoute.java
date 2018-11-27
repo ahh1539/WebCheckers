@@ -7,8 +7,6 @@ import com.webcheckers.model.Message;
 import com.webcheckers.model.Player;
 import spark.*;
 
-import java.util.HashMap;
-import java.util.Map;
 import java.util.Objects;
 import java.util.logging.Logger;
 
@@ -50,7 +48,7 @@ public class PostCheckTurnRoute implements Route {
 //        Map<String, Object> vm = new HashMap<>();
 //
 //        vm.put(MESSAGE_ATTR, "true");
-//        vm.put(MESSAGE_TYPE_ATTR, Message.Type.INFO);
+//        vm.put(MESSAGE_TYPE_ATTR, Message.Type.info);
 
         final Session session = request.session();
         Gson gson = new Gson();
@@ -60,14 +58,14 @@ public class PostCheckTurnRoute implements Route {
         Game game = gameCenter.getGameLobby().getGame(player);
 
         // default behavior returns Not My Turn values
-        Message message = new Message(Message.Type.ERROR, "false");
+        Message message = new Message(Message.Type.error, "false");
         LOG.info(message.getText());
         LOG.info("curr: "+ player + ", active: " + game.getActiveColor());
 
         // if it is current player's turn, change messages values
         if(game.getActiveColor() == player.getColor()) {
             LOG.info("activeColor == player's Color");
-            message = new Message(Message.Type.INFO, "true");
+            message = new Message(Message.Type.info, "true");
         }
 
         // convert message to JSON for response

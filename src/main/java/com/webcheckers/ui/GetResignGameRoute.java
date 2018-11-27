@@ -1,15 +1,12 @@
 package com.webcheckers.ui;
 
 import com.webcheckers.application.GameCenter;
-import com.webcheckers.application.PlayerLobby;
 import com.webcheckers.model.Color;
 import com.webcheckers.model.Game;
 import com.webcheckers.model.Message;
 import com.webcheckers.model.Player;
 import spark.*;
 
-import java.util.HashMap;
-import java.util.Map;
 import java.util.Objects;
 import java.util.logging.Logger;
 
@@ -78,7 +75,7 @@ public class GetResignGameRoute implements Route{
         // Handles a null game object
 
         response.redirect(WebServer.HOME_URL);
-        return new Message(Message.Type.INFO, "Player sucessfully resigned" );
+        return new Message(Message.Type.info, "Player sucessfully resigned" );
     }
 }
 

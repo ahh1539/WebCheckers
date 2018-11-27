@@ -61,7 +61,7 @@ public class PostValidateMoveRoute implements Route {
         // Check if it's valid, and format response message to JSON
         // Add valid moves to arraylist in Game
         Message message = move.isValidMessage(board);
-        if (!(message.getType() == Message.Type.ERROR)){
+        if (!(message.getType() == Message.Type.error)){
             if (playerColor.equals(Color.RED)) {
                 game.updateBoardRedTurn(move);
             } else {

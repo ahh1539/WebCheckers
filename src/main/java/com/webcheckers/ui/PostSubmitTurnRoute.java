@@ -7,9 +7,7 @@ import spark.*;
 import static spark.Spark.halt;
 
 import java.lang.*;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.Objects;
 import java.util.logging.Logger;
 
@@ -58,7 +56,7 @@ public class PostSubmitTurnRoute implements Route {
         if(true) {
 
             // If the turn is valid and processed
-            msg = new Message(Message.Type.INFO, "Valid move successfully processed");
+            msg = new Message(Message.Type.info, "Valid move successfully processed");
             LOG.info("current player: " + player +", active color: " + game.getActiveColor());
             game.toggleActiveColor();
             LOG.info("current player: " + player +", active color: " + game.getActiveColor());
@@ -89,7 +87,7 @@ public class PostSubmitTurnRoute implements Route {
 
         } else {
             // turn is invalid/not complex enough- need specific reason to be given, switch statements?
-            msg = new Message(Message.Type.ERROR, "Invalid move. [Reason]. " +
+            msg = new Message(Message.Type.error, "Invalid move. [Reason]. " +
                     "Please backup your move and try again.");
         }
 

@@ -66,7 +66,7 @@ public class GetRequestGameRoute implements Route{
 
         if (PlayerLobby.getPlayer(player1.getName()).inGame()|| PlayerLobby.getPlayer(player2.getName()).inGame()){
             String msg = "The player you have selected is already in a game. Select another player.";
-            Message message = new Message(Message.Type.ERROR, msg);
+            Message message = new Message(Message.Type.error, msg);
             vm.put("errorMsg", msg);
             response.redirect(WebServer.HOME_URL);
             return templateEngine.render(new ModelAndView(vm, GetHomeRoute.ROUTE_NAME));
@@ -81,7 +81,7 @@ public class GetRequestGameRoute implements Route{
         // Configures view model for new game
         GameLobby gameLobby = gameCenter.getGameLobby();
         gameLobby.addGame(game);
-        Message message = new Message(Message.Type.ERROR, "Text");
+        Message message = new Message(Message.Type.error, "Text");
 
         vm.put(GetGameRoute.MESSAGE, message);
         vm.put(GetGameRoute.CURRENT_PLAYER_ATTR, player1);

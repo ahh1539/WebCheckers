@@ -53,10 +53,10 @@ public class PostBackupMoveRoute implements Route{
 
         if(true) {
             // backup was successful
-            msg = new Message(Message.Type.INFO, "Successful backup");
+            msg = new Message(Message.Type.info, "Successful backup");
         } else {
             // backup failed
-            msg = new Message(Message.Type.ERROR, "Backup failed");
+            msg = new Message(Message.Type.error, "Backup failed");
         }
 
         gson = new Gson();
