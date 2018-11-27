@@ -11,7 +11,7 @@ import java.util.Objects;
 import java.util.logging.Logger;
 
 public class PostCheckTurnRoute implements Route {
-    private static final Logger LOG = Logger.getLogger(GetSignInRoute.class.getName());
+    private static final Logger LOG = Logger.getLogger(PostCheckTurnRoute.class.getName());
 
     private final TemplateEngine templateEngine;
     private final GameCenter gameCenter;

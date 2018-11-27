@@ -57,7 +57,7 @@ public class WebServer {
 
   public static final String SIGN_IN_URL = "/signin";
 
-  public static final String GAME_START_URL = "/game";
+  public static final String GAME_START_URL = "/startGame";
 
   public static final String SIGN_OUT_URL = "/signout";
 
@@ -169,7 +169,9 @@ public class WebServer {
     // Signs player out
     get(SIGN_OUT_URL, new GetSignOutRoute(templateEngine, gameCenter));
     // Request a game
-    //get(GAME_URL, new GetGameRoute(templateEngine, gameCenter));
+    get(REQUEST_GAME_URL, new GetRequestGameRoute(templateEngine, gameCenter));
+
+    get(GAME_URL, new GetGameRoute(templateEngine, gameCenter));
 
 
     //Posts when the player is to resign because they are the inferior player
@@ -183,7 +185,7 @@ public class WebServer {
     // Submit turn and change active color
     post(SUBMIT_TURN_URL, new PostSubmitTurnRoute(templateEngine, gameCenter));
     // Undo move if it's not up to snuff
-    post(BACKUP_MOVE_URL, new PostBackupMoveRoute(gson));
+    post(BACKUP_MOVE_URL, new PostBackupMoveRoute(gameCenter));
 
 
     LOG.config("WebServer is initialized.");

@@ -18,6 +18,10 @@ public class Game {
     private Color activeColor;
     private BoardView redBoard;
     private BoardView whiteBoard;
+    private int redCaptured = 0;
+    private int whiteCaptured = 0;
+
+    private final int NUM_ROWS_COLS = 7;
 
     private List<Move> moves = new ArrayList<Move>();
 
@@ -210,9 +214,217 @@ public class Game {
         return this.winner;
     }
 
-    public void addMove(Move m){
-        moves.add(m);
+    /**
+     * Gets the list of moves made so far in the game
+     * @return
+     *      The current list of moves
+     */
+    public List<Move> getMoves() { return this.moves; }
+
+    /**
+     * Completes removal of white captured piece and adds to captured count
+     * @param target
+     *      location of piece being captured
+     */
+    public void whiteCaptured(Position target) {
+        whiteCaptured++;
+
+        // Remove from red board
+        Row targetRow = this.redBoard.getRow(target.getRow());
+        Space targetSpace = targetRow.getSpace(target.getCell());
+        targetSpace.removePiece();
+
+        // Remove from white board
+        targetRow = this.whiteBoard.getRow(NUM_ROWS_COLS - target.getRow());
+        targetSpace = targetRow.getSpace(NUM_ROWS_COLS - target.getCell());
+        targetSpace.removePiece();
     }
 
+    /**
+     * Completes removal of red captured piece and adds to captured count
+     * @param target
+     *      location of piece being captured
+     */
+    public void redCaptured(Position target) {
+        redCaptured++;
+
+        // Remove from white board
+        Row targetRow = this.whiteBoard.getRow(target.getRow());
+        Space targetSpace = targetRow.getSpace(target.getCell());
+        targetSpace.removePiece();
+
+        // Remove from red board
+        targetRow = this.redBoard.getRow(NUM_ROWS_COLS - target.getRow());
+        targetSpace = targetRow.getSpace(NUM_ROWS_COLS - target.getCell());
+        targetSpace.removePiece();
+    }
+
+    /**
+     * Updates both boards for a red player's turn, adds move to list of moves,
+     *  makes pieces into kings as necessary
+     * @param m
+     *      the Move submitted
+     */
+    public void updateBoardRedTurn(Move m) {
+        // Adds move to the ongoing list of moves
+        moves.add(m);
+
+        // RED BOARD
+
+        // Removes red piece from given start space
+        Row startRow = this.redBoard.getRow(m.getStart().getRow());
+        Space startSpace = startRow.getSpace(m.getStart().getCell());
+        Piece piece = startSpace.removePiece();
+
+        // Adds red piece to given end space
+        Row endRow = this.redBoard.getRow(m.getEnd().getRow());
+        Space endSpace = endRow.getSpace(m.getEnd().getCell());
+        endSpace.putPiece(piece);
+
+        // Checks for new king piece
+        if(piece.getType().equals(Piece.Type.SINGLE) && endRow.getIndex() == 0) {
+            endSpace.putPiece(piece.makeKingPiece());
+        }
+
+        // WHITE BOARD
+        // Overwrites all variables used for red board
+
+        // Removes red piece from given start space
+
+        startRow = this.whiteBoard.getRow(NUM_ROWS_COLS - m.getStart().getRow());
+        startSpace = startRow.getSpace(NUM_ROWS_COLS - m.getStart().getCell());
+        piece = startSpace.removePiece();
+
+        // Adds red piece to given end space
+
+        endRow = this.whiteBoard.getRow(NUM_ROWS_COLS - m.getEnd().getRow());
+        endSpace = endRow.getSpace(NUM_ROWS_COLS - m.getEnd().getCell());
+        endSpace.putPiece(piece);
+
+        // Checks for new king piece
+        if(piece.getType().equals(Piece.Type.SINGLE) && endRow.getIndex() == NUM_ROWS_COLS) {
+            endSpace.putPiece(piece.makeKingPiece());
+        }
+
+    }
+
+    /**
+     * Updates both boards for a white player's turn, removes move from list of moves,
+     *  makes pieces into kings as necessary
+     * @param m
+     *      the Move submitted
+     */
+    public void updateBoardWhiteTurn(Move m) {
+        // Adds move to ongoing list of moves
+        moves.add(m);
+
+        // WHITE BOARD
+
+        // Removes white piece from given start space
+        Row startRow = this.whiteBoard.getRow(m.getStart().getRow());
+        Space startSpace = startRow.getSpace(m.getStart().getCell());
+        Piece piece = startSpace.removePiece();
+
+        // Adds white piece to given end space
+        Row endRow = this.whiteBoard.getRow(m.getEnd().getRow());
+        Space endSpace = endRow.getSpace(m.getEnd().getCell());
+        endSpace.putPiece(piece);
+
+        // Checks for new king piece
+        if(piece.getType().equals(Piece.Type.SINGLE) && endRow.getIndex() == 0) {
+            endSpace.putPiece(piece.makeKingPiece());
+        }
+
+        // RED BOARD
+        // Overwrites all variables used for white board
+
+        // Removes white piece from given start space
+
+        startRow = this.redBoard.getRow(NUM_ROWS_COLS - m.getStart().getRow());
+        startSpace = startRow.getSpace(NUM_ROWS_COLS - m.getStart().getCell());
+        piece = startSpace.removePiece();
+
+        // Adds white piece to given end space
+
+        endRow = this.redBoard.getRow(NUM_ROWS_COLS - m.getEnd().getRow());
+        endSpace = endRow.getSpace(NUM_ROWS_COLS - m.getEnd().getCell());
+        endSpace.putPiece(piece);
+
+        // Checks for new king piece
+        if(piece.getType().equals(Piece.Type.SINGLE) && endRow.getIndex() == NUM_ROWS_COLS) {
+            endSpace.putPiece(piece.makeKingPiece());
+        }
+
+    }
+
+    /**
+     * Backs up the previously made move by the red player
+     */
+    public void backupRedTurn() {
+        // Removes previously made move from move list
+        Move move = moves.remove(moves.size() - 1);
+
+        // RED BOARD
+
+        // Removes red piece from given ending space
+        Row finalRow = this.redBoard.getRow(move.getEnd().getRow());
+        Space finalSpace = finalRow.getSpace(move.getEnd().getCell());
+        Piece piece = finalSpace.removePiece();
+
+        // Adds red piece to original space
+        Row originalRow = this.redBoard.getRow(move.getStart().getRow());
+        Space originalSpace = originalRow.getSpace(move.getStart().getCell());
+        originalSpace.putPiece(piece);
+
+        // WHITE BOARD
+        // Overwrites all variables used for red board
+
+        // Removes red piece from given start space
+
+        finalRow = this.whiteBoard.getRow(NUM_ROWS_COLS - move.getEnd().getRow());
+        finalSpace = finalRow.getSpace(NUM_ROWS_COLS - move.getEnd().getCell());
+        piece = finalSpace.removePiece();
+
+        // Adds red piece to given end space
+
+        originalRow = this.whiteBoard.getRow(NUM_ROWS_COLS - move.getStart().getRow());
+        originalSpace = originalRow.getSpace(NUM_ROWS_COLS - move.getStart().getCell());
+        originalSpace.putPiece(piece);
+    }
+
+    /**
+     * Backs up the previously made move by the white player
+     */
+    public void backupWhiteTurn() {
+        // Removes previously made move from move list
+        Move move = moves.remove(moves.size() - 1);
+
+        // WHITE BOARD
+
+        // Removes white piece from given ending space
+        Row finalRow = this.whiteBoard.getRow(move.getEnd().getRow());
+        Space finalSpace = finalRow.getSpace(move.getEnd().getCell());
+        Piece piece = finalSpace.removePiece();
+
+        // Adds white piece to original space
+        Row originalRow = this.whiteBoard.getRow(move.getStart().getRow());
+        Space originalSpace = originalRow.getSpace(move.getStart().getCell());
+        originalSpace.putPiece(piece);
+
+        // RED BOARD
+        // Overwrites all variables used for white board
+
+        // Removes white piece from given start space
+
+        finalRow = this.redBoard.getRow(NUM_ROWS_COLS - move.getEnd().getRow());
+        finalSpace = finalRow.getSpace(NUM_ROWS_COLS - move.getEnd().getCell());
+        piece = finalSpace.removePiece();
+
+        // Adds white piece to given end space
+
+        originalRow = this.redBoard.getRow(NUM_ROWS_COLS - move.getStart().getRow());
+        originalSpace = originalRow.getSpace(NUM_ROWS_COLS - move.getStart().getCell());
+        originalSpace.putPiece(piece);
+    }
 
 }

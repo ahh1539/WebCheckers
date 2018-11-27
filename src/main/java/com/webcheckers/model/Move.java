@@ -1,5 +1,4 @@
 package com.webcheckers.model;
-
 import java.io.Serializable;
 
 /**
@@ -42,20 +41,12 @@ public class Move implements Serializable {
         this.end = end;
     }
 
-    /**
-     * Accessor method for start
-     * @return start
-     *   beginning position of piece
-     */
+    // Returns the start location's Position
     public Position getStart(){
         return start;
     }
 
-    /**
-     * Accessor method for end
-     * @return end
-     *   final position of piece
-     */
+    // Returns the end location's Position
     public Position getEnd(){
         return end;
     }
@@ -81,33 +72,6 @@ public class Move implements Serializable {
     }
 
     /**
-     * Transfer the successfully validated move to a copy of the board
-     * @return
-     *   new BoardView with changes made
-     */
-    public BoardView makeMove(){
-        BoardView copyBoard = new BoardView(this.board);
-        Space startSpace = getStartSpace(copyBoard.getRow(this.startRowIndex));
-        Space endSpace = getEndSpace(copyBoard.getRow(this.endRowIndex));
-        Piece movingPiece = startSpace.getPiece();
-        Space targetSpace = copyBoard.getRow(targetRow).getSpace(targetCell);
-
-        // Remove piece at starting position and place piece at ending position
-        startSpace.removePiece();
-        endSpace.putPiece(movingPiece);
-
-        // Check if move is a jump
-        if(this.isJump()) {
-            // Capture piece
-            targetSpace.removePiece();
-        }
-        if((endRowIndex == 7 || endRowIndex == 0) && endSpace.getPiece().getType() == Piece.Type.SINGLE) {
-            endSpace.putPiece(movingPiece.makeKingPiece());
-        }
-        return copyBoard;
-    }
-
-    /**
      * Helper function to set up values for use in isValid
      */
     private void isValidSetup() {
@@ -116,17 +80,22 @@ public class Move implements Serializable {
         Position start = this.getStart();
         Position end = this.getEnd();
 
-        // Applies various rules to determine info about attempted move
+        // Different spaces and rows required to perform logic
         startRowIndex = this.start.getRow();
         endRowIndex = this.end.getRow();
         startCell =  this.start.getCell();
         endCell = this.end.getCell();
         targetRow = (startRowIndex + endRowIndex) / 2;
         targetCell = (startCell + endCell) / 2;
+
+        // Logic stored in these variables
+        // "Pos" indicates movement forwards or rightwards
+
         isJumpRow = (startRowIndex - 2) == endRowIndex;
         isJumpCell = (startCell - 2 == endCell);
         isJumpRowPos = (startRowIndex + 2) == endRowIndex;
         isJumpCellPos = (startCell + 2 == endCell);
+
         correctRows = (startRowIndex - 1 == endRowIndex);
         correctCell = (startCell-1 == endCell);
         correctCellPos = (startCell+1 == endCell);
@@ -153,34 +122,15 @@ public class Move implements Serializable {
 
         // Check if the piece is single
         if(movingPiece.getType() == Piece.Type.SINGLE){
-            // If it is Red
-            if(movingPiece.getColor() == Color.RED){
-                if((correctCellPos || correctCell) && correctRows){
-                    if(endSpace.isValid()){
-                        valid = true;
-                    }
-                }
-                else if (isJumpRow && (isJumpCell || isJumpCellPos)){
-                    if(endSpace.isValid() && !targetSpace.isValid()){
-                        if(targetSpace.getPiece().getColor() != movingPiece.getColor()){
-                            valid = true;
-                        }
-                    }
+            if((correctCellPos || correctCell) && correctRows){
+                if(endSpace.isValid()){
+                    valid = true;
                 }
             }
-            // If it is White
-            else{
-                if(correctRowsPos && (correctCellPos || correctCell)){
-                    if(endSpace.isValid()) {
+            else if (isJumpRow && (isJumpCell || isJumpCellPos)){
+                if(endSpace.isValid() && !targetSpace.isValid()){
+                    if(targetSpace.getPiece().getColor() != movingPiece.getColor()){
                         valid = true;
-                    }
-                }
-                // check if jump
-                else if (isJumpRowPos && (isJumpCell || isJumpCellPos)){
-                    if(endSpace.isValid() && !targetSpace.isValid()){
-                        if (targetSpace.getPiece().getColor() != startSpace.getPiece().getColor()){
-                            valid = true;
-                        }
                     }
                 }
             }
@@ -223,6 +173,7 @@ public class Move implements Serializable {
      * @return returns True if the move is a jump move
      */
     public boolean isJump() {
+
         boolean valid = false;
         Space startSpace = getStartSpace(this.board.getRow(this.startRowIndex));
         Space endSpace = getEndSpace(this.board.getRow(this.endRowIndex));
@@ -231,32 +182,8 @@ public class Move implements Serializable {
 
         // If the moving piece is single
         if (movingPiece.getType() == Piece.Type.SINGLE) {
-            // If the moving piece is RED
-            if (movingPiece.getColor() == Color.RED) {
-                // Check if move is a jump
-                if (isJumpRow && (isJumpCell || isJumpCellPos)) {
-                    // Check if there is piece to capture
-                    if (endSpace.isValid() && !targetSpace.isValid()) {
-                        if (targetSpace.getPiece().getColor() != startSpace.getPiece().getColor()) {
-                            valid = true;
-                        }
-                    }
-                }
-                // Otherwise, if the moving piece is WHITE
-            } else {
-                // Check if move is a jump
-                if (isJumpRowPos && (isJumpCell || isJumpCellPos)) {
-                    // Check if there is piece to capture
-                    if (endSpace.isValid() && !targetSpace.isValid()) {
-                        if (targetSpace.getPiece().getColor() != startSpace.getPiece().getColor()) {
-                            valid = true;
-                        }
-                    }
-                }
-            }
-            // Otherwise, if the moving piece is KING
-        } else {
-            if ((isJumpRow && (isJumpCell || isJumpCellPos)) || (isJumpRowPos && (isJumpCell || isJumpCellPos))){
+            // Check if move is a jump
+            if (isJumpRow && (isJumpCell || isJumpCellPos)) {
                 // Check if there is piece to capture
                 if (endSpace.isValid() && !targetSpace.isValid()) {
                     if (targetSpace.getPiece().getColor() != startSpace.getPiece().getColor()) {
@@ -265,7 +192,20 @@ public class Move implements Serializable {
                 }
             }
         }
+        // Otherwise, if the moving piece is king
+        else {
+            if ((isJumpRow || isJumpRowPos)&& (isJumpCell || isJumpCellPos)) {
+                // Check if there is piece to capture
+                if (endSpace.isValid() && !targetSpace.isValid()) {
+                    if (targetSpace.getPiece().getColor() != startSpace.getPiece().getColor()) {
+                        valid = true;
+                    }
+                }
+            }
+        }
+
         return valid;
+
     }
 
     // toString method for the move attributes
