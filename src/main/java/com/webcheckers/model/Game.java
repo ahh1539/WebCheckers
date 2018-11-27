@@ -24,6 +24,7 @@ public class Game {
     private final int NUM_ROWS_COLS = 7;
 
     private List<Move> moves = new ArrayList<Move>();
+    private List<Move> tempMoves = new ArrayList<>();
 
     public enum ViewMode { PLAY, SPECTATOR, REPLAY }
 
@@ -268,6 +269,7 @@ public class Game {
     public void updateBoardRedTurn(Move m) {
         // Adds move to the ongoing list of moves
         moves.add(m);
+        tempMoves.add(m);
 
         // RED BOARD
 
@@ -362,7 +364,8 @@ public class Game {
      */
     public void backupRedTurn() {
         // Removes previously made move from move list
-        Move move = moves.remove(moves.size() - 1);
+        Move move = tempMoves.remove(tempMoves.size() - 1);
+
 
         // RED BOARD
 
