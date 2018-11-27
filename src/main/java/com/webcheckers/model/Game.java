@@ -15,6 +15,7 @@ public class Game {
     private Player redPlayer;
     private Player whitePlayer;
     private Player winner;
+    private Player loser;
     private Color activeColor;
     private BoardView redBoard;
     private BoardView whiteBoard;
@@ -175,24 +176,23 @@ public class Game {
     }
 
     /**
-     * Sets the winner of the game to either the Red or White player
+     * Sets the winner and loser of the game to either the Red or White player
      * @param player
      *      The winning player
      */
     public void setWinner(Player player){
-        if(this.redPlayer.equals(player)) this.winner = this.redPlayer;
-        else this.winner = this.whitePlayer;
-        player.addWin();
-    }
+        if(this.redPlayer.equals(player)) {
+            this.winner = this.redPlayer;
+            this.loser = this.whitePlayer;
+        } else {
+            this.winner = this.whitePlayer;
+            this.loser = this.redPlayer;
+        }
 
-    /**
-     * Sets the loser of the game to either the Red or White player
-     * @param player
-     *      The losing player
-     */
-    public void setLoser(Player player){
-        if(this.redPlayer.equals(player)) this.winner = this.whitePlayer;
-        else this.winner = this.redPlayer;
+        player.addWin();
+
+        this.redPlayer.leaveGame();
+        this.whitePlayer.leaveGame();
     }
 
     /**
@@ -433,13 +433,8 @@ public class Game {
      * Checks both counts of captured pieces to see if either player has captured all pieces
      */
     private void checkWinByCapture() {
-        if(whiteCaptured == 12) {
-            setWinner(this.redPlayer);
-            setLoser(this.whitePlayer);
-        } else if(redCaptured == 12) {
-            setWinner(this.whitePlayer);
-            setLoser(this.redPlayer);
-        }
+        if(whiteCaptured == 12) setWinner(this.redPlayer);
+        else if(redCaptured == 12) setWinner(this.whitePlayer);
     }
 
 }
