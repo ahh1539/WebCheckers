@@ -74,6 +74,19 @@ public class GetStartGameRoute implements Route {
         // Checks to see if a player is already in a game and then refreshes that game if so
         if (gameLobby.hasGame(player1)) {
             Game game = gameLobby.getGame(player1);
+
+            // Checks whether the game has declared a winner and sends back to home if so
+
+            if(game.hasWinner()) {
+                gameLobby.removeGame(player1);
+
+                response.redirect(WebServer.HOME_URL);
+                if(game.getWinner() == player1) return new Message(Message.Type.info, "You won!!!" );
+                else return new Message(Message.Type.info, "You lost.");
+            }
+
+            // Assembles the appropriate board and view model
+
             if (player1.getColor() == Color.RED) {
                 LOG.finer("red board building");
                 vm.put(BOARD_ATTR, game.getRedBoard());
