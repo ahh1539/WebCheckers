@@ -4,6 +4,7 @@ package com.webcheckers.ui;
 import com.webcheckers.application.GameCenter;
 import com.webcheckers.application.GameLobby;
 import com.webcheckers.application.PlayerLobby;
+import com.webcheckers.model.Color;
 import com.webcheckers.model.Game;
 import com.webcheckers.model.Player;
 import spark.*;
@@ -70,14 +71,12 @@ public class GetSignOutRoute implements Route {
         // If the player was in a game
         if(gameLobby.hasGame(player)){
             Game game = gameLobby.getGame(player);
+            Player opponent = player.getColor() == Color.RED ? game.getWhitePlayer():game.getRedPlayer();
 
             // The player loses and the opponent wins
-            game.setLoser(player);
-            Player opponent = game.getWhitePlayer();
+            game.setWinner(opponent);
 
             vm.put(GetHomeRoute.ROUTE_NAME, opponent);
-
-            game.setWinner(opponent);
 
             // Both players leave the game
             opponent.leaveGame();
