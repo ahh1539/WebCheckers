@@ -109,7 +109,7 @@ public class GetStartGameRoute implements Route {
             // Configures view model for new game
             gameLobby.addGame(game);
 
-            Message message = new Message(Message.Type.ERROR, "Text");
+            Message message = new Message(Message.Type.error, "Text");
 
             if (player1.getColor() == Color.RED) {
                 LOG.finer("red board building");

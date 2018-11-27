@@ -213,9 +213,9 @@ public class Move implements Serializable {
      */
     public Message isValidMessage(BoardView board){
         if( isValid( board)){
-            return new Message(Message.Type.INFO, "good choice");
+            return new Message(Message.Type.info, "good choice");
         }
-        return new Message(Message.Type.ERROR, "bad choice");
+        return new Message(Message.Type.error, "bad choice");
     }
 
     /**

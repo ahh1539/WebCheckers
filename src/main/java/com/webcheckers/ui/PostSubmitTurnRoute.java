@@ -64,7 +64,7 @@ public class PostSubmitTurnRoute implements Route {
         if(true) {
 
             // if the turn is valid and processed
-            msg = new Message(Message.Type.INFO, "Valid move successfully processed");
+            msg = new Message(Message.Type.info, "Valid move successfully processed");
             LOG.info("current player: " + player +", active color: " + game.getActiveColor());
             game.toggleActiveColor();
             LOG.info("current player: " + player +", active color: " + game.getActiveColor());
@@ -73,7 +73,7 @@ public class PostSubmitTurnRoute implements Route {
 
         } else {
             // turn is invalid/not complex enough- need specific reason to be given, switch statements?
-            msg = new Message(Message.Type.ERROR, "Invalid move. [Reason]. " +
+            msg = new Message(Message.Type.error, "Invalid move. [Reason]. " +
                     "Please backup your move and try again.");
         }
 
