@@ -301,11 +301,12 @@ public class Game {
         endSpace = endRow.getSpace(NUM_ROWS_COLS - m.getEnd().getCell());
         endSpace.putPiece(piece);
 
-        // Checks for new king piece
+        // Checks for new king piece and for win by capture
         if(piece.getType().equals(Piece.Type.SINGLE) && endRow.getIndex() == NUM_ROWS_COLS) {
             endSpace.putPiece(piece.makeKingPiece());
         }
 
+        checkWinByCapture();
     }
 
     /**
@@ -350,11 +351,12 @@ public class Game {
         endSpace = endRow.getSpace(NUM_ROWS_COLS - m.getEnd().getCell());
         endSpace.putPiece(piece);
 
-        // Checks for new king piece
+        // Checks for new king piece and for win by capture
         if(piece.getType().equals(Piece.Type.SINGLE) && endRow.getIndex() == NUM_ROWS_COLS) {
             endSpace.putPiece(piece.makeKingPiece());
         }
 
+        checkWinByCapture();
     }
 
     /**
@@ -425,6 +427,19 @@ public class Game {
         originalRow = this.redBoard.getRow(NUM_ROWS_COLS - move.getStart().getRow());
         originalSpace = originalRow.getSpace(NUM_ROWS_COLS - move.getStart().getCell());
         originalSpace.putPiece(piece);
+    }
+
+    /**
+     * Checks both counts of captured pieces to see if either player has captured all pieces
+     */
+    private void checkWinByCapture() {
+        if(whiteCaptured == 12) {
+            setWinner(this.redPlayer);
+            setLoser(this.whitePlayer);
+        } else if(redCaptured == 12) {
+            setWinner(this.whitePlayer);
+            setLoser(this.redPlayer);
+        }
     }
 
 }
