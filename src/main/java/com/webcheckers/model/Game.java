@@ -1,6 +1,7 @@
 package com.webcheckers.model;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 
@@ -214,5 +215,8 @@ public class Game {
         moves.add(m);
     }
 
+    public List<Move> getMoves() {
+        return Collections.unmodifiableList(moves);
+    }
 
 }

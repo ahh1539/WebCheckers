@@ -40,12 +40,12 @@ public class BoardViewTest {
 
     @Test
     @DisplayName("Iterators are null")
-    public void testIteratorsNull() throws NoSuchElementException {
+    public void testIteratorsNull() {
         assertTrue(CuT_iterator.hasNext());
         for (int i = 0; i < BOARD_LENGTH; i++) {
             assertTrue(CuT_iterator.next() != null);
         }
-        assertFalse(CuT_iterator.hasNext());
+        assertThrows(NoSuchElementException.class, CuT_iterator::next);
     }
 
     @Test
