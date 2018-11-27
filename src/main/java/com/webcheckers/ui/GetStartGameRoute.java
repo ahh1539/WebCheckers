@@ -83,7 +83,7 @@ public class GetStartGameRoute implements Route {
             //vm.put(GetStartGameRoute.MESSAGE, message);
             vm.put(GetStartGameRoute.CURRENT_PLAYER_ATTR, player1);
             vm.put(GetStartGameRoute.VIEW_MODE_ATTR, Game.ViewMode.PLAY);
-            vm.put(GetStartGameRoute.RED_PLAYER_ATTR, player1);
+            vm.put(GetStartGameRoute.RED_PLAYER_ATTR, game.getRedPlayer());
             vm.put(GetStartGameRoute.WHITE_PLAYER_ATTR, game.getWhitePlayer());
             vm.put(GetStartGameRoute.ACTIVE_COLOR_ATTR, gameLobby.getGame(player1).getActiveColor());
             return templateEngine.render(new ModelAndView(vm, GetStartGameRoute.GAME_NAME));
