@@ -223,6 +223,14 @@ public class Game {
     public List<Move> getMoves() { return this.moves; }
 
     /**
+     * Gets the list of moves made so far in the turn
+     * @return
+     *      The current list of moves in the turn
+     */
+    public List<Move> getTempMoves() { return this.tempMoves; }
+
+
+    /**
      * Completes removal of white captured piece and adds to captured count
      * @param target
      *      location of piece being captured
@@ -317,8 +325,10 @@ public class Game {
      *      the Move submitted
      */
     public void updateBoardWhiteTurn(Move m) {
+        //TODO update from list of move
         // Adds move to ongoing list of moves
         moves.add(m);
+        tempMoves.add(m);
 
         // WHITE BOARD
 
@@ -400,7 +410,7 @@ public class Game {
      */
     public void backupWhiteTurn() {
         // Removes previously made move from move list
-        Move move = moves.remove(moves.size() - 1);
+        Move move = tempMoves.remove(tempMoves.size() - 1);
 
         // WHITE BOARD
 
