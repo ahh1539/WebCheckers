@@ -11,7 +11,7 @@ import spark.*;
 import java.util.Objects;
 import java.util.logging.Logger;
 
-public class PostResignGameRoute implements Route{
+public class PostResignGameRoute implements Route {
 
     private static final Logger LOG = Logger.getLogger(GetStartGameRoute.class.getName());
     private final TemplateEngine templateEngine;
@@ -19,7 +19,6 @@ public class PostResignGameRoute implements Route{
 
     static final String TITLE_ATTR = "title";
     static final String TITLE = "Game Page";
-
 
 
     public PostResignGameRoute(final TemplateEngine templateEngine, final GameCenter gameCenter) {
@@ -30,15 +29,13 @@ public class PostResignGameRoute implements Route{
         this.gameCenter = gameCenter;
         LOG.config("PostResignGameRoute is initialized.");
     }
+
     /**
      * Render the WebCheckers Start Game page.
      *
-     * @param request
-     *   the HTTP request
-     * @param response
-     *   the HTTP response
-     * @return
-     *   message stating sucessful resignation
+     * @param request  the HTTP request
+     * @param response the HTTP response
+     * @return message stating sucessful resignation
      */
     @Override
     public Object handle(Request request, Response response) {
@@ -54,12 +51,11 @@ public class PostResignGameRoute implements Route{
         game.setLoser(player);
         Player red = game.getRedPlayer();
         Player white = game.getWhitePlayer();
-        if (player.getColor() == Color.WHITE){
+        if (player.getColor() == Color.WHITE) {
             game.setWinner(game.getRedPlayer());
             game.getRedPlayer().leaveGame();
             game.getRedPlayer().hasResigned();
-        }
-        else {
+        } else {
             game.setWinner(game.getWhitePlayer());
             game.getWhitePlayer().leaveGame();
             game.getWhitePlayer().hasResigned();
@@ -68,14 +64,13 @@ public class PostResignGameRoute implements Route{
         player.leaveGame();
 
         // checks whether or not players successfully left the game
-        if (!white.inGame() || !red.inGame()){
+        if (!white.inGame() || !red.inGame()) {
             System.out.println("looooooooooooooppppp1111111111111111");
             Message message = new Message(Message.Type.info, "true");
             String rJson = gson.toJson(message);
             return rJson;
-        }
-        else {
-            Message message1 = new Message(Message.Type.error, "false" );
+        } else {
+            Message message1 = new Message(Message.Type.error, "false");
             String rJson2 = gson.toJson(message1);
             System.out.println("loooooooooooooopppppppppp2222222222222");
             return rJson2;

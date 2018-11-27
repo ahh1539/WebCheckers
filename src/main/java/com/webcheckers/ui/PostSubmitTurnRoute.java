@@ -4,6 +4,7 @@ import com.google.gson.Gson;
 import com.webcheckers.application.GameCenter;
 import com.webcheckers.model.*;
 import spark.*;
+
 import static spark.Spark.halt;
 
 import java.lang.*;
@@ -24,8 +25,7 @@ public class PostSubmitTurnRoute implements Route {
      * Create the Spark Route (UI controller) for the
      * {@code POST /submitTurn} HTTP request.
      *
-     * @param templateEngine
-     *   the HTML template rendering engine
+     * @param templateEngine the HTML template rendering engine
      */
     public PostSubmitTurnRoute(final TemplateEngine templateEngine, final GameCenter gameCenter) {
         // validation
@@ -53,13 +53,13 @@ public class PostSubmitTurnRoute implements Route {
         // TODO: complete implementation with specific message based on validateMove results
         // TODO: Refresh /game if not error
 
-        if(true) {
+        if (true) {
 
             // If the turn is valid and processed
             msg = new Message(Message.Type.info, "Valid move successfully processed");
-            LOG.info("current player: " + player +", active color: " + game.getActiveColor());
+            LOG.info("current player: " + player + ", active color: " + game.getActiveColor());
             game.toggleActiveColor();
-            LOG.info("current player: " + player +", active color: " + game.getActiveColor());
+            LOG.info("current player: " + player + ", active color: " + game.getActiveColor());
 
             // Checks for captured piece(s) and removes
 
@@ -68,14 +68,14 @@ public class PostSubmitTurnRoute implements Route {
             Position start = lastMove.getStart();
             Position end = lastMove.getEnd();
 
-            if(Math.abs(start.getRow() - end.getRow()) > 1) {
+            if (Math.abs(start.getRow() - end.getRow()) > 1) {
                 // Quick implementation of single jump capture
                 int targetRow = (start.getRow() + end.getRow()) / 2;
                 int targetCell = (start.getCell() + end.getCell()) / 2;
                 Position target = new Position(targetRow, targetCell);
 
                 // Need to determine all targets and call capture method for each
-                if(player.getColor().equals(Color.RED)) {
+                if (player.getColor().equals(Color.RED)) {
                     game.whiteCaptured(target);
                 } else {
                     game.redCaptured(target);

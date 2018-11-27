@@ -27,12 +27,12 @@ public class GetSignOutRoute implements Route {
 
     public static final String TITLE_ATTR = "title";
     public static final String TITLE = "Signout";
+
     /**
      * Create the Spark Route (UI controller) for the
      * {@code GET /} HTTP request.
      *
-     * @param templateEngine
-     *   the HTML template rendering engine
+     * @param templateEngine the HTML template rendering engine
      */
     public GetSignOutRoute(final TemplateEngine templateEngine, final GameCenter gameCenter) {
         // Validation and configuration
@@ -47,12 +47,9 @@ public class GetSignOutRoute implements Route {
     /**
      * Render the WebCheckers SignOut page.
      *
-     * @param request
-     *   the HTTP request
-     * @param response
-     *   the HTTP response
-     * @return
-     *   the rendered HTML for the SignOut page
+     * @param request  the HTTP request
+     * @param response the HTTP response
+     * @return the rendered HTML for the SignOut page
      */
     @Override
     public Object handle(Request request, Response response) {
@@ -68,7 +65,7 @@ public class GetSignOutRoute implements Route {
         GameLobby gameLobby = this.gameCenter.getGameLobby();
         PlayerLobby playerLobby = this.gameCenter.getPlayerLobby();
         // If the player was in a game
-        if(gameLobby.hasGame(player)){
+        if (gameLobby.hasGame(player)) {
             Game game = gameLobby.getGame(player);
 
             // The player loses and the opponent wins
@@ -85,11 +82,10 @@ public class GetSignOutRoute implements Route {
 
             // The player leaves the playerLobby
             PlayerLobby.removePlayer(player);
-        }
-        else if(playerLobby.hasPlayer(player)){
+        } else if (playerLobby.hasPlayer(player)) {
             PlayerLobby.removePlayer(player);
         }
-        
+
         vm.put(TITLE_ATTR, TITLE);
         vm.put(GetStartGameRoute.CURRENT_PLAYER_ATTR, null);
         vm.put(GetHomeRoute.NUM_PLAYERS, playerLobby.getNumberOfPlayers());

@@ -39,18 +39,15 @@ public class GetStartGameRoute implements Route {
         Objects.requireNonNull(gameCenter, "gameCenter must not be null");
         this.templateEngine = templateEngine;
         this.gameCenter = gameCenter;
-        LOG.config("GetHomeRoute is initialized.");
+        LOG.config("GetStartGameRoute is initialized.");
     }
 
     /**
      * Render the WebCheckers Start Game page.
      *
-     * @param request
-     *   the HTTP request
-     * @param response
-     *   the HTTP response
-     * @return
-     *   the rendered HTML for the Home page
+     * @param request  the HTTP request
+     * @param response the HTTP response
+     * @return the rendered HTML for the Home page
      */
     @Override
     public Object handle(Request request, Response response) {
@@ -65,8 +62,8 @@ public class GetStartGameRoute implements Route {
 
         Player player1 = session.attribute(PostSignInRoute.PLAYER);
 
-         //Checks is player has resigned, if so it returns to homepage
-        if (player1.resigned()){
+        //Checks is player has resigned, if so it returns to homepage
+        if (player1.resigned()) {
             response.redirect(WebServer.HOME_URL);
             return templateEngine.render(new ModelAndView(vm, GetStartGameRoute.GAME_NAME));
         }
