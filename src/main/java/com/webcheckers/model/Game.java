@@ -328,6 +328,7 @@ public class Game {
         //TODO update from list of move
         // Adds move to ongoing list of moves
         moves.add(m);
+        // adds move to moves for turn
         tempMoves.add(m);
 
         // WHITE BOARD
