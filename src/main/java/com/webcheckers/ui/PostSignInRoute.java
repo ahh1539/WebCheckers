@@ -106,22 +106,22 @@ public class PostSignInRoute implements Route {
         // retrieve request parameter
         final String username = request.queryParams(USERNAME);
 
-        if (username.trim().length() <= 0){
+        if (username.trim().length() <= 0) {
             return templateEngine.render(error(vm, makeBadArgMessage(username)));
         }
-        final String usr = username.replaceAll("\\s+","");
+        final String usr = username.replaceAll("\\s+", "");
         // Check if the username is alphanumeric
         Pattern p = Pattern.compile("[^a-zA-Z0-9\\s]");
         boolean isAlphaNumeric = !p.matcher(usr).find();
 
-        if(!isAlphaNumeric){
+        if (!isAlphaNumeric) {
             return templateEngine.render(error(vm, makeBadArgMessage(usr)));
         }
 
         // Check if the player's name has been taken
         Player player = new Player(usr);
         PlayerLobby playerLobby = gameCenter.getPlayerLobby();
-        if(playerLobby.hasPlayer(player)){
+        if (playerLobby.hasPlayer(player)) {
             return templateEngine.render(error(vm, makeInvalidArgMessage(usr)));
         }
 

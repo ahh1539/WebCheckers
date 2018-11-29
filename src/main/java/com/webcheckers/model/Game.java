@@ -25,6 +25,7 @@ public class Game {
     private final int NUM_ROWS_COLS = 7;
 
     private List<Move> moves = new ArrayList<Move>();
+    private List<Move> tempMoves = new ArrayList<>();
 
     public enum ViewMode { PLAY, SPECTATOR, REPLAY }
 
@@ -222,6 +223,20 @@ public class Game {
     public List<Move> getMoves() { return this.moves; }
 
     /**
+     * Gets the list of moves made so far in the turn
+     * @return
+     *      The current list of moves in the turn
+     */
+    public List<Move> getTempMoves() { return this.tempMoves; }
+
+    public void resetTempMoves(){
+        while(!tempMoves.isEmpty()){
+            tempMoves.remove(0);
+        }
+    }
+
+
+    /**
      * Completes removal of white captured piece and adds to captured count
      * @param target
      *      location of piece being captured
@@ -265,9 +280,27 @@ public class Game {
      * @param m
      *      the Move submitted
      */
-    public void updateBoardRedTurn(Move m) {
-        // Adds move to the ongoing list of moves
-        moves.add(m);
+    public Message updateBoardRedTurn(Move m) {
+
+        // if first move of turn, add
+        if( tempMoves.isEmpty()) {
+
+            // Add move to the ongoing list of moves
+            moves.add(m);
+            tempMoves.add(m);
+        }
+        // if previous move is jump check if curr move is jump
+        else if( tempMoves.get(0).isJump()) {
+            if( m.isJump()){
+                // Add move to the ongoing list of moves
+                moves.add(m);
+                tempMoves.add(m);
+            }
+        }
+        // else the first move was a simple move and you can't keep going
+        else{
+            return new Message(Message.Type.error, "One simple move per turn....CHEATER");
+        }
 
         // RED BOARD
 
@@ -307,6 +340,7 @@ public class Game {
         }
 
         checkWinByCapture();
+        return new Message(Message.Type.info, "Well played");
     }
 
     /**
@@ -315,9 +349,27 @@ public class Game {
      * @param m
      *      the Move submitted
      */
-    public void updateBoardWhiteTurn(Move m) {
-        // Adds move to ongoing list of moves
-        moves.add(m);
+    public Message updateBoardWhiteTurn(Move m) {
+
+        // if first move of turn, add
+        if( tempMoves.isEmpty()) {
+
+            // Add move to the ongoing list of moves
+            moves.add(m);
+            tempMoves.add(m);
+        }
+        // if previous move is jump check if curr move is jump
+        else if( tempMoves.get(0).isJump()) {
+            if( m.isJump()){
+                // Add move to the ongoing list of moves
+                moves.add(m);
+                tempMoves.add(m);
+            }
+        }
+        // else the first move was a simple move and you can't keep going
+        else{
+            return new Message(Message.Type.error, "One simple move per turn....CHEATER");
+        }
 
         // WHITE BOARD
 
@@ -357,6 +409,7 @@ public class Game {
         }
 
         checkWinByCapture();
+        return new Message(Message.Type.info, "Well played.");
     }
 
     /**
@@ -364,7 +417,8 @@ public class Game {
      */
     public void backupRedTurn() {
         // Removes previously made move from move list
-        Move move = moves.remove(moves.size() - 1);
+        Move move = tempMoves.remove(tempMoves.size() - 1);
+
 
         // RED BOARD
 
@@ -399,7 +453,7 @@ public class Game {
      */
     public void backupWhiteTurn() {
         // Removes previously made move from move list
-        Move move = moves.remove(moves.size() - 1);
+        Move move = tempMoves.remove(tempMoves.size() - 1);
 
         // WHITE BOARD
 

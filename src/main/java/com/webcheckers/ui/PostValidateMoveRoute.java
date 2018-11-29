@@ -21,8 +21,7 @@ public class PostValidateMoveRoute implements Route {
      * Create the Spark Route (UI controller) for the
      * {@code POST /validateMove} HTTP request.
      *
-     * @param templateEngine
-     *   the HTML template rendering engine
+     * @param templateEngine the HTML template rendering engine
      */
     public PostValidateMoveRoute(final TemplateEngine templateEngine, final GameCenter gameCenter) {
         // Validation
@@ -45,10 +44,9 @@ public class PostValidateMoveRoute implements Route {
         Game game = gameCenter.getGameLobby().getGame(player);
         BoardView board;
 
-        if(playerColor.equals(Color.RED)){
+        if (playerColor.equals(Color.RED)) {
             board = game.getRedBoard();
-        }
-        else{
+        } else {
             board = game.getWhiteBoard();
         }
 
@@ -60,11 +58,11 @@ public class PostValidateMoveRoute implements Route {
         // Check if it's valid, and format response message to JSON
         // Add valid moves to arraylist in Game
         Message message = move.isValidMessage(board);
-        if (!(message.getType() == Message.Type.error)){
+        if (!(message.getType() == Message.Type.error)) {
             if (playerColor.equals(Color.RED)) {
-                game.updateBoardRedTurn(move);
+                message = game.updateBoardRedTurn(move);
             } else {
-                game.updateBoardWhiteTurn(move);
+                message = game.updateBoardWhiteTurn(move);
             }
         }
 

@@ -69,26 +69,27 @@ public class GetSignOutRoute implements Route {
         GameLobby gameLobby = this.gameCenter.getGameLobby();
         PlayerLobby playerLobby = this.gameCenter.getPlayerLobby();
         // If the player was in a game
-        if(gameLobby.hasGame(player)){
+        if (gameLobby.hasGame(player)) {
             Game game = gameLobby.getGame(player);
             Player opponent = player.getColor() == Color.RED ? game.getWhitePlayer():game.getRedPlayer();
 
             // The player loses and the opponent wins
             game.setWinner(opponent);
+            response.redirect(WebServer.RESIGN_GAME_URL);
 
             vm.put(GetHomeRoute.ROUTE_NAME, opponent);
 
             // Both players leave the game
             opponent.leaveGame();
             player.leaveGame();
+            gameLobby.removeGame(player);
 
             // The player leaves the playerLobby
             PlayerLobby.removePlayer(player);
-        }
-        else if(playerLobby.hasPlayer(player)){
+        } else if (playerLobby.hasPlayer(player)) {
             PlayerLobby.removePlayer(player);
         }
-        
+
         vm.put(TITLE_ATTR, TITLE);
         vm.put(GetStartGameRoute.CURRENT_PLAYER_ATTR, null);
         vm.put(GetHomeRoute.NUM_PLAYERS, playerLobby.getNumberOfPlayers());

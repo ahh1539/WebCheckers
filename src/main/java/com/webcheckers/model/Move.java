@@ -1,4 +1,6 @@
 package com.webcheckers.model;
+import com.webcheckers.ui.PostCheckTurnRoute;
+
 import java.io.Serializable;
 
 /**
@@ -174,37 +176,39 @@ public class Move implements Serializable {
      */
     public boolean isJump() {
 
-        boolean valid = false;
-        Space startSpace = getStartSpace(this.board.getRow(this.startRowIndex));
-        Space endSpace = getEndSpace(this.board.getRow(this.endRowIndex));
-        Piece movingPiece = startSpace.getPiece();
-        Space targetSpace = this.board.getRow(targetRow).getSpace(targetCell);
+//        boolean valid = false;
+//        Space startSpace = getStartSpace(this.board.getRow(this.startRowIndex));
+//        Space endSpace = getEndSpace(this.board.getRow(this.endRowIndex));
+//        Piece movingPiece = startSpace.getPiece();
+//        Space targetSpace = this.board.getRow(targetRow).getSpace(targetCell);
+//
+//        // If the moving piece is single
+//        if (movingPiece.getType() == Piece.Type.SINGLE) {
+//            // Check if move is a jump
+//            if (isJumpRow && (isJumpCell || isJumpCellPos)) {
+//                // Check if there is piece to capture
+//                if (endSpace.isValid() && !targetSpace.isValid()) {
+//                    if (targetSpace.getPiece().getColor() != startSpace.getPiece().getColor()) {
+//                        valid = true;
+//                    }
+//                }
+//            }
+//        }
+//        // Otherwise, if the moving piece is king
+//        else {
+//            if ((isJumpRow || isJumpRowPos)&& (isJumpCell || isJumpCellPos)) {
+//                // Check if there is piece to capture
+//                if (endSpace.isValid() && !targetSpace.isValid()) {
+//                    if (targetSpace.getPiece().getColor() != startSpace.getPiece().getColor()) {
+//                        valid = true;
+//                    }
+//                }
+//            }
+//        }
+//
+//        return valid;
 
-        // If the moving piece is single
-        if (movingPiece.getType() == Piece.Type.SINGLE) {
-            // Check if move is a jump
-            if (isJumpRow && (isJumpCell || isJumpCellPos)) {
-                // Check if there is piece to capture
-                if (endSpace.isValid() && !targetSpace.isValid()) {
-                    if (targetSpace.getPiece().getColor() != startSpace.getPiece().getColor()) {
-                        valid = true;
-                    }
-                }
-            }
-        }
-        // Otherwise, if the moving piece is king
-        else {
-            if ((isJumpRow || isJumpRowPos)&& (isJumpCell || isJumpCellPos)) {
-                // Check if there is piece to capture
-                if (endSpace.isValid() && !targetSpace.isValid()) {
-                    if (targetSpace.getPiece().getColor() != startSpace.getPiece().getColor()) {
-                        valid = true;
-                    }
-                }
-            }
-        }
-
-        return valid;
+        return ((isJumpRow || isJumpRowPos)&& (isJumpCell || isJumpCellPos));
 
     }
 
