@@ -127,7 +127,13 @@ public class Player {
     }
 
     public void hasResigned(){
-        hasresigned = true;
+
+        if (hasresigned == true){
+            hasresigned = false;
+        }
+        else if (hasresigned == false){
+            hasresigned = true;
+        }
     }
 
     public boolean resigned(){

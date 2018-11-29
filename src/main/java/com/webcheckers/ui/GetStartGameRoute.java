@@ -63,10 +63,10 @@ public class GetStartGameRoute implements Route {
         Player player1 = session.attribute(PostSignInRoute.PLAYER);
 
         //Checks is player has resigned, if so it returns to homepage
-        if (player1.resigned()) {
-            response.redirect(WebServer.HOME_URL);
-            return templateEngine.render(new ModelAndView(vm, GetStartGameRoute.GAME_NAME));
-        }
+//        if (player1.resigned()) {
+//            response.redirect(WebServer.HOME_URL);
+//            return templateEngine.render(new ModelAndView(vm, GetStartGameRoute.GAME_NAME));
+//        }
 
         // Checks to see if a player is already in a game and then refreshes that game if so
         if (gameLobby.hasGame(player1)) {
@@ -88,9 +88,15 @@ public class GetStartGameRoute implements Route {
 
         } else {
             //creates a new game
+            //sets has resigned back to false
             String secondPlayer = request.queryParams("opponent");
-            System.out.println(secondPlayer);
             Player player2 = new Player(secondPlayer);
+            if (player1.resigned() == true){
+                player1.hasResigned();
+            }
+            if (player2.resigned() == true){
+                player2.hasResigned();
+            }
             if (PlayerLobby.getPlayer(player2.getName()).inGame()) {
                 String msg = "The player you have selected is already in a game. Select another player.";
                 vm.put(GetHomeRoute.ERROR, msg);
@@ -117,7 +123,6 @@ public class GetStartGameRoute implements Route {
                 LOG.finer("white board building");
                 vm.put(BOARD_ATTR, game.getWhiteBoard());
             }
-
             vm.put(GetStartGameRoute.MESSAGE, message);
             vm.put(GetStartGameRoute.CURRENT_PLAYER_ATTR, player1);
             vm.put(GetStartGameRoute.VIEW_MODE_ATTR, Game.ViewMode.PLAY);

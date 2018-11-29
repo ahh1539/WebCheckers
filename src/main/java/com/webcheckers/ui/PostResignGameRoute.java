@@ -65,6 +65,7 @@ public class PostResignGameRoute implements Route {
         }
         player.hasResigned();
         player.leaveGame();
+        gameCenter.getGameLobby().removeGame(player);
 
         // checks whether or not players successfully left the game
         if (!white.inGame() || !red.inGame()) {
