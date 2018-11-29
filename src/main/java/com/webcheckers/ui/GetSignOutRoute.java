@@ -70,6 +70,7 @@ public class GetSignOutRoute implements Route {
 
             // The player loses and the opponent wins
             game.setLoser(player);
+            response.redirect(WebServer.RESIGN_GAME_URL);
             Player opponent = game.getWhitePlayer();
 
             vm.put(GetHomeRoute.ROUTE_NAME, opponent);
@@ -79,6 +80,7 @@ public class GetSignOutRoute implements Route {
             // Both players leave the game
             opponent.leaveGame();
             player.leaveGame();
+            gameLobby.removeGame(player);
 
             // The player leaves the playerLobby
             PlayerLobby.removePlayer(player);
