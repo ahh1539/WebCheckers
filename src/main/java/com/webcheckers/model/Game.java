@@ -229,6 +229,12 @@ public class Game {
      */
     public List<Move> getTempMoves() { return this.tempMoves; }
 
+    public void resetTempMoves(){
+        while(!tempMoves.isEmpty()){
+            tempMoves.remove(0);
+        }
+    }
+
 
     /**
      * Completes removal of white captured piece and adds to captured count
@@ -274,10 +280,27 @@ public class Game {
      * @param m
      *      the Move submitted
      */
-    public void updateBoardRedTurn(Move m) {
-        // Adds move to the ongoing list of moves
-        moves.add(m);
-        tempMoves.add(m);
+    public Message updateBoardRedTurn(Move m) {
+
+        // if first move of turn, add
+        if( tempMoves.isEmpty()) {
+
+            // Add move to the ongoing list of moves
+            moves.add(m);
+            tempMoves.add(m);
+        }
+        // if previous move is jump check if curr move is jump
+        else if( tempMoves.get(0).isJump()) {
+            if( m.isJump()){
+                // Add move to the ongoing list of moves
+                moves.add(m);
+                tempMoves.add(m);
+            }
+        }
+        // else the first move was a simple move and you can't keep going
+        else{
+            return new Message(Message.Type.error, "One simple move per turn....CHEATER");
+        }
 
         // RED BOARD
 
@@ -315,7 +338,7 @@ public class Game {
         if(piece.getType().equals(Piece.Type.SINGLE) && endRow.getIndex() == NUM_ROWS_COLS) {
             endSpace.putPiece(piece.makeKingPiece());
         }
-
+        return new Message(Message.Type.info, "Well played");
     }
 
     /**
@@ -324,12 +347,27 @@ public class Game {
      * @param m
      *      the Move submitted
      */
-    public void updateBoardWhiteTurn(Move m) {
-        //TODO update from list of move
-        // Adds move to ongoing list of moves
-        moves.add(m);
-        // adds move to moves for turn
-        tempMoves.add(m);
+    public Message updateBoardWhiteTurn(Move m) {
+
+        // if first move of turn, add
+        if( tempMoves.isEmpty()) {
+
+            // Add move to the ongoing list of moves
+            moves.add(m);
+            tempMoves.add(m);
+        }
+        // if previous move is jump check if curr move is jump
+        else if( tempMoves.get(0).isJump()) {
+            if( m.isJump()){
+                // Add move to the ongoing list of moves
+                moves.add(m);
+                tempMoves.add(m);
+            }
+        }
+        // else the first move was a simple move and you can't keep going
+        else{
+            return new Message(Message.Type.error, "One simple move per turn....CHEATER");
+        }
 
         // WHITE BOARD
 
@@ -367,7 +405,7 @@ public class Game {
         if(piece.getType().equals(Piece.Type.SINGLE) && endRow.getIndex() == NUM_ROWS_COLS) {
             endSpace.putPiece(piece.makeKingPiece());
         }
-
+        return new Message(Message.Type.info, "Well played.");
     }
 
     /**

@@ -65,7 +65,6 @@ public class PostSubmitTurnRoute implements Route {
 
             List<Move> tempMoves = game.getTempMoves();
 
-            // minor comment to try to commit again...
             // remove capture pieces in multiple jump
             while( !tempMoves.isEmpty()) {
                 Move lastMove = tempMoves.remove(0);//tempMoves.size() - 1);

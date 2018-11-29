@@ -60,9 +60,9 @@ public class PostValidateMoveRoute implements Route {
         Message message = move.isValidMessage(board);
         if (!(message.getType() == Message.Type.error)) {
             if (playerColor.equals(Color.RED)) {
-                game.updateBoardRedTurn(move);
+                message = game.updateBoardRedTurn(move);
             } else {
-                game.updateBoardWhiteTurn(move);
+                message = game.updateBoardWhiteTurn(move);
             }
         }
 
