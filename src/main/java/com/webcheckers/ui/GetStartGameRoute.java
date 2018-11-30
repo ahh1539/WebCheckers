@@ -109,7 +109,9 @@ public class GetStartGameRoute implements Route {
                 return templateEngine.render(new ModelAndView(vm, GetHomeRoute.ROUTE_NAME));
             }
             player2.assignColor(Color.WHITE);
-            Game game = new Game(player1, player2);
+            String id1 = player1.getName();
+            String id2 = player2.getName();
+            Game game = new Game(player1, player2, id1 + id2);
             PlayerLobby.getPlayer(player1.getName()).joinGame();
             PlayerLobby.getPlayer(player2.getName()).joinGame();
 

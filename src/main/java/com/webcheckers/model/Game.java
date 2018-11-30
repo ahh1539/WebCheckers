@@ -5,6 +5,7 @@ import javafx.geometry.Pos;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.SplittableRandom;
 
 /**
  * A representation of a single Game, with two players and a Board.
@@ -23,6 +24,8 @@ public class Game {
     private BoardView whiteBoard;
     private int redCaptured = 0;
     private int whiteCaptured = 0;
+    private String id;
+    private boolean turn = false;
     private boolean canDeleteGame = false;
 
     private final int NUM_ROWS_COLS = 7;
@@ -42,7 +45,7 @@ public class Game {
      * @param whitePlayer
      *      Player {@link Player} representing the white Player
      */
-    public Game(Player redPlayer, Player whitePlayer){
+    public Game(Player redPlayer, Player whitePlayer, String id){
         Objects.requireNonNull(redPlayer, "redPlayer must not be null");
         Objects.requireNonNull(whitePlayer, "whitePlayer must not be null");
 
@@ -52,6 +55,7 @@ public class Game {
         this.winner = null;
         this.redBoard = new BoardView(redPlayer);
         this.whiteBoard = new BoardView(whitePlayer);
+        this.id = id;
     }
 
     /**
@@ -61,6 +65,21 @@ public class Game {
      */
     public Player getRedPlayer() {
         return redPlayer;
+    }
+
+    public String getId(){return id; }
+
+    public void changeTurn(){
+        if (turn == true){
+            turn = false;
+        }
+        else {
+            turn = true;
+        }
+    }
+
+    public boolean changedTurn(){
+        return turn;
     }
 
     /**
@@ -113,6 +132,10 @@ public class Game {
      */
     public boolean hasGame(Player player){
         return this.redPlayer.equals(player) | this.whitePlayer.equals(player);
+    }
+
+    public boolean hasGame2(String id){
+        return this.getId().equals(id);
     }
 
     /**

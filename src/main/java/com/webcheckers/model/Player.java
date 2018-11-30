@@ -17,6 +17,7 @@ public class Player {
     private boolean inGame;
     private Color color;
     private boolean hasresigned = false;
+    private String thing = "empty";
 
 
     /**
@@ -31,6 +32,12 @@ public class Player {
         this.wins = 0;
         this.inGame = false;
         this.color = Color.RED;
+    }
+    public String getThing(){
+        return thing;
+    }
+    public void setThing(String help){
+        thing = help;
     }
 
     /**

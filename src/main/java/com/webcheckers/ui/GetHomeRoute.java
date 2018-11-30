@@ -1,6 +1,7 @@
 package com.webcheckers.ui;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.logging.Logger;
@@ -30,6 +31,7 @@ public class GetHomeRoute implements Route {
 
     static final String PLAYER = "currentPlayer";
     static final String PLAYER_LIST = "players";
+    static final String GAME_LIST = "games";
     static final String NUM_PLAYERS = "numPlayers";
     static final String ERROR = "errorMsg";
     static final String ERROR_IN_GAME = "The player you have selected is already in a game. Select another player.";
@@ -77,9 +79,14 @@ public class GetHomeRoute implements Route {
         GameLobby gameLobby = this.gameCenter.getGameLobby();
 
         // Allows player to see current players only if signed in
+//        if (gameLobby.getGameLobby() != null){
+//            vm.put(GAME_LIST, gameLobby.getGameLobby());
+//        }
         Player player = session.attribute(PostSignInRoute.PLAYER);
         if (playerLobby.hasPlayer(player)) {
-
+            if (!gameLobby.getGameLobby().isEmpty()){
+                vm.put(GAME_LIST, gameLobby.getGameLobby());
+            }
             vm.put(GetStartGameRoute.CURRENT_PLAYER_ATTR, player);
             vm.put(PLAYER_LIST, playerLobby.getPlayerLobby());
             final String username = request.queryParams("opponent");
@@ -92,7 +99,9 @@ public class GetHomeRoute implements Route {
                 if (!gameLobby.hasGame(opponent)) {
 
                     // Add a new game if the opponent is free to play
-                    Game game = new Game(player, opponent);
+                    String id1 = player.getName();
+                    String id2 = opponent.getName();
+                    Game game = new Game(player, opponent, id1 + id2);
                     gameLobby.addGame(game);
 
                     vm.put(GetStartGameRoute.VIEW_MODE_ATTR, Game.ViewMode.PLAY);

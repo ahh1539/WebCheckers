@@ -88,4 +88,8 @@ public class PlayerLobby {
     public List<Player> getPlayerLobby(){
         return Collections.unmodifiableList(playerLobby);
     }
+
+//    public String printyy(){
+//        return playerLobby.get(0);
+//    }
 }

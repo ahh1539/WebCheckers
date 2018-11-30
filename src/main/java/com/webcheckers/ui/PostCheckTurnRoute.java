@@ -44,11 +44,6 @@ public class PostCheckTurnRoute implements Route {
     @Override
     public Object handle(Request request, Response response) {
 
-//        Map<String, Object> vm = new HashMap<>();
-//
-//        vm.put(MESSAGE_ATTR, "true");
-//        vm.put(MESSAGE_TYPE_ATTR, Message.Type.info);
-
         final Session session = request.session();
         Gson gson = new Gson();
 
@@ -62,6 +57,7 @@ public class PostCheckTurnRoute implements Route {
         // if it is current player's turn, change messages values
         if (game.getActiveColor() == player.getColor()) {
             message = new Message(Message.Type.info, "true");
+            game.changeTurn();
         }
 
         // convert message to JSON for response
