@@ -658,8 +658,12 @@ public class Game {
      * Checks if either player has captured all of opponent's pieces or has run out of moves
      */
     public void checkForWin() {
-        if(whiteCaptured == 12 || !hasMove()) setWinner(this.redPlayer);
-        else if(redCaptured == 12 || !hasMove()) setWinner(this.whitePlayer);
+        //TODO use this if hasMove works
+//        if(whiteCaptured == 12 || !hasMove()) setWinner(this.redPlayer);
+//        else if(redCaptured == 12 || !hasMove()) setWinner(this.whitePlayer);
+
+        if(whiteCaptured == 12 ) setWinner(this.redPlayer);
+        else if(redCaptured == 12 ) setWinner(this.whitePlayer);
     }
 
 }
