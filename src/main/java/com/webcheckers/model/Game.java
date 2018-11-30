@@ -133,8 +133,13 @@ public class Game {
         if( whiteCaptured == 12 || redCaptured == 12){
             return false;
         }
+        BoardView board;
+        if( activeColor == Color.WHITE){
+            board = whiteBoard;
+        }
+        else{ board = redBoard;}
         // iterate over rows and spaces
-        for(Row r : whiteBoard){
+        for(Row r : board){
             for(Space s : r){
 
                 // if space has piece, see if there's a valid move in any direction
@@ -178,8 +183,13 @@ public class Game {
         if( whiteCaptured == 12 || redCaptured == 12){
             return false;
         }
+        BoardView board;
+        if( activeColor == Color.WHITE){
+            board = whiteBoard;
+        }
+        else{ board = redBoard;}
         // iterate over rows and spaces
-        for(Row r : whiteBoard){
+        for(Row r : board){
             for(Space s : r){
 
                 // if space has piece, see if there's a valid move in any direction
