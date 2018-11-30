@@ -116,6 +116,17 @@ public class Game {
     }
 
     /**
+     * Checks for overall move ability, helps look for win by stagnation
+     * @param player
+     *      the given player to check moves capability for
+     * @return
+     *      whether this player can make any valid moves
+     */
+    private boolean hasMove(Player player) {
+        return (hasSimpleMove(player) || hasJumpMove(player));
+    }
+
+    /**
      * Check to see if current player has any moves available
      * @param player
      * @return
