@@ -519,7 +519,9 @@ public class Game {
 
         // if first move of turn, add
         if( tempMoves.isEmpty()) {
-
+            if( hasJumpMove() && !m.isJump()){
+                return new Message(Message.Type.error, "You have a jump possible.");
+            }
             // Add move to the ongoing list of moves
             moves.add(m);
             tempMoves.add(m);
