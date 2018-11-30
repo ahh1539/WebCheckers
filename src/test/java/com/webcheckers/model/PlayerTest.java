@@ -113,5 +113,29 @@ public class PlayerTest {
         Player dummy2 = new Player("dummy");
         assertTrue(dummy1.equals(dummy2));
     }
+    @Test
+    @DisplayName("test equals fails on non-player object")
+    void testEqualsNonPlayer(){
+        Player dummy1 = new Player("dummy");
+        String string = "Fail";
+        assertFalse(dummy1.equals(string));
+    }
+
+    @Test
+    @DisplayName("Player hasResigned is true")
+    void testHasResigned(){
+        Player dummy1 = new Player("dummy");
+        dummy1.hasResigned();
+        assertTrue(dummy1.resigned());
+    }
+
+
+    @Test
+    @DisplayName("test hashCode")
+    void testHashCode(){
+        Player dummy1 = new Player("dummy");
+        Player dummy2 = new Player("dummy1");
+        assertNotEquals(dummy1.hashCode(), dummy2.hashCode());
+    }
 
 }
