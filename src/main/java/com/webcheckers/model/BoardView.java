@@ -31,7 +31,6 @@ public class BoardView implements Iterable<Row>{
             placeRedPieces();
         }
         else{
-            System.out.println("placing white pieces");
             placeWhitePieces();
         }
     }
@@ -71,14 +70,16 @@ public class BoardView implements Iterable<Row>{
      */
     public void placeRedPieces(){
         for(int i = 0; i < BOARD_LENGTH; i++ ){
-            if( i < 3){
+            //if( i < 3){
+              if( i == 3 || i == 2){
                 for (Space space: gameBoard[i]) {
                     if (space.getColor() == Space.SpaceColor.WHITE) {
                         space.putWhitePiece();
                     }
                 }
             }
-            if( i > 4){
+            //if( i > 4){
+              if( i == 4 || i == 5){
                 for (Space space: gameBoard[i]) {
                     if (space.getColor() == Space.SpaceColor.WHITE) {
                         space.putRedPiece();
@@ -93,14 +94,16 @@ public class BoardView implements Iterable<Row>{
      */
     public void placeWhitePieces(){
         for(int i = 0; i < BOARD_LENGTH; i++ ){
-            if( i < 3){
+            //if( i < 3){
+            if( i == 3 || i == 2){
                 for (Space space: gameBoard[i]) {
                     if (space.getColor() == Space.SpaceColor.WHITE) {
                         space.putRedPiece();
                     }
                 }
             }
-            if( i > 4){
+            //if( i > 4){
+            if( i == 4 || i == 5){
                 for (Space space: gameBoard[i]) {
                     if (space.getColor() == Space.SpaceColor.WHITE) {
                         space.putWhitePiece();

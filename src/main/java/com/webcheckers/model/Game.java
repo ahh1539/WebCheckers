@@ -1,5 +1,7 @@
 package com.webcheckers.model;
 
+import javafx.geometry.Pos;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -114,13 +116,68 @@ public class Game {
     }
 
     /**
-     * Will be fully implemented in later sprints.
+     * Check to see if current player has any moves available
      * @param player
      * @return
      */
     public boolean hasMove(Player player){
+        if( whiteCaptured == 12 || redCaptured == 12){
+            return false;
+        }
+        // iterate over rows and spaces
+        for(Row r : whiteBoard){
+            for(Space s : r){
+
+                // if space has piece, see if there's a valid move in any direction
+                if( s.getPiece() != null){
+                    if( s.getPiece().getColor() == player.getColor()){
+
+                        ArrayList<Position> positions = new ArrayList<>();
+                        // if piece belongs to player, check if it is movable
+                        Position current = new Position(r.getIndex(), s.getCellIdx());
+                        Position simpleLF = new Position(current.getRow()+1, current.getCell()-1);
+                        positions.add(simpleLF);
+
+                        Position simpleRF = new Position(current.getRow()+1, current.getCell()+1);
+                        positions.add(simpleRF);
+
+                        Position jumpLF = new Position(current.getRow()+2, current.getCell()-2);
+                        positions.add(jumpLF);
+
+                        Position jumpRF = new Position(current.getRow()+2, current.getCell()+2);
+                        positions.add(jumpRF);
+
+                        Position kingLF = new Position(current.getRow()-1, current.getCell()-1);
+                        positions.add(kingLF);
+
+                        Position kingRF = new Position(current.getRow()-1, current.getCell()-1);
+                        positions.add(kingRF);
+
+                        Position kingJumpLF = new Position(current.getRow()-2, current.getCell()-1);
+                        positions.add(kingJumpLF);
+
+                        Position kingJumpRF = new Position(current.getRow()-2, current.getCell()-1);
+                        positions.add(kingJumpRF);
+
+                        for(Position p : positions){
+                            Move move = new Move(current, p);
+                            if( player.getColor() == Color.WHITE) {
+                                if (move.isValid(whiteBoard)) return true;
+                            }
+                            else{
+                                if( move.isValid(redBoard)) return true;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        // default to false if no valid move is found
         return false;
     }
+
+
+
 
     /**
      * Gets the Board for this Game if current player is red
@@ -241,7 +298,10 @@ public class Game {
      * @return
      *      The current list of moves in the turn
      */
-    public List<Move> getTempMoves() { return this.tempMoves; }
+    public List<Move> getTempMoves() {
+        List<Move> lightingMoves = new ArrayList<>(tempMoves);
+        return lightingMoves;
+    }
 
     public void resetTempMoves(){
         while(!tempMoves.isEmpty()){
@@ -296,6 +356,13 @@ public class Game {
      */
     public Message updateBoardRedTurn(Move m) {
 
+        if( !tempMoves.isEmpty()){
+            System.out.println("GAME.JAVA 286: previous RED move: "+ tempMoves.get(0).toString());
+        }
+        System.out.println("GAME.JAVA 286: previous RED move: none");
+        System.out.println("GAME.JAVA 288: current RED move: "+ m.toString());
+
+
         // if first move of turn, add
         if( tempMoves.isEmpty()) {
 
@@ -306,6 +373,7 @@ public class Game {
         // if previous move is jump check if curr move is jump
         else if( tempMoves.get(0).isJump()) {
             if( m.isJump()){
+
                 // Add move to the ongoing list of moves
                 moves.add(m);
                 tempMoves.add(m);
@@ -364,6 +432,12 @@ public class Game {
      */
     public Message updateBoardWhiteTurn(Move m) {
 
+        if( !tempMoves.isEmpty()){
+            System.out.println("GAME.JAVA 286: previous WHITE move: "+ tempMoves.get(0).toString());
+        }
+        System.out.println("GAME.JAVA 286: previous WHITE move: none");
+        System.out.println("GAME.JAVA 288: current WHITE move: "+ m.toString());
+
         // if first move of turn, add
         if( tempMoves.isEmpty()) {
 
@@ -377,6 +451,9 @@ public class Game {
                 // Add move to the ongoing list of moves
                 moves.add(m);
                 tempMoves.add(m);
+            }
+            else {
+                return new Message(Message.Type.error, "One simple move per turn....CHEATER");
             }
         }
         // else the first move was a simple move and you can't keep going
