@@ -6,6 +6,7 @@ import com.webcheckers.application.PlayerLobby;
 import com.webcheckers.model.Game;
 import com.webcheckers.model.Message;
 import com.webcheckers.model.Player;
+import com.webcheckers.model.Color;
 import spark.*;
 
 import java.util.HashMap;
@@ -28,8 +29,7 @@ public class GetStartGameRoute implements Route {
     static final String WHITE_PLAYER_ATTR = "whitePlayer";
     static final String ACTIVE_COLOR_ATTR = "activeColor";
     static final String VIEW_MODE_ATTR = "viewMode";
-
-    static final String MESSAGE = "message";
+    private static final String MESSAGE = "errorMsg";
 
 
     public GetStartGameRoute(final TemplateEngine templateEngine, final GameCenter gameCenter) {
@@ -38,103 +38,104 @@ public class GetStartGameRoute implements Route {
         Objects.requireNonNull(gameCenter, "gameCenter must not be null");
         this.templateEngine = templateEngine;
         this.gameCenter = gameCenter;
-        LOG.config("GetHomeRoute is initialized.");
+        LOG.config("GetStartRoute is initialized.");
     }
 
     /**
      * Render the WebCheckers Start Game page.
      *
-     * @param request
-     *   the HTTP request
-     * @param response
-     *   the HTTP response
-     * @return
-     *   the rendered HTML for the Home page
+     * @param request  the HTTP request
+     * @param response the HTTP response
+     * @return the rendered HTML for the Home page
      */
     @Override
     public Object handle(Request request, Response response) {
         LOG.finer("GetStartGameRoute is invoked.");
-
         Map<String, Object> vm = new HashMap<>();
         vm.put(TITLE_ATTR, TITLE);
         final Session session = request.session();
+        GameLobby gameLobby = gameCenter.getGameLobby();
+        PlayerLobby playerLobby = gameCenter.getPlayerLobby();
 
         // Sets up player and opponent player based on selection
 
-        Player player1 =  session.attribute(PostSignInRoute.PLAYER);
-        String secondPlayer = request.queryParams("opponent");
+        Player player1 = session.attribute(PostSignInRoute.PLAYER);
 
-        // Checks if the players are already in the lobby, if not it adds them.
-        PlayerLobby playerLobby = gameCenter.getPlayerLobby();
-        Player player2 = new Player(secondPlayer);
-        if(!playerLobby.hasPlayer(player1)){
-            playerLobby.addPlayer(player1);
+        // Checks to see if a player is already in a game and then refreshes that game if so
+        if (gameLobby.hasGame(player1)) {
+            System.out.println("player is in game");
+            Game game = gameLobby.getGame(player1);
+
+            // Checks whether the game has declared a winner and sends back to home if so
+
+            if(game.hasWinner()) { response.redirect(WebServer.HOME_URL); }
+
+            // Assembles the appropriate board and view model
+
+            if (player1.getColor() == Color.RED) {
+                LOG.finer("red board building");
+                vm.put(BOARD_ATTR, game.getRedBoard());
+            }
+            if (player1.getColor() == Color.WHITE) {
+                LOG.finer("white board building");
+                vm.put(BOARD_ATTR, game.getWhiteBoard());
+            }
+            vm.put(GetStartGameRoute.CURRENT_PLAYER_ATTR, player1);
+            vm.put(GetStartGameRoute.VIEW_MODE_ATTR, Game.ViewMode.PLAY);
+            vm.put(GetStartGameRoute.RED_PLAYER_ATTR, game.getRedPlayer());
+            vm.put(GetStartGameRoute.WHITE_PLAYER_ATTR, game.getWhitePlayer());
+            vm.put(GetStartGameRoute.ACTIVE_COLOR_ATTR, gameLobby.getGame(player1).getActiveColor());
+            return templateEngine.render(new ModelAndView(vm, GetStartGameRoute.GAME_NAME));
+
+        } else {
+            //creates a new game
+            //sets has resigned back to false
+            String secondPlayer = request.queryParams("opponent");
+            Player player2 = new Player(secondPlayer);
+            System.out.println(player1);
+            System.out.println(player2);
+            if (player1.resigned() == true){
+                player1.hasResigned();
+            }
+            if (player2.resigned() == true){
+                player2.hasResigned();
+            }
+            if (PlayerLobby.getPlayer(player2.getName()).inGame()) {
+                String msg = "The player you have selected is already in a game. Select another player.";
+                vm.put(GetHomeRoute.ERROR, msg);
+                vm.put(GetHomeRoute.PLAYER_LIST, playerLobby.getPlayerLobby());
+                vm.put(GetHomeRoute.LOBBY_ATTR, playerLobby);
+                vm.put(GetHomeRoute.PLAYER, player1);
+                return templateEngine.render(new ModelAndView(vm, GetHomeRoute.ROUTE_NAME));
+            }
+            player2.assignColor(Color.WHITE);
+            String id1 = player1.getName();
+            String id2 = player2.getName();
+            Game game = new Game(player1, player2, id1 + id2);
+            PlayerLobby.getPlayer(player1.getName()).joinGame();
+            PlayerLobby.getPlayer(player2.getName()).joinGame();
+
+            // Configures view model for new game
+            gameLobby.addGame(game);
+
+            Message message = new Message(Message.Type.error, "Text");
+
+            if (player1.getColor() == Color.RED) {
+                LOG.finer("red board building");
+                vm.put(BOARD_ATTR, game.getRedBoard());
+            }
+            if (player1.getColor() == Color.WHITE) {
+                LOG.finer("white board building");
+                vm.put(BOARD_ATTR, game.getWhiteBoard());
+            }
+            vm.put(GetStartGameRoute.MESSAGE, message);
+            vm.put(GetStartGameRoute.CURRENT_PLAYER_ATTR, player1);
+            vm.put(GetStartGameRoute.VIEW_MODE_ATTR, Game.ViewMode.PLAY);
+            vm.put(GetStartGameRoute.RED_PLAYER_ATTR, player1);
+            vm.put(GetStartGameRoute.WHITE_PLAYER_ATTR, player2);
+            vm.put(GetStartGameRoute.ACTIVE_COLOR_ATTR, gameLobby.getGame(player1).getActiveColor());
+
+            return templateEngine.render(new ModelAndView(vm, GetStartGameRoute.GAME_NAME));
         }
-        if(!playerLobby.hasPlayer(player2)){
-            playerLobby.addPlayer(player2);
-        }
-
-        // Checks whether the opponent is already playing a game
-
-        if (PlayerLobby.getPlayer(player1.getName()).inGame()|| PlayerLobby.getPlayer(player2.getName()).inGame()){
-            String msg = "The player you have selected is already in a game. Select another player.";
-            vm.put(GetHomeRoute.ERROR, msg);
-            vm.put(GetHomeRoute.PLAYER_LIST, playerLobby.getPlayerLobby());
-            vm.put(GetHomeRoute.LOBBY_ATTR, playerLobby);
-            vm.put(GetHomeRoute.PLAYER, player1);
-            return templateEngine.render(new ModelAndView(vm, GetHomeRoute.ROUTE_NAME));
-        }
-
-        // Instantiates new game and marks both players as being participants
-
-        Game game = new Game(player1, player2);
-        PlayerLobby.getPlayer(player1.getName()).joinGame();
-        PlayerLobby.getPlayer(player2.getName()).joinGame();
-
-        // Configures view model for new game
-        GameLobby gameLobby = gameCenter.getGameLobby();
-        gameLobby.addGame(game);
-        Message message = new Message(Message.Type.ERROR, "Text");
-
-        vm.put(GetStartGameRoute.MESSAGE, message);
-        vm.put(GetStartGameRoute.CURRENT_PLAYER_ATTR, player1);
-        vm.put(GetStartGameRoute.VIEW_MODE_ATTR, Game.ViewMode.PLAY);
-        vm.put(GetStartGameRoute.RED_PLAYER_ATTR, player1);
-        vm.put(GetStartGameRoute.WHITE_PLAYER_ATTR, player2);
-        vm.put(GetStartGameRoute.ACTIVE_COLOR_ATTR, gameLobby.getGame(player1).getActiveColor());
-        vm.put(GetStartGameRoute.BOARD_ATTR, gameLobby.getGameBoard(player1));
-
-        return templateEngine.render(new ModelAndView(vm, GetStartGameRoute.GAME_NAME));
-
-        // Retrieves the HTTP session and necessary player/game info
-
-//        final Session session = request.session();
-//        Player player = session.attribute(PostSignInRoute.PLAYER);
-//        PlayerLobby.getPlayer(player.getName()).joinGame();
-//        Game game = this.gameCenter.getGameLobby().getGame(player);
-//
-//        Map<String, Object> vm = new HashMap<>();
-//        vm.put(TITLE_ATTR, TITLE);
-//
-//        // Handles a null game object
-//
-//        if(game == null){
-//            vm.put(TITLE_ATTR, TITLE);
-//            vm.put(GetHomeRoute.NUM_PLAYERS, this.gameCenter.getPlayerLobby().getNumberOfPlayers());
-//            vm.put(CURRENT_PLAYER_ATTR, player);
-//            vm.put(GetHomeRoute.LOBBY_ATTR, this.gameCenter.getPlayerLobby().getPlayerLobby());
-//            return templateEngine.render(new ModelAndView(vm, GetHomeRoute.ROUTE_NAME));
-//        }
-//
-//        // Configures view model to set up template based on player and opponent info
-//
-//        vm.put(BOARD_ATTR, game.getBoard());
-//        vm.put(CURRENT_PLAYER_ATTR, player);
-//        vm.put(TITLE_ATTR, TITLE);
-//        vm.put(VIEW_MODE_ATTR, Game.ViewMode.PLAY);
-//        vm.put(RED_PLAYER_ATTR, game.getRedPlayer());
-//        vm.put(WHITE_PLAYER_ATTR, game.getWhitePlayer());
-//        vm.put(ACTIVE_COLOR_ATTR, game.getActiveColor());
-//        return templateEngine.render(new ModelAndView(vm , GetStartGameRoute.GAME_NAME));
     }
 }

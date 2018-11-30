@@ -2,14 +2,14 @@ package com.webcheckers.ui;
 
 import com.google.gson.Gson;
 import com.webcheckers.application.GameCenter;
-import com.webcheckers.model.Game;
-import com.webcheckers.model.Message;
-import com.webcheckers.model.Player;
+import com.webcheckers.application.GameLobby;
+import com.webcheckers.application.PlayerLobby;
+import com.webcheckers.model.*;
 import spark.*;
 import static spark.Spark.halt;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.lang.*;
+import java.util.List;
 import java.util.Objects;
 import java.util.logging.Logger;
 
@@ -21,7 +21,6 @@ public class PostSubmitTurnRoute implements Route {
 
     // Attributes
     private static final Logger LOG = Logger.getLogger(PostSubmitTurnRoute.class.getName());
-    private Gson gson;
 
     /**
      * Create the Spark Route (UI controller) for the
@@ -47,9 +46,8 @@ public class PostSubmitTurnRoute implements Route {
 
         final Session session = request.session();
 
+        // Get current player and game to compare active color with
 
-        System.out.println("SUBMIT TURN IS INVOKED");
-        // get current player and game to compare active color with
         Player player = session.attribute(PostSignInRoute.PLAYER);
         Game game = gameCenter.getGameLobby().getGame(player);
         Message msg;
@@ -57,28 +55,52 @@ public class PostSubmitTurnRoute implements Route {
         // TODO: complete implementation with specific message based on validateMove results
         // TODO: Refresh /game if not error
 
-        Map<String, Object> vm = new HashMap<>();
-        //vm.put(TITLE_ATTR, TITLE);
-
-
         if(true) {
 
-            // if the turn is valid and processed
-            msg = new Message(Message.Type.INFO, "Valid move successfully processed");
-            LOG.info("current player: " + player +", active color: " + game.getActiveColor());
+            // If the turn is valid and processed
+            msg = new Message(Message.Type.info, "Valid move successfully processed");
             game.toggleActiveColor();
-            LOG.info("current player: " + player +", active color: " + game.getActiveColor());
+
+            // Checks for captured piece(s) and removes
+
+            List<Move> tempMoves = game.getTempMoves();
+
+            // remove capture pieces in multiple jump
+            while( !tempMoves.isEmpty()) {
+                Move lastMove = tempMoves.remove(0);//tempMoves.size() - 1);
+                Position start = lastMove.getStart();
+                Position end = lastMove.getEnd();
+
+                if (Math.abs(start.getRow() - end.getRow()) > 1) {
+                    // Quick implementation of single jump capture
+                    int targetRow = (start.getRow() + end.getRow()) / 2;
+                    int targetCell = (start.getCell() + end.getCell()) / 2;
+                    Position target = new Position(targetRow, targetCell);
+
+                    // Need to determine all targets and call capture method for each
+                    if (player.getColor().equals(Color.RED)) {
+                        game.whiteCaptured(target);
+                    } else {
+                        game.redCaptured(target);
+                    }
+
+                    game.checkForWin();
+
+                }
+                game.resetTempMoves();
+
+            }
+
             //response.redirect(WebServer.GAME_URL);
             //return templateEngine.render(new ModelAndView(vm, GetGameRoute.GAME_NAME));
 
         } else {
             // turn is invalid/not complex enough- need specific reason to be given, switch statements?
-            msg = new Message(Message.Type.ERROR, "Invalid move. [Reason]. " +
+            msg = new Message(Message.Type.error, "Invalid move. [Reason]. " +
                     "Please backup your move and try again.");
         }
 
-        gson = new Gson();
-        String rJSON = gson.toJson(msg);
-        return rJSON;
+        Gson gson = new Gson();
+        return gson.toJson(msg);
     }
 }

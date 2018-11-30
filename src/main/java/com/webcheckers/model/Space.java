@@ -106,20 +106,15 @@ public class Space {
 
     /**
      * Remove a piece from the Space by setting it to null and making valid again
+     * @return
+     *      Piece previously stored in this Space
      */
-    public void removePiece(){
+    public Piece removePiece(){
+        Piece piece = this.piece;
         this.piece = null;
         this.isValid = true;
+        return piece;
     }
-
-//    public boolean isPieceNull(Piece p){
-//        if (p == null){
-//            return true;
-//        }
-//        else {
-//            return false;
-//        }
-//    }
 
     /**
      * Puts Piece object in this space
