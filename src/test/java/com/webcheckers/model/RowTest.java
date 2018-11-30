@@ -17,7 +17,6 @@ import spark.ModelAndView;
 
 /**
  * Test class for Row class
- * @author Daria Chaplin (dxc4643)
  */
 @Tag("Model-tier")
 public class RowTest {
@@ -127,6 +126,29 @@ public class RowTest {
         Row testRow = new Row(EVEN_NUM);
         Iterator<Space> testRowIterator = testRow.iterator();
         assertThrows(UnsupportedOperationException.class, testRowIterator::remove);
+    }
+
+    /**
+     * Tests that equals works with non Row objects
+     */
+    @Test
+    @DisplayName("Row equals works with non-Row")
+    public void testEqualsNonRow() {
+        Row testRow = new Row(EVEN_NUM);
+        Player player = new Player("Friendly");
+        assertFalse(testRow.equals(player));
+    }
+
+
+    /**
+     * Tests that equals works with non-matching row indexes.
+     */
+    @Test
+    @DisplayName("Row Equals works with non-matching Index")
+    public void testEqualsWrongIndex() {
+        Row testEvenRow = new Row(EVEN_NUM);
+        Row testOddRow = new Row(ODD_NUM);
+        assertFalse(testEvenRow.equals(testOddRow));
     }
 }
 

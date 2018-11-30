@@ -12,6 +12,7 @@ public class MoveTest {
 
     private final int END_POS_ROW = 4;
     private final int END_POS_CELL = 7;
+    private final int VALID_END_CELL = 1;
 
     @Test
     @DisplayName("Move is Created")
@@ -119,11 +120,21 @@ public class MoveTest {
 
 
     @Test
+    @DisplayName("MakeMove for null board")
+    public void testMakeMoveNull(){
+        final Player player = new Player("Friendly");
+        final BoardView board = new BoardView(player);
+        final Position start = new Position(START_POS_ROW, START_POS_CELL);
+        final Position end = new Position(END_POS_ROW, END_POS_CELL);
+        final Move CuT = new Move(start, end);
+        assertNull(CuT.makeMove());
+    }
+    @Test
     @DisplayName("IsValid for False result")
     public void testIsValidFalse(){
         // Make all the test objects needed to make a move
         final Position validStart = new Position(START_POS_ROW, START_POS_CELL);
-        final Position invalidEnd = new Position(0, 0);
+        final Position invalidEnd = new Position(START_POS_CELL, START_POS_CELL);
 
         final Player player = new Player("Friendly");
         final BoardView board = new BoardView(player);
@@ -143,13 +154,9 @@ public class MoveTest {
     @DisplayName("IsValid for True result")
     public void testIsValidTrue(){
         // Make all the test objects needed to make a move
-        final int VALID_START_ROW = 3;
-        final int VALID_START_CELL = 0;
-        final int VALID_END_ROW = 4;
-        final int VALID_END_CELL = 1;
 
-        final Position validStart = new Position(VALID_START_ROW, VALID_START_CELL);
-        final Position validEnd = new Position(VALID_END_ROW, VALID_END_CELL);
+        final Position validStart = new Position(START_POS_ROW, START_POS_CELL);
+        final Position validEnd = new Position(END_POS_ROW, VALID_END_CELL);
 
         final Player player = new Player("Friendly");
         final BoardView board = new BoardView(player);
@@ -157,8 +164,8 @@ public class MoveTest {
         // Place the pieces
         board.placeWhitePieces();
         board.placeRedPieces();
-        Space validSpace = board.getRow(VALID_START_ROW).getSpace(VALID_START_CELL);
-        Space validEndSpace = board.getRow(VALID_END_ROW).getSpace(VALID_END_CELL);
+        Space validSpace = board.getRow(START_POS_ROW).getSpace(START_POS_CELL);
+        Space validEndSpace = board.getRow(END_POS_ROW).getSpace(VALID_END_CELL);
         validSpace.putWhitePiece();
         assertTrue(validEndSpace.isValid());
         final Move validCuT = new Move(validStart, validEnd);
@@ -170,13 +177,9 @@ public class MoveTest {
     @DisplayName("IsValidMessage for True")
     public void testIsValidMessage(){
         // Make all the test objects needed to make a move
-        final int VALID_START_ROW = 3;
-        final int VALID_START_CELL = 0;
-        final int VALID_END_ROW = 4;
-        final int VALID_END_CELL = 1;
 
-        final Position validStart = new Position(VALID_START_ROW, VALID_START_CELL);
-        final Position validEnd = new Position(VALID_END_ROW, VALID_END_CELL);
+        final Position validStart = new Position(START_POS_ROW , START_POS_CELL );
+        final Position validEnd = new Position(END_POS_ROW , VALID_END_CELL );
 
         final Player player = new Player("Friendly");
         final BoardView board = new BoardView(player);
@@ -184,8 +187,8 @@ public class MoveTest {
         // Place the pieces
         board.placeWhitePieces();
         board.placeRedPieces();
-        Space validSpace = board.getRow(VALID_START_ROW).getSpace(VALID_START_CELL);
-        Space validEndSpace = board.getRow(VALID_END_ROW).getSpace(VALID_END_CELL);
+        Space validSpace = board.getRow(START_POS_ROW ).getSpace(START_POS_CELL );
+        Space validEndSpace = board.getRow(END_POS_ROW ).getSpace(VALID_END_CELL );
         validSpace.putWhitePiece();
         assertTrue(validEndSpace.isValid());
         final Move validCuT = new Move(validStart, validEnd);
@@ -200,7 +203,7 @@ public class MoveTest {
     public void testIsValidMessageFalse(){
         // Make all the test objects needed to make a move
         final Position validStart = new Position(START_POS_ROW, START_POS_CELL);
-        final Position invalidEnd = new Position(0, 0);
+        final Position invalidEnd = new Position(START_POS_CELL , START_POS_CELL );
 
         final Player player = new Player("Friendly");
         final BoardView board = new BoardView(player);
@@ -222,13 +225,8 @@ public class MoveTest {
     @DisplayName("IsJump for false")
     public void testIsJump(){
         // Make all the test objects needed to make a move
-        final int VALID_START_ROW = 3;
-        final int VALID_START_CELL = 0;
-        final int VALID_END_ROW = 4;
-        final int VALID_END_CELL = 1;
-
-        final Position validStart = new Position(VALID_START_ROW, VALID_START_CELL);
-        final Position validEnd = new Position(VALID_END_ROW, VALID_END_CELL);
+        final Position validStart = new Position(START_POS_ROW , START_POS_CELL );
+        final Position validEnd = new Position(END_POS_ROW , VALID_END_CELL );
 
         final Player player = new Player("Friendly");
         final BoardView board = new BoardView(player);
@@ -236,8 +234,8 @@ public class MoveTest {
         // Place the pieces
         board.placeWhitePieces();
         board.placeRedPieces();
-        Space validSpace = board.getRow(VALID_START_ROW).getSpace(VALID_START_CELL);
-        Space validEndSpace = board.getRow(VALID_END_ROW).getSpace(VALID_END_CELL);
+        Space validSpace = board.getRow(START_POS_ROW ).getSpace(START_POS_CELL );
+        Space validEndSpace = board.getRow(END_POS_ROW ).getSpace(VALID_END_CELL );
         validSpace.putWhitePiece();
         assertTrue(validEndSpace.isValid());
         final Move validCuT = new Move(validStart, validEnd);
@@ -245,4 +243,18 @@ public class MoveTest {
         assertTrue(validCuT.isValid(board));
         assertFalse(validCuT.isJump());
     }
+/*
+
+    @Test
+    @DisplayName("IsJump for null")
+    public void testIsJumpNull(){
+        // Make all the test objects needed to make a move
+
+        final Position invalidStart = new Position(0,0);
+        final Position validEnd = new Position(END_POS_ROW, VALID_END_CELL);
+        final Move CuT = new Move(invalidStart, validEnd);
+        assertFalse(CuT.isJump());
+    }
+*/
+
 }
