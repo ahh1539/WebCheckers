@@ -103,6 +103,18 @@ public class GameTest {
         CuT_copy.toggleActiveColor();
         assertEquals(CuT_copy.getActiveColor(), Color.WHITE);
     }
+
+
+    @Test
+    @DisplayName("ToggleActiveColor works")
+    public void testToggleActiveColorOpposite(){
+        final Game CuT_copy = new Game(redPlayer, whitePlayer);
+        CuT_copy.toggleActiveColor();
+        assertEquals(CuT_copy.getActiveColor(), Color.WHITE);
+        CuT_copy.toggleActiveColor();
+        assertEquals(CuT_copy.getActiveColor(), Color.RED);
+    }
+
     @Test
     @DisplayName("IsActive works")
     public void testIsActive(){
@@ -135,5 +147,24 @@ public class GameTest {
         assertFalse(CuT_copy.hasWinner());
         CuT_copy.setWinner(redPlayer);
         assertTrue(CuT_copy.hasWinner());
+    }
+
+    @Test
+    @DisplayName("HasMove works")
+    public void testHasMove(){
+        final Game CuT_copy = new Game(redPlayer, whitePlayer);
+        assertFalse(CuT_copy.hasMove(redPlayer));
+    }
+
+    @Test
+    @DisplayName("AddMove works")
+    public void testAddMove(){
+        final Game CuT_copy = new Game(redPlayer, whitePlayer);
+        final Position startPosition = new Position(0,0);
+        final Position endPosition = new Position(0,0);
+        final Move move = new Move(startPosition, endPosition);
+        assertEquals(CuT_copy.getMoves().size(), 0);
+        CuT_copy.addMove(move);
+        assertEquals(CuT_copy.getMoves().size(), 1);
     }
 }

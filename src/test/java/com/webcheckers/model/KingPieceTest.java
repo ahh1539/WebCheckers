@@ -63,4 +63,13 @@ public class KingPieceTest {
         final Piece CuT2 = new Piece(whiteColor, index);
         assertFalse(CuT.equals(CuT2));
     }
+
+    /**
+     * Testing the getType function of KingPiece
+     */
+    @Test
+    public void test_get_type(){
+        final KingPiece CuT = new KingPiece(redColor, index);
+        assertEquals(CuT.getType(), Piece.Type.KING);
+    }
 }

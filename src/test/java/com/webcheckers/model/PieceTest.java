@@ -57,4 +57,26 @@ public class PieceTest {
         final Piece CuT2 = new Piece(whiteColor, 1);
         assertFalse(CuT.equals(CuT2));
     }
+
+    /**
+     * Testing the toString method of Piece
+     */
+    @Test
+    public void testToString(){
+        final Piece CuT = new Piece(redColor, index);
+        String toString = "Piece Object:\tColor: " + CuT.getColor() + ", index: " + CuT.getIndex()
+                + ", Type: " + CuT.getType() + "\n";
+        assertEquals(CuT.toString(), toString);
+    }
+
+    /**
+     * Testing the makeKing() method
+     */
+    @Test
+    public void testMakeKing(){
+        final Piece CuT = new Piece(redColor, index);
+        assertEquals(CuT.getType(), Piece.Type.SINGLE);
+        final KingPiece CuTKing = CuT.makeKing();
+        assertEquals(CuTKing.getType(), Piece.Type.KING);
+    }
 }
