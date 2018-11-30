@@ -127,13 +127,7 @@ public class Player {
     }
 
     public void hasResigned(){
-
-        if (hasresigned == true){
-            hasresigned = false;
-        }
-        else if (hasresigned == false){
-            hasresigned = true;
-        }
+        this.hasresigned = !this.hasresigned;
     }
 
     public boolean resigned(){
