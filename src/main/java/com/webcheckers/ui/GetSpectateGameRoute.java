@@ -18,15 +18,18 @@ import spark.*;
 /**
  * The UI Controller to GET the Home page.
  *
- * @author <a href='mailto:bdbvse@rit.edu'>Bryan Basham</a>
  */
 public class GetSpectateGameRoute implements Route {
-    private static final Logger LOG = Logger.getLogger(GetHomeRoute.class.getName());
+    private static final Logger LOG = Logger.getLogger(GetSpectateGameRoute.class.getName());
 
     static final String ROUTE_NAME = "game.ftl";
     static final String SPECTATOR = "currentPlayer";
     static final String VIEW_MODE_ATTR = "viewMode";
     static final String RED_PLAYER_ATTR = "redPlayer";
+    static final String WHITE_PLAYER_ATTR = "whitePlayer";
+    static final String BOARD_ATTR = "board";
+    static final String MESSAGE = "message";
+    static final String ACTIVE_COLOR_ATTR = "activeColor";
 
     private final TemplateEngine templateEngine;
     private final GameCenter gameCenter;
@@ -45,7 +48,7 @@ public class GetSpectateGameRoute implements Route {
         this.templateEngine = templateEngine;
         this.gameCenter = gameCenter;
         //
-        LOG.config("GetHomeRoute is initialized.");
+        LOG.config("GetSpectateRoute is initialized.");
     }
 
     /**
@@ -53,13 +56,16 @@ public class GetSpectateGameRoute implements Route {
      *
      * @param request  the HTTP request
      * @param response the HTTP response
-     * @return the rendered HTML for the Game page
+     * @return the rendered HTML for the Home page
      */
     @Override
     public Object handle(Request request, Response response) {
-        LOG.finer("GetStartGameRoute is invoked.");
+        LOG.finer("GetSpectateRoute is invoked.");
         Map<String, Object> vm = new HashMap<>();
+        final Session session = request.session();
+        GameLobby gameLobby = gameCenter.getGameLobby();
+        Player spectator = session.attribute(PostSignInRoute.PLAYER);
 
-        return templateEngine.render(new ModelAndView(vm, GetStartGameRoute.GAME_NAME));
+        return templateEngine.render(new ModelAndView(vm, GetHomeRoute.ROUTE_NAME));
     }
 }

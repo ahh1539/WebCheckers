@@ -3,6 +3,7 @@ package com.webcheckers.model;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.SplittableRandom;
 
 /**
  * A representation of a single Game, with two players and a Board.
@@ -20,6 +21,7 @@ public class Game {
     private BoardView whiteBoard;
     private int redCaptured = 0;
     private int whiteCaptured = 0;
+    private String id;
 
     private final int NUM_ROWS_COLS = 7;
 
@@ -38,7 +40,7 @@ public class Game {
      * @param whitePlayer
      *      Player {@link Player} representing the white Player
      */
-    public Game(Player redPlayer, Player whitePlayer){
+    public Game(Player redPlayer, Player whitePlayer, String id){
         Objects.requireNonNull(redPlayer, "redPlayer must not be null");
         Objects.requireNonNull(whitePlayer, "whitePlayer must not be null");
 
@@ -48,6 +50,7 @@ public class Game {
         this.winner = null;
         this.redBoard = new BoardView(redPlayer);
         this.whiteBoard = new BoardView(whitePlayer);
+        this.id = id;
     }
 
     /**
@@ -58,6 +61,8 @@ public class Game {
     public Player getRedPlayer() {
         return redPlayer;
     }
+
+    public String getId(){return id; }
 
     /**
      * Gets the white Player from the Game

@@ -6,6 +6,8 @@ import com.webcheckers.model.Game;
 import com.webcheckers.model.Player;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 /**
  * An ArrayList of Games, representing all of the current ongoing games
@@ -104,4 +106,13 @@ public class GameLobby {
         gameLobby.remove(getGame(player));
     }
 
+    public List<Game> getGameLobby(){
+        return Collections.unmodifiableList(gameLobby);
+    }
+
+//    public Game printyboi(){
+//        return gameLobby.get(0);
+//    }
 }
+
+
