@@ -156,8 +156,13 @@ public class Game {
         if( whiteCaptured == 12 || redCaptured == 12){
             return false;
         }
+        BoardView board;
+        if( activeColor == Color.WHITE){
+            board = whiteBoard;
+        }
+        else{ board = redBoard;}
         // iterate over rows and spaces
-        for(Row r : whiteBoard){
+        for(Row r : board){
             for(Space s : r){
 
                 // if space has piece, see if there's a valid move in any direction
@@ -201,8 +206,13 @@ public class Game {
         if( whiteCaptured == 12 || redCaptured == 12){
             return false;
         }
+        BoardView board;
+        if( activeColor == Color.WHITE){
+            board = whiteBoard;
+        }
+        else{ board = redBoard;}
         // iterate over rows and spaces
-        for(Row r : whiteBoard){
+        for(Row r : board){
             for(Space s : r){
 
                 // if space has piece, see if there's a valid move in any direction
@@ -455,19 +465,12 @@ public class Game {
      */
     public Message updateBoardRedTurn(Move m) {
 
-//        if( !tempMoves.isEmpty()){
-//            System.out.println("GAME.JAVA 286: previous RED move: "+ tempMoves.get(0).toString());
-//        }
-//        System.out.println("GAME.JAVA 286: previous RED move: none");
-//        System.out.println("GAME.JAVA 288: current RED move: "+ m.toString());
-
-
         // if first move of turn, check if jump is possible & force if so
         if( tempMoves.isEmpty()) {
-//
-//            if( hasJumpMove() && !m.isJump()){
-//                return new Message(Message.Type.error, "You have a jump possible.");
-//         }
+
+            if( hasJumpMove() && !m.isJump()){
+                return new Message(Message.Type.error, "You have a jump possible.");
+         }
             // Add move to the ongoing list of moves
             moves.add(m);
             tempMoves.add(m);
@@ -537,15 +540,11 @@ public class Game {
      */
     public Message updateBoardWhiteTurn(Move m) {
 
-//        if( !tempMoves.isEmpty()){
-//            System.out.println("GAME.JAVA 286: previous WHITE move: "+ tempMoves.get(0).toString());
-//        }
-//        System.out.println("GAME.JAVA 286: previous WHITE move: none");
-//        System.out.println("GAME.JAVA 288: current WHITE move: "+ m.toString());
-
         // if first move of turn, add
         if( tempMoves.isEmpty()) {
-
+            if( hasJumpMove() && !m.isJump()){
+                return new Message(Message.Type.error, "You have a jump possible.");
+            }
             // Add move to the ongoing list of moves
             moves.add(m);
             tempMoves.add(m);
