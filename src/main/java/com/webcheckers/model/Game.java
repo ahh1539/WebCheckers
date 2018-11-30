@@ -115,10 +115,10 @@ public class Game {
 
     /**
      * Check to see if current player has any moves available
-     * @param player
+
      * @return
      */
-    public boolean hasSimpleMove(Player player){
+    public boolean hasSimpleMove(){
         if( whiteCaptured == 12 || redCaptured == 12){
             return false;
         }
@@ -128,7 +128,7 @@ public class Game {
 
                 // if space has piece, see if there's a valid move in any direction
                 if( s.getPiece() != null){
-                    if( s.getPiece().getColor() == player.getColor()){
+                    if( s.getPiece().getColor() == activeColor){
 
                         ArrayList<Position> positions = new ArrayList<>();
                         // if piece belongs to player, check if it is movable
@@ -147,7 +147,7 @@ public class Game {
 
                         for(Position p : positions){
                             Move move = new Move(current, p);
-                            if( player.getColor() == Color.WHITE) {
+                            if( activeColor == Color.WHITE) {
                                 if (move.isValid(whiteBoard)) return true;
                             }
                             else{
@@ -162,7 +162,7 @@ public class Game {
         return false;
     }
 
-    public boolean hasJumpMove(Player player){
+    public boolean hasJumpMove(){
 
         if( whiteCaptured == 12 || redCaptured == 12){
             return false;
@@ -173,7 +173,7 @@ public class Game {
 
                 // if space has piece, see if there's a valid move in any direction
                 if( s.getPiece() != null){
-                    if( s.getPiece().getColor() == player.getColor()){
+                    if( s.getPiece().getColor() == activeColor){
 
                         ArrayList<Position> positions = new ArrayList<>();
                         // if piece belongs to player, check if it is movable
@@ -193,7 +193,7 @@ public class Game {
 
                         for(Position p : positions){
                             Move move = new Move(current, p);
-                            if( player.getColor() == Color.WHITE) {
+                            if( activeColor == Color.WHITE) {
                                 if (move.isValid(whiteBoard)) return true;
                             }
                             else{
@@ -210,11 +210,10 @@ public class Game {
 
     /**
      *  checks whether player can perform another jump in from their current position
-     * @param player player who's in the middle of the turn
      * @param p position of player currently
      * @return true if another jump can be made
      */
-    public boolean hasNextJump(Player player, Position p){
+    public boolean hasNextJump(Position p){
 
         ArrayList<Position> positions = new ArrayList<>();
         // if piece belongs to player, check if it is movable
@@ -233,7 +232,7 @@ public class Game {
 
         for(Position ps : positions){
             Move move = new Move(p, ps);
-            if( player.getColor() == Color.WHITE) {
+            if( activeColor == Color.WHITE) {
                 if (move.isValid(whiteBoard)) return true;
             }
             else{
@@ -410,16 +409,19 @@ public class Game {
      */
     public Message updateBoardRedTurn(Move m) {
 
-        if( !tempMoves.isEmpty()){
-            System.out.println("GAME.JAVA 286: previous RED move: "+ tempMoves.get(0).toString());
-        }
-        System.out.println("GAME.JAVA 286: previous RED move: none");
-        System.out.println("GAME.JAVA 288: current RED move: "+ m.toString());
+//        if( !tempMoves.isEmpty()){
+//            System.out.println("GAME.JAVA 286: previous RED move: "+ tempMoves.get(0).toString());
+//        }
+//        System.out.println("GAME.JAVA 286: previous RED move: none");
+//        System.out.println("GAME.JAVA 288: current RED move: "+ m.toString());
 
 
-        // if first move of turn, add
+        // if first move of turn, check if jump is possible & force if so
         if( tempMoves.isEmpty()) {
 
+//            if( hasJumpMove()){
+
+  //          }
             // Add move to the ongoing list of moves
             moves.add(m);
             tempMoves.add(m);
@@ -431,6 +433,9 @@ public class Game {
                 // Add move to the ongoing list of moves
                 moves.add(m);
                 tempMoves.add(m);
+            }
+            else {
+                return new Message(Message.Type.error, "One simple move per turn....CHEATER");
             }
         }
         // else the first move was a simple move and you can't keep going
@@ -485,11 +490,11 @@ public class Game {
      */
     public Message updateBoardWhiteTurn(Move m) {
 
-        if( !tempMoves.isEmpty()){
-            System.out.println("GAME.JAVA 286: previous WHITE move: "+ tempMoves.get(0).toString());
-        }
-        System.out.println("GAME.JAVA 286: previous WHITE move: none");
-        System.out.println("GAME.JAVA 288: current WHITE move: "+ m.toString());
+//        if( !tempMoves.isEmpty()){
+//            System.out.println("GAME.JAVA 286: previous WHITE move: "+ tempMoves.get(0).toString());
+//        }
+//        System.out.println("GAME.JAVA 286: previous WHITE move: none");
+//        System.out.println("GAME.JAVA 288: current WHITE move: "+ m.toString());
 
         // if first move of turn, add
         if( tempMoves.isEmpty()) {
