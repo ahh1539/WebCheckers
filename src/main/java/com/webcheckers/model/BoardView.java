@@ -31,7 +31,6 @@ public class BoardView implements Iterable<Row>{
             placeRedPieces();
         }
         else{
-            System.out.println("placing white pieces");
             placeWhitePieces();
         }
     }

@@ -117,7 +117,6 @@ public class Move implements Serializable {
 
         // Get the starting space and end space
         Space startSpace = getStartSpace(board.getRow(this.startRowIndex));
-        System.out.println("start space is " + startSpace);
         Space endSpace = getEndSpace(board.getRow(this.endRowIndex));
         Piece movingPiece = startSpace.getPiece();
         Space targetSpace = board.getRow(targetRow).getSpace(targetCell);

@@ -227,7 +227,10 @@ public class Game {
      * @return
      *      The current list of moves in the turn
      */
-    public List<Move> getTempMoves() { return this.tempMoves; }
+    public List<Move> getTempMoves() {
+        List<Move> lightingMoves = new ArrayList<>(tempMoves);
+        return lightingMoves;
+    }
 
     public void resetTempMoves(){
         while(!tempMoves.isEmpty()){
@@ -282,6 +285,13 @@ public class Game {
      */
     public Message updateBoardRedTurn(Move m) {
 
+        if( !tempMoves.isEmpty()){
+            System.out.println("GAME.JAVA 286: previous RED move: "+ tempMoves.get(0).toString());
+        }
+        System.out.println("GAME.JAVA 286: previous RED move: none");
+        System.out.println("GAME.JAVA 288: current RED move: "+ m.toString());
+
+
         // if first move of turn, add
         if( tempMoves.isEmpty()) {
 
@@ -292,6 +302,7 @@ public class Game {
         // if previous move is jump check if curr move is jump
         else if( tempMoves.get(0).isJump()) {
             if( m.isJump()){
+
                 // Add move to the ongoing list of moves
                 moves.add(m);
                 tempMoves.add(m);
@@ -349,6 +360,12 @@ public class Game {
      */
     public Message updateBoardWhiteTurn(Move m) {
 
+        if( !tempMoves.isEmpty()){
+            System.out.println("GAME.JAVA 286: previous WHITE move: "+ tempMoves.get(0).toString());
+        }
+        System.out.println("GAME.JAVA 286: previous WHITE move: none");
+        System.out.println("GAME.JAVA 288: current WHITE move: "+ m.toString());
+
         // if first move of turn, add
         if( tempMoves.isEmpty()) {
 
@@ -362,6 +379,9 @@ public class Game {
                 // Add move to the ongoing list of moves
                 moves.add(m);
                 tempMoves.add(m);
+            }
+            else {
+                return new Message(Message.Type.error, "One simple move per turn....CHEATER");
             }
         }
         // else the first move was a simple move and you can't keep going

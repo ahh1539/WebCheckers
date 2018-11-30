@@ -57,9 +57,7 @@ public class PostSubmitTurnRoute implements Route {
 
             // If the turn is valid and processed
             msg = new Message(Message.Type.info, "Valid move successfully processed");
-            LOG.info("current player: " + player +", active color: " + game.getActiveColor());
             game.toggleActiveColor();
-            LOG.info("current player: " + player +", active color: " + game.getActiveColor());
 
             // Checks for captured piece(s) and removes
 
@@ -84,6 +82,7 @@ public class PostSubmitTurnRoute implements Route {
                         game.redCaptured(target);
                     }
                 }
+                game.resetTempMoves();
             }
 
             //response.redirect(WebServer.GAME_URL);
