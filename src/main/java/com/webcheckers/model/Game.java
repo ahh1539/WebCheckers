@@ -117,13 +117,11 @@ public class Game {
 
     /**
      * Checks for overall move ability, helps look for win by stagnation
-     * @param player
-     *      the given player to check moves capability for
      * @return
      *      whether this player can make any valid moves
      */
-    private boolean hasMove(Player player) {
-        return (hasSimpleMove(player) || hasJumpMove(player));
+    private boolean hasMove() {
+        return (hasSimpleMove() || hasJumpMove());
     }
 
     /**
@@ -147,16 +145,16 @@ public class Game {
                         // if piece belongs to player, check if it is movable
                         Position current = new Position(r.getIndex(), s.getCellIdx());
                         Position simpleLF = new Position(current.getRow()+1, current.getCell()-1);
-                        positions.add(simpleLF);
+                        if( simpleLF.isOnBoard()) positions.add(simpleLF);
 
                         Position simpleRF = new Position(current.getRow()+1, current.getCell()+1);
-                        positions.add(simpleRF);
+                        if( simpleRF.isOnBoard()) positions.add(simpleRF);
 
                         Position kingLF = new Position(current.getRow()-1, current.getCell()-1);
-                        positions.add(kingLF);
+                        if( kingLF.isOnBoard()) positions.add(kingLF);
 
                         Position kingRF = new Position(current.getRow()-1, current.getCell()+1);
-                        positions.add(kingRF);
+                        if( kingRF.isOnBoard()) positions.add(kingRF);
 
                         for(Position p : positions){
                             Move move = new Move(current, p);
@@ -193,16 +191,16 @@ public class Game {
                         Position current = new Position(r.getIndex(), s.getCellIdx());
 
                         Position jumpLF = new Position(current.getRow()+2, current.getCell()-2);
-                        positions.add(jumpLF);
+                        if( jumpLF.isOnBoard()) positions.add(jumpLF);
 
                         Position jumpRF = new Position(current.getRow()+2, current.getCell()+2);
-                        positions.add(jumpRF);
+                        if( jumpRF.isOnBoard()) positions.add(jumpRF);
 
                         Position kingJumpLF = new Position(current.getRow()-2, current.getCell()-2);
-                        positions.add(kingJumpLF);
+                        if( kingJumpLF.isOnBoard()) positions.add(kingJumpLF);
 
                         Position kingJumpRF = new Position(current.getRow()-2, current.getCell()+2);
-                        positions.add(kingJumpRF);
+                        if( kingJumpRF.isOnBoard()) positions.add(kingJumpRF);
 
                         for(Position p : positions){
                             Move move = new Move(current, p);
@@ -232,16 +230,16 @@ public class Game {
         // if piece belongs to player, check if it is movable
 
         Position jumpLF = new Position(p.getRow()+2, p.getCell()-2);
-        positions.add(jumpLF);
+        if( jumpLF.isOnBoard()) positions.add(jumpLF);
 
         Position jumpRF = new Position(p.getRow()+2, p.getCell()+2);
-        positions.add(jumpRF);
+        if( jumpRF.isOnBoard()) positions.add(jumpRF);
 
         Position kingJumpLF = new Position(p.getRow()-2, p.getCell()-2);
-        positions.add(kingJumpLF);
+        if( kingJumpLF.isOnBoard()) positions.add(kingJumpLF);
 
         Position kingJumpRF = new Position(p.getRow()-2, p.getCell()+2);
-        positions.add(kingJumpRF);
+        if( kingJumpRF.isOnBoard()) positions.add(kingJumpRF);
 
         for(Position ps : positions){
             Move move = new Move(p, ps);
@@ -443,10 +441,10 @@ public class Game {
 
         // if first move of turn, check if jump is possible & force if so
         if( tempMoves.isEmpty()) {
-
-//            if( hasJumpMove()){
-
-  //          }
+//
+//            if( hasJumpMove() && !m.isJump()){
+//                return new Message(Message.Type.error, "You have a jump possible.");
+//         }
             // Add move to the ongoing list of moves
             moves.add(m);
             tempMoves.add(m);
@@ -660,8 +658,8 @@ public class Game {
      * Checks if either player has captured all of opponent's pieces or has run out of moves
      */
     public void checkForWin() {
-        if(whiteCaptured == 12 || !hasMove(this.whitePlayer)) setWinner(this.redPlayer);
-        else if(redCaptured == 12 || !hasMove(this.redPlayer)) setWinner(this.whitePlayer);
+        if(whiteCaptured == 12 || !hasMove()) setWinner(this.redPlayer);
+        else if(redCaptured == 12 || !hasMove()) setWinner(this.whitePlayer);
     }
 
 }

@@ -28,4 +28,8 @@ public class Position {
     public int getCell() {
         return this.cell;
    }
+
+    public boolean isOnBoard(){
+        return row < 8 && row >=0 && cell < 8 && cell >=0;
+    }
 }
