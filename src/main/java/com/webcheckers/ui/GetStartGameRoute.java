@@ -63,6 +63,7 @@ public class GetStartGameRoute implements Route {
 
         // Checks to see if a player is already in a game and then refreshes that game if so
         if (gameLobby.hasGame(player1)) {
+            System.out.println("player is in game");
             Game game = gameLobby.getGame(player1);
 
             // Checks whether the game has declared a winner and sends back to home if so
@@ -91,10 +92,12 @@ public class GetStartGameRoute implements Route {
             //sets has resigned back to false
             String secondPlayer = request.queryParams("opponent");
             Player player2 = new Player(secondPlayer);
-            if (player1.resigned()){
+            System.out.println(player1);
+            System.out.println(player2);
+            if (player1.resigned() == true){
                 player1.hasResigned();
             }
-            if (player2.resigned()){
+            if (player2.resigned() == true){
                 player2.hasResigned();
             }
             if (PlayerLobby.getPlayer(player2.getName()).inGame()) {

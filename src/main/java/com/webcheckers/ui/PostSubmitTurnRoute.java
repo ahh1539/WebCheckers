@@ -2,6 +2,8 @@ package com.webcheckers.ui;
 
 import com.google.gson.Gson;
 import com.webcheckers.application.GameCenter;
+import com.webcheckers.application.GameLobby;
+import com.webcheckers.application.PlayerLobby;
 import com.webcheckers.model.*;
 import spark.*;
 import static spark.Spark.halt;
@@ -83,8 +85,11 @@ public class PostSubmitTurnRoute implements Route {
                     }
 
                     game.checkForWin();
+
+
                 }
                 game.resetTempMoves();
+
             }
 
             //response.redirect(WebServer.GAME_URL);
