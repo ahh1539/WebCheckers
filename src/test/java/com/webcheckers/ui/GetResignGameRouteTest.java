@@ -1,3 +1,4 @@
+/*
 package com.webcheckers.ui;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.mock;
@@ -16,21 +17,27 @@ import org.junit.jupiter.api.Test;
 import spark.*;
 import static org.mockito.Mockito.*;
 
+*/
 /**
  * Test class for GetResignGameRoute (UI tier component)
  * @author Paula Register (per4521)
- */
+ *//*
+
 @Tag("UI-tier")
 public class GetResignGameRouteTest {
 
-    /**
+    */
+/**
      * The component-under-test (CuT).
-     */
+     *//*
+
     private GetResignGameRoute CuT;
 
-    /**
+    */
+/**
      * Mock objects
-     */
+     *//*
+
     private Request request;
     private Session session;
     private Response response;
@@ -39,9 +46,11 @@ public class GetResignGameRouteTest {
     private Player player;
     private GameCenter gameCenter;
     private GameLobby gameLobby;
-    /**
+    */
+/**
      * Setup new mock objects for each test.
-     */
+     *//*
+
     @BeforeEach
     public void setup(){
         request = mock(Request.class);
@@ -60,9 +69,11 @@ public class GetResignGameRouteTest {
         CuT = new GetResignGameRoute(engine, gameCenter);
     }
 
-    /**
+    */
+/**
      * Test that the user can properly resign
-     */
+     *//*
+
     @Test
     public void resignTest(){
         final TemplateEngineTester testHelper = new TemplateEngineTester();
@@ -78,9 +89,11 @@ public class GetResignGameRouteTest {
 
     }
 
-    /**
+    */
+/**
      * Test that the user can properly resign
-     */
+     *//*
+
     @Test
     public void resignTestWhite(){
         final TemplateEngineTester testHelper = new TemplateEngineTester();
@@ -99,3 +112,4 @@ public class GetResignGameRouteTest {
     }
 }
 
+*/

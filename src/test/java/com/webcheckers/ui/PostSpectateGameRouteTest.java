@@ -4,29 +4,27 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
+import com.google.gson.Gson;
 import com.webcheckers.application.GameCenter;
 import com.webcheckers.application.GameLobby;
 import com.webcheckers.application.PlayerLobby;
-import com.webcheckers.model.Game;
-import com.webcheckers.model.Player;
+import com.webcheckers.model.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 
 import spark.*;
 import static org.mockito.Mockito.*;
-
 /**
- * Test class for PostSubmitTurnRoute (UI tier component)
+ * Test class for GetSpectateGameRoute (UI tier component)
  * @author Paula Register (per4521)
  */
 @Tag("UI-tier")
-public class PostSubmitTurnRouteTest {
-
+public class PostSpectateGameRouteTest {
     /**
      * The component-under-test (CuT).
      */
-    private PostSubmitTurnRoute CuT;
+    private PostSpectateGameRoute CuT;
 
     /**
      * Mock objects
@@ -38,6 +36,7 @@ public class PostSubmitTurnRouteTest {
     private PlayerLobby playerLobby;
     private Player player;
     private GameLobby gameLobby;
+    private Gson gson;
 
     /**
      * Setup new mock objects for each test.
@@ -45,10 +44,13 @@ public class PostSubmitTurnRouteTest {
     @BeforeEach
     public void setup(){
         request = mock(Request.class);
+        response = mock(Response.class);
         session = mock(Session.class);
+        gson = new Gson();
         when(request.session()).thenReturn(session);
-        engine = mock(TemplateEngine.class);
+        when(request.body()).thenReturn("{'start':{'row':2,'cell':1},'end':{'row':3,'cell':2}}");
 
+        engine = mock(TemplateEngine.class);
         // set up friendly objects
         this.playerLobby = new PlayerLobby();
         player = new Player("player");
@@ -57,38 +59,26 @@ public class PostSubmitTurnRouteTest {
         GameCenter gameCenter = new GameCenter(playerLobby, gameLobby);
 
         // create a unique CuT for each test
-        CuT = new PostSubmitTurnRoute(engine, gameCenter);
+        CuT = new PostSpectateGameRoute(engine, gameCenter);
     }
-
     /**
-     * Test that the user is properly logged out when the GetSignOutRoute is called
+     * Test that move is properly validated for the white board.
      */
     @Test
-    public void signOutTest(){
+    public void testGetSpectateGameRoute(){
         final TemplateEngineTester testHelper = new TemplateEngineTester();
         when(engine.render(any(ModelAndView.class))).thenAnswer(testHelper.makeAnswer());
         Player player1 = new Player("user");
         Player player2 = new Player("opp");
+        player1.assignColor(Color.RED);
+        player2.assignColor(Color.RED);
         Game g = new Game(player1, player2, player1.getName()+player2.getName());
-        when(request.queryParams(eq("opponent"))).thenReturn(player1.toString());
+        g.getRedBoard().placeRedPieces();
+        player2.setThing(player1.getName()+player2.getName());
         when(session.attribute(eq(PostSignInRoute.PLAYER))).thenReturn(player2);
         when(gameLobby.getGame(eq(player2))).thenReturn(g);
+        when(gameLobby.getGame2(eq(player1.getName()+player2.getName()))).thenReturn(g);
+        g.changeTurn();
         CuT.handle(request, response);
-
-
-        // Analyze the results:
-        //   * model is a non-null Map
-/*        testHelper.assertViewModelExists();
-        testHelper.assertViewModelIsaMap();
-        //   * model contains all necessary View-Model data
-
-        testHelper.assertViewModelAttribute(GetResignGameRoute.TITLE_ATTR, GetResignGameRoute.TITLE);
-        //   * The player and playerList has been removed from the home view
-     /*   testHelper.assertViewModelAttribute(GetHomeRoute.PLAYER, null);
-        testHelper.assertViewModelAttribute(GetHomeRoute.PLAYER_LIST, null);
-        //   * test view name as it redirects back to home
-        testHelper.assertViewName(GetHomeRoute.ROUTE_NAME);
-        //   * test that the number of players is correct
-        testHelper.assertViewModelAttribute(GetHomeRoute.NUM_PLAYERS, playerLobby.getNumberOfPlayers());*/
     }
 }

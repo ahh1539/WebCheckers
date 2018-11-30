@@ -67,12 +67,7 @@ public class Game {
     public String getId(){return id; }
 
     public void changeTurn(){
-        if (turn == true){
-            turn = false;
-        }
-        else {
-            turn = true;
-        }
+        turn = !turn;
     }
 
     public boolean changedTurn(){
@@ -260,9 +255,9 @@ public class Game {
         }
     }
 
-    public List<Move> getMoves() {
+/*    public List<Move> getMoves() {
         return Collections.unmodifiableList(moves);
-    }
+    }*/
 
     /**
      * Completes removal of white captured piece and adds to captured count
@@ -344,7 +339,7 @@ public class Game {
 
         // Checks for new king piece
         if(piece.getType().equals(Piece.Type.SINGLE) && endRow.getIndex() == 0) {
-            endSpace.putPiece(piece.makeKingPiece());
+            endSpace.putPiece(piece.makeKing());
         }
 
         // WHITE BOARD
@@ -364,7 +359,7 @@ public class Game {
 
         // Checks for new king piece
         if(piece.getType().equals(Piece.Type.SINGLE) && endRow.getIndex() == NUM_ROWS_COLS) {
-            endSpace.putPiece(piece.makeKingPiece());
+            endSpace.putPiece(piece.makeKing());
         }
         return new Message(Message.Type.info, "Well played");
     }
@@ -411,7 +406,7 @@ public class Game {
 
         // Checks for new king piece
         if(piece.getType().equals(Piece.Type.SINGLE) && endRow.getIndex() == 0) {
-            endSpace.putPiece(piece.makeKingPiece());
+            endSpace.putPiece(piece.makeKing());
         }
 
         // RED BOARD
@@ -431,7 +426,7 @@ public class Game {
 
         // Checks for new king piece
         if(piece.getType().equals(Piece.Type.SINGLE) && endRow.getIndex() == NUM_ROWS_COLS) {
-            endSpace.putPiece(piece.makeKingPiece());
+            endSpace.putPiece(piece.makeKing());
         }
         return new Message(Message.Type.info, "Well played.");
     }

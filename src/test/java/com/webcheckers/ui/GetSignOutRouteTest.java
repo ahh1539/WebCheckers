@@ -47,6 +47,7 @@ public class GetSignOutRouteTest {
     @BeforeEach
     public void setup(){
         request = mock(Request.class);
+        response = mock(Response.class);
         session = mock(Session.class);
         when(request.session()).thenReturn(session);
         engine = mock(TemplateEngine.class);
@@ -76,7 +77,7 @@ public class GetSignOutRouteTest {
 
         when(session.attribute(eq(PostSignInRoute.PLAYER))).thenReturn(player);
         when(gameLobby.hasGame(eq(player))).thenReturn(true);
-        when(gameLobby.getGame(eq(player))).thenReturn(new Game(player,opponent));
+        when(gameLobby.getGame(eq(player))).thenReturn(new Game(player,opponent, player.getName()+opponent.getName()));
 
         CuT.handle(request, response);
 
