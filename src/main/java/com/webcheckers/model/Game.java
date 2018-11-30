@@ -573,11 +573,11 @@ public class Game {
     }
 
     /**
-     * Checks both counts of captured pieces to see if either player has captured all pieces
+     * Checks if either player has captured all of opponent's pieces or has run out of moves
      */
-    public void checkWinByCapture() {
-        if(whiteCaptured == 12) setWinner(this.redPlayer);
-        else if(redCaptured == 12) setWinner(this.whitePlayer);
+    public void checkForWin() {
+        if(whiteCaptured == 12 || !hasMove(this.whitePlayer)) setWinner(this.redPlayer);
+        else if(redCaptured == 12 || !hasMove(this.redPlayer)) setWinner(this.whitePlayer);
     }
 
 }
