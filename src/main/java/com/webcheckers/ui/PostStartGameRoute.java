@@ -38,7 +38,7 @@ public class PostStartGameRoute implements Route {
     /**
      * The constructor for the {@code POST /game} route handler.
      *
-     * @param gameCenter coordinates web app
+     * @param gameCenter     coordinates web app
      * @param templateEngine template engine to use for rendering HTML page
      * @throws NullPointerException when the {@code gameCenter} or {@code templateEngine} parameter is null
      */
@@ -68,6 +68,6 @@ public class PostStartGameRoute implements Route {
 
         vm.put(VIEW_MODE, Game.ViewMode.PLAY);
 
-        return templateEngine.render(new ModelAndView(vm , GetStartGameRoute.GAME_NAME));
+        return templateEngine.render(new ModelAndView(vm, GetStartGameRoute.GAME_NAME));
     }
 }

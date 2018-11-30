@@ -11,7 +11,7 @@ public class Message implements Serializable {
     // Attributes
     //
 
-    public enum Type {INFO, ERROR}
+    public enum Type {info, error}
 
     private Type type;
     private String text;
@@ -19,7 +19,7 @@ public class Message implements Serializable {
     /**
      * Create a Message, either Informational or Error type, with provided text
      * @param type
-     *      Type {@link Type} of the message, either INFO or ERROR
+     *      Type {@link Type} of the message, either info or error
      * @param text
      *      The String text content of the Message
      */
@@ -31,7 +31,7 @@ public class Message implements Serializable {
     /**
      * Gets the type of the Message
      * @return
-     *      Type {@link Type} of the message, INFO or ERROR
+     *      Type {@link Type} of the message, info or error
      */
     public Type getType(){
         return this.type;

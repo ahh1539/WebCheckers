@@ -129,7 +129,7 @@ public class Player {
      * Void; when called it changes the status of the player to resigned
      */
     public void hasResigned(){
-        hasresigned = true;
+        this.hasresigned = !this.hasresigned;
     }
 
     /**

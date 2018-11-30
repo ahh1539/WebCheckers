@@ -1,0 +1,8 @@
+to build and run the WebCheckers program, enter the following command in the terminal:
+
+mvn compile exec:java
+
+
+After the program has launched, navigate to localhost:4567 in you web browser to play the checkers game.
+To sign in as 2 players, you will need to use 2 different browsers or an incognito window
+
