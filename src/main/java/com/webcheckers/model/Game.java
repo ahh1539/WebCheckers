@@ -118,7 +118,7 @@ public class Game {
      * @param player
      * @return
      */
-    public boolean hasMove(Player player){
+    public boolean hasSimpleMove(Player player){
         if( whiteCaptured == 12 || redCaptured == 12){
             return false;
         }
@@ -139,22 +139,56 @@ public class Game {
                         Position simpleRF = new Position(current.getRow()+1, current.getCell()+1);
                         positions.add(simpleRF);
 
+                        Position kingLF = new Position(current.getRow()-1, current.getCell()-1);
+                        positions.add(kingLF);
+
+                        Position kingRF = new Position(current.getRow()-1, current.getCell()+1);
+                        positions.add(kingRF);
+
+                        for(Position p : positions){
+                            Move move = new Move(current, p);
+                            if( player.getColor() == Color.WHITE) {
+                                if (move.isValid(whiteBoard)) return true;
+                            }
+                            else{
+                                if( move.isValid(redBoard)) return true;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        // default to false if no valid move is found
+        return false;
+    }
+
+    public boolean hasJumpMove(Player player){
+
+        if( whiteCaptured == 12 || redCaptured == 12){
+            return false;
+        }
+        // iterate over rows and spaces
+        for(Row r : whiteBoard){
+            for(Space s : r){
+
+                // if space has piece, see if there's a valid move in any direction
+                if( s.getPiece() != null){
+                    if( s.getPiece().getColor() == player.getColor()){
+
+                        ArrayList<Position> positions = new ArrayList<>();
+                        // if piece belongs to player, check if it is movable
+                        Position current = new Position(r.getIndex(), s.getCellIdx());
+
                         Position jumpLF = new Position(current.getRow()+2, current.getCell()-2);
                         positions.add(jumpLF);
 
                         Position jumpRF = new Position(current.getRow()+2, current.getCell()+2);
                         positions.add(jumpRF);
 
-                        Position kingLF = new Position(current.getRow()-1, current.getCell()-1);
-                        positions.add(kingLF);
-
-                        Position kingRF = new Position(current.getRow()-1, current.getCell()-1);
-                        positions.add(kingRF);
-
-                        Position kingJumpLF = new Position(current.getRow()-2, current.getCell()-1);
+                        Position kingJumpLF = new Position(current.getRow()-2, current.getCell()-2);
                         positions.add(kingJumpLF);
 
-                        Position kingJumpRF = new Position(current.getRow()-2, current.getCell()-1);
+                        Position kingJumpRF = new Position(current.getRow()-2, current.getCell()+2);
                         positions.add(kingJumpRF);
 
                         for(Position p : positions){
@@ -174,7 +208,41 @@ public class Game {
         return false;
     }
 
+    /**
+     *  checks whether player can perform another jump in from their current position
+     * @param player player who's in the middle of the turn
+     * @param p position of player currently
+     * @return true if another jump can be made
+     */
+    public boolean hasNextJump(Player player, Position p){
 
+        ArrayList<Position> positions = new ArrayList<>();
+        // if piece belongs to player, check if it is movable
+
+        Position jumpLF = new Position(p.getRow()+2, p.getCell()-2);
+        positions.add(jumpLF);
+
+        Position jumpRF = new Position(p.getRow()+2, p.getCell()+2);
+        positions.add(jumpRF);
+
+        Position kingJumpLF = new Position(p.getRow()-2, p.getCell()-2);
+        positions.add(kingJumpLF);
+
+        Position kingJumpRF = new Position(p.getRow()-2, p.getCell()+2);
+        positions.add(kingJumpRF);
+
+        for(Position ps : positions){
+            Move move = new Move(p, ps);
+            if( player.getColor() == Color.WHITE) {
+                if (move.isValid(whiteBoard)) return true;
+            }
+            else{
+                if( move.isValid(redBoard)) return true;
+            }
+        }
+
+        return false;
+    }
 
 
     /**
