@@ -76,8 +76,6 @@ public class GetHomeRoute implements Route {
         PlayerLobby playerLobby = this.gameCenter.getPlayerLobby();
         GameLobby gameLobby = this.gameCenter.getGameLobby();
 
-        //vm.put(PLAYER_LIST, playerLobby.getPlayerLobby()); TODO is this redundant?
-
         // Allows player to see current players only if signed in
         Player player = session.attribute(PostSignInRoute.PLAYER);
         if (playerLobby.hasPlayer(player)) {
@@ -116,7 +114,6 @@ public class GetHomeRoute implements Route {
 
                 if (!game.hasWinner()) {
 
-
                     vm.put(GetStartGameRoute.VIEW_MODE_ATTR, "PLAY");
                     vm.put(GetStartGameRoute.RED_PLAYER_ATTR, game.getRedPlayer());
                     vm.put(GetStartGameRoute.WHITE_PLAYER_ATTR, game.getWhitePlayer());
@@ -131,6 +128,7 @@ public class GetHomeRoute implements Route {
                     vm.put(NUM_PLAYERS, playerLobby.getNumberOfPlayers());
                     vm.put(LOBBY_ATTR, null);
 
+                    // Uses boolean in Game that is false unless one of the players has already redirected
                     if(game.safeToDelete()) {
                         // Both players now redirecting
                         gameLobby.removeGame(player);
