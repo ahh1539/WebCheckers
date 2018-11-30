@@ -29,8 +29,7 @@ public class GetStartGameRoute implements Route {
     static final String WHITE_PLAYER_ATTR = "whitePlayer";
     static final String ACTIVE_COLOR_ATTR = "activeColor";
     static final String VIEW_MODE_ATTR = "viewMode";
-
-    static final String MESSAGE = "message";
+    private static final String MESSAGE = "errorMsg";
 
 
     public GetStartGameRoute(final TemplateEngine templateEngine, final GameCenter gameCenter) {
@@ -62,15 +61,16 @@ public class GetStartGameRoute implements Route {
 
         Player player1 = session.attribute(PostSignInRoute.PLAYER);
 
-        //Checks is player has resigned, if so it returns to homepage
-//        if (player1.resigned()) {
-//            response.redirect(WebServer.HOME_URL);
-//            return templateEngine.render(new ModelAndView(vm, GetStartGameRoute.GAME_NAME));
-//        }
-
         // Checks to see if a player is already in a game and then refreshes that game if so
         if (gameLobby.hasGame(player1)) {
             Game game = gameLobby.getGame(player1);
+
+            // Checks whether the game has declared a winner and sends back to home if so
+
+            if(game.hasWinner()) { response.redirect(WebServer.HOME_URL); }
+
+            // Assembles the appropriate board and view model
+
             if (player1.getColor() == Color.RED) {
                 LOG.finer("red board building");
                 vm.put(BOARD_ATTR, game.getRedBoard());
@@ -91,10 +91,10 @@ public class GetStartGameRoute implements Route {
             //sets has resigned back to false
             String secondPlayer = request.queryParams("opponent");
             Player player2 = new Player(secondPlayer);
-            if (player1.resigned() == true){
+            if (player1.resigned()){
                 player1.hasResigned();
             }
-            if (player2.resigned() == true){
+            if (player2.resigned()){
                 player2.hasResigned();
             }
             if (PlayerLobby.getPlayer(player2.getName()).inGame()) {

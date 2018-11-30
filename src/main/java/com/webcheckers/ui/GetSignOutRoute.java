@@ -4,6 +4,7 @@ package com.webcheckers.ui;
 import com.webcheckers.application.GameCenter;
 import com.webcheckers.application.GameLobby;
 import com.webcheckers.application.PlayerLobby;
+import com.webcheckers.model.Color;
 import com.webcheckers.model.Game;
 import com.webcheckers.model.Player;
 import spark.*;
@@ -27,12 +28,12 @@ public class GetSignOutRoute implements Route {
 
     public static final String TITLE_ATTR = "title";
     public static final String TITLE = "Signout";
-
     /**
      * Create the Spark Route (UI controller) for the
      * {@code GET /} HTTP request.
      *
-     * @param templateEngine the HTML template rendering engine
+     * @param templateEngine
+     *   the HTML template rendering engine
      */
     public GetSignOutRoute(final TemplateEngine templateEngine, final GameCenter gameCenter) {
         // Validation and configuration
@@ -47,9 +48,12 @@ public class GetSignOutRoute implements Route {
     /**
      * Render the WebCheckers SignOut page.
      *
-     * @param request  the HTTP request
-     * @param response the HTTP response
-     * @return the rendered HTML for the SignOut page
+     * @param request
+     *   the HTTP request
+     * @param response
+     *   the HTTP response
+     * @return
+     *   the rendered HTML for the SignOut page
      */
     @Override
     public Object handle(Request request, Response response) {
@@ -67,15 +71,13 @@ public class GetSignOutRoute implements Route {
         // If the player was in a game
         if (gameLobby.hasGame(player)) {
             Game game = gameLobby.getGame(player);
+            Player opponent = player.getColor() == Color.RED ? game.getWhitePlayer():game.getRedPlayer();
 
             // The player loses and the opponent wins
-            game.setLoser(player);
+            game.setWinner(opponent);
             response.redirect(WebServer.RESIGN_GAME_URL);
-            Player opponent = game.getWhitePlayer();
 
             vm.put(GetHomeRoute.ROUTE_NAME, opponent);
-
-            game.setWinner(opponent);
 
             // Both players leave the game
             opponent.leaveGame();

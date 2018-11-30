@@ -34,6 +34,10 @@ public class GetHomeRoute implements Route {
     static final String ERROR = "errorMsg";
     static final String ERROR_IN_GAME = "The player you have selected is already in a game. Select another player.";
 
+    private static final String MESSAGE = "errorMsg";
+    private static final String YOU_WON = "Congratulations! You have won the game of WebCheckers.";
+    private static final String YOU_LOST = "Sorry pal, you lost. Better luck next time.";
+
     private final TemplateEngine templateEngine;
     private final GameCenter gameCenter;
 
@@ -120,6 +124,22 @@ public class GetHomeRoute implements Route {
                     vm.put(GetStartGameRoute.BOARD_ATTR, gameLobby.getGameBoard(player));
                     return templateEngine.render(new ModelAndView(vm, GetStartGameRoute.GAME_NAME));
 
+                } else if (game.hasWinner()) {
+                    // Prints specific message to the homepage and deletes the game
+                    String winnerMsg = game.getWinner().equals(player) ? YOU_WON : YOU_LOST;
+                    vm.put(MESSAGE, winnerMsg);
+                    vm.put(NUM_PLAYERS, playerLobby.getNumberOfPlayers());
+                    vm.put(LOBBY_ATTR, null);
+
+                    if(game.safeToDelete()) {
+                        // Both players now redirecting
+                        gameLobby.removeGame(player);
+                    } else {
+                        // Only one player redirected
+                        game.toggleCanDeleteGame();
+                    }
+
+                    return templateEngine.render(new ModelAndView(vm, ROUTE_NAME));
                 }
             }
         }

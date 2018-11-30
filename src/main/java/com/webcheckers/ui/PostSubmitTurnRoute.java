@@ -81,6 +81,8 @@ public class PostSubmitTurnRoute implements Route {
                     } else {
                         game.redCaptured(target);
                     }
+
+                    game.checkForWin();
                 }
                 game.resetTempMoves();
             }

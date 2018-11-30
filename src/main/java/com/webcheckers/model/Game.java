@@ -17,11 +17,13 @@ public class Game {
     private Player redPlayer;
     private Player whitePlayer;
     private Player winner;
+    private Player loser;
     private Color activeColor;
     private BoardView redBoard;
     private BoardView whiteBoard;
     private int redCaptured = 0;
     private int whiteCaptured = 0;
+    private boolean canDeleteGame = false;
 
     private final int NUM_ROWS_COLS = 7;
 
@@ -111,6 +113,17 @@ public class Game {
      */
     public boolean hasGame(Player player){
         return this.redPlayer.equals(player) | this.whitePlayer.equals(player);
+    }
+
+    /**
+     * Checks for overall move ability, helps look for win by stagnation
+     * @param player
+     *      the given player to check moves capability for
+     * @return
+     *      whether this player can make any valid moves
+     */
+    private boolean hasMove(Player player) {
+        return (hasSimpleMove(player) || hasJumpMove(player));
     }
 
     /**
@@ -300,24 +313,36 @@ public class Game {
     }
 
     /**
-     * Sets the winner of the game to either the Red or White player
+     * Toggles whether a finished game can be deleted
+     * Gets called when each player is redirected to home
+     */
+    public void toggleCanDeleteGame() {
+        this.canDeleteGame = !this.canDeleteGame;
+    }
+
+    /**
+     * Return whether the game is safe to be deleted
+     */
+    public boolean safeToDelete() { return this.canDeleteGame; }
+
+    /**
+     * Sets the winner and loser of the game to either the Red or White player
      * @param player
      *      The winning player
      */
     public void setWinner(Player player){
-        if(this.redPlayer.equals(player)) this.winner = this.redPlayer;
-        else this.winner = this.whitePlayer;
-        player.addWin();
-    }
+        if(this.redPlayer.equals(player)) {
+            this.winner = this.redPlayer;
+            this.loser = this.whitePlayer;
+        } else {
+            this.winner = this.whitePlayer;
+            this.loser = this.redPlayer;
+        }
 
-    /**
-     * Sets the loser of the game to either the Red or White player
-     * @param player
-     *      The losing player
-     */
-    public void setLoser(Player player){
-        if(this.redPlayer.equals(player)) this.winner = this.whitePlayer;
-        else this.winner = this.redPlayer;
+        player.addWin();
+
+        this.redPlayer.leaveGame();
+        this.whitePlayer.leaveGame();
     }
 
     /**
@@ -479,6 +504,7 @@ public class Game {
         if(piece.getType().equals(Piece.Type.SINGLE) && endRow.getIndex() == NUM_ROWS_COLS) {
             endSpace.putPiece(piece.makeKingPiece());
         }
+
         return new Message(Message.Type.info, "Well played");
     }
 
@@ -555,6 +581,7 @@ public class Game {
         if(piece.getType().equals(Piece.Type.SINGLE) && endRow.getIndex() == NUM_ROWS_COLS) {
             endSpace.putPiece(piece.makeKingPiece());
         }
+
         return new Message(Message.Type.info, "Well played.");
     }
 
@@ -627,6 +654,14 @@ public class Game {
         originalRow = this.redBoard.getRow(NUM_ROWS_COLS - move.getStart().getRow());
         originalSpace = originalRow.getSpace(NUM_ROWS_COLS - move.getStart().getCell());
         originalSpace.putPiece(piece);
+    }
+
+    /**
+     * Checks if either player has captured all of opponent's pieces or has run out of moves
+     */
+    public void checkForWin() {
+        if(whiteCaptured == 12 || !hasMove(this.whitePlayer)) setWinner(this.redPlayer);
+        else if(redCaptured == 12 || !hasMove(this.redPlayer)) setWinner(this.whitePlayer);
     }
 
 }
