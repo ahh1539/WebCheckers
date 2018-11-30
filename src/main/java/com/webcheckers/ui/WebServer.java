@@ -73,6 +73,8 @@ public class WebServer {
 
     public static final String SPECTATOR_URL = "/spectator/game";
 
+    public static final String SPECTATOR_CHECK_TURN_URL = "/spectator/checkTurn";
+
     public static final String SPECTATOR_LEAVE_URL = "/spectator/stopWatching";
 
     //
@@ -166,6 +168,7 @@ public class WebServer {
         get(SIGN_OUT_URL, new GetSignOutRoute(templateEngine, gameCenter));
         // redirects player to observe an ongoing game
         get(SPECTATOR_URL, new GetSpectateGameRoute(templateEngine,gameCenter));
+        get(SPECTATOR_LEAVE_URL, new GetLeaveSpectateRoute(templateEngine,gameCenter));
         //Posts when the player is to resign because they are the inferior player
         post(RESIGN_GAME_URL, new PostResignGameRoute(templateEngine, gameCenter));
         // Posts the player username as they sign in
@@ -178,6 +181,8 @@ public class WebServer {
         post(SUBMIT_TURN_URL, new PostSubmitTurnRoute(templateEngine, gameCenter));
         // Undo move if it's not up to snuff
         post(BACKUP_MOVE_URL, new PostBackupMoveRoute(gameCenter));
+
+        post(SPECTATOR_CHECK_TURN_URL, new PostSpectateGameRoute(templateEngine,gameCenter));
 
 
         LOG.config("WebServer is initialized.");

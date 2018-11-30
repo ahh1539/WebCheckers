@@ -22,6 +22,7 @@ public class Game {
     private int redCaptured = 0;
     private int whiteCaptured = 0;
     private String id;
+    private boolean turn = false;
 
     private final int NUM_ROWS_COLS = 7;
 
@@ -63,6 +64,19 @@ public class Game {
     }
 
     public String getId(){return id; }
+
+    public void changeTurn(){
+        if (turn == true){
+            turn = false;
+        }
+        else {
+            turn = true;
+        }
+    }
+
+    public boolean changedTurn(){
+        return turn;
+    }
 
     /**
      * Gets the white Player from the Game
@@ -113,7 +127,12 @@ public class Game {
      *      False otherwise
      */
     public boolean hasGame(Player player){
+
         return this.redPlayer.equals(player) | this.whitePlayer.equals(player);
+    }
+
+    public boolean hasGame2(String id){
+        return this.getId().equals(id);
     }
 
     /**

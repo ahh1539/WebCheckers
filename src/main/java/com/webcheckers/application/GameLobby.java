@@ -97,6 +97,15 @@ public class GameLobby {
         return null;
     }
 
+    public Game getGame2(String id){
+        for (Game game : gameLobby){
+            if (game.hasGame2(id)){
+                return game;
+            }
+        }
+        return null;
+    }
+
     /**
      * Removes a game that the provided Player is in from the gameLobby
      * @param player

@@ -30,6 +30,8 @@ public class GetSpectateGameRoute implements Route {
     static final String BOARD_ATTR = "board";
     static final String MESSAGE = "message";
     static final String ACTIVE_COLOR_ATTR = "activeColor";
+    static final String TITLE_ATTR = "title";
+    static final String TITLE = "Game Page";
 
     private final TemplateEngine templateEngine;
     private final GameCenter gameCenter;
@@ -65,7 +67,19 @@ public class GetSpectateGameRoute implements Route {
         final Session session = request.session();
         GameLobby gameLobby = gameCenter.getGameLobby();
         Player spectator = session.attribute(PostSignInRoute.PLAYER);
+        spectator.joinGame();
+        final String id = request.queryParams("gameID");
+        spectator.setThing(id);
+        Game game = gameLobby.getGame2(id);
+        System.out.println(game);
+        vm.put(TITLE_ATTR, TITLE);
+        vm.put(GetSpectateGameRoute.BOARD_ATTR, game.getRedBoard());
+        vm.put(GetSpectateGameRoute.SPECTATOR, spectator);
+        vm.put(GetSpectateGameRoute.VIEW_MODE_ATTR, Game.ViewMode.SPECTATOR);
+        vm.put(GetSpectateGameRoute.RED_PLAYER_ATTR, game.getRedPlayer());
+        vm.put(GetSpectateGameRoute.WHITE_PLAYER_ATTR, game.getWhitePlayer());
+        vm.put(GetSpectateGameRoute.ACTIVE_COLOR_ATTR, game.getActiveColor());
+        return templateEngine.render(new ModelAndView(vm, GetStartGameRoute.GAME_NAME));
 
-        return templateEngine.render(new ModelAndView(vm, GetHomeRoute.ROUTE_NAME));
     }
 }
