@@ -442,19 +442,12 @@ public class Game {
      */
     public Message updateBoardRedTurn(Move m) {
 
-//        if( !tempMoves.isEmpty()){
-//            System.out.println("GAME.JAVA 286: previous RED move: "+ tempMoves.get(0).toString());
-//        }
-//        System.out.println("GAME.JAVA 286: previous RED move: none");
-//        System.out.println("GAME.JAVA 288: current RED move: "+ m.toString());
-
-
         // if first move of turn, check if jump is possible & force if so
         if( tempMoves.isEmpty()) {
-//
-//            if( hasJumpMove() && !m.isJump()){
-//                return new Message(Message.Type.error, "You have a jump possible.");
-//         }
+
+            if( hasJumpMove() && !m.isJump()){
+                return new Message(Message.Type.error, "You have a jump possible.");
+         }
             // Add move to the ongoing list of moves
             moves.add(m);
             tempMoves.add(m);
@@ -523,12 +516,6 @@ public class Game {
      *      the Move submitted
      */
     public Message updateBoardWhiteTurn(Move m) {
-
-//        if( !tempMoves.isEmpty()){
-//            System.out.println("GAME.JAVA 286: previous WHITE move: "+ tempMoves.get(0).toString());
-//        }
-//        System.out.println("GAME.JAVA 286: previous WHITE move: none");
-//        System.out.println("GAME.JAVA 288: current WHITE move: "+ m.toString());
 
         // if first move of turn, add
         if( tempMoves.isEmpty()) {
