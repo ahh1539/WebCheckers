@@ -21,6 +21,7 @@ public class Game {
     private BoardView whiteBoard;
     private int redCaptured = 0;
     private int whiteCaptured = 0;
+    private boolean canDeleteGame = false;
 
     private final int NUM_ROWS_COLS = 7;
 
@@ -175,6 +176,19 @@ public class Game {
             this.activeColor = Color.RED;
         }
     }
+
+    /**
+     * Toggles whether a finished game can be deleted
+     * Gets called when each player is redirected to home
+     */
+    public void toggleCanDeleteGame() {
+        this.canDeleteGame = !this.canDeleteGame;
+    }
+
+    /**
+     * Return whether the game is safe to be deleted
+     */
+    public boolean safeToDelete() { return this.canDeleteGame; }
 
     /**
      * Sets the winner and loser of the game to either the Red or White player
@@ -334,12 +348,11 @@ public class Game {
         endSpace = endRow.getSpace(NUM_ROWS_COLS - m.getEnd().getCell());
         endSpace.putPiece(piece);
 
-        // Checks for new king piece and for win by capture
+        // Checks for new king piece
         if(piece.getType().equals(Piece.Type.SINGLE) && endRow.getIndex() == NUM_ROWS_COLS) {
             endSpace.putPiece(piece.makeKingPiece());
         }
 
-        checkWinByCapture();
         return new Message(Message.Type.info, "Well played");
     }
 
@@ -403,12 +416,11 @@ public class Game {
         endSpace = endRow.getSpace(NUM_ROWS_COLS - m.getEnd().getCell());
         endSpace.putPiece(piece);
 
-        // Checks for new king piece and for win by capture
+        // Checks for new king piece
         if(piece.getType().equals(Piece.Type.SINGLE) && endRow.getIndex() == NUM_ROWS_COLS) {
             endSpace.putPiece(piece.makeKingPiece());
         }
 
-        checkWinByCapture();
         return new Message(Message.Type.info, "Well played.");
     }
 
@@ -486,7 +498,7 @@ public class Game {
     /**
      * Checks both counts of captured pieces to see if either player has captured all pieces
      */
-    private void checkWinByCapture() {
+    public void checkWinByCapture() {
         if(whiteCaptured == 12) setWinner(this.redPlayer);
         else if(redCaptured == 12) setWinner(this.whitePlayer);
     }
