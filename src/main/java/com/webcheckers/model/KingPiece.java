@@ -9,7 +9,7 @@ public class KingPiece extends Piece {
 
     private Color color;
     private int index;
-    private Type type = Type.KING;
+    private Type type;
 
 
 
@@ -22,6 +22,9 @@ public class KingPiece extends Piece {
      */
     public KingPiece(Color color, int idx) {
         super(color, idx);
+        this.color = color;
+        this.index = idx;
+        this.type = Type.KING;
     }
 
 
@@ -31,7 +34,7 @@ public class KingPiece extends Piece {
      *      the Color {@link Color} of the Piece, RED or WHITE
      */
     public Color getColor() {
-        return color;
+        return this.color;
     }
 
     /**
@@ -41,6 +44,15 @@ public class KingPiece extends Piece {
      */
     public int getIndex(){
         return this.index;
+    }
+
+    /**
+     * Gets the type of the piece
+     * @return
+     *      the type of the piece
+     */
+    public Type getType(){
+        return this.type;
     }
 
 

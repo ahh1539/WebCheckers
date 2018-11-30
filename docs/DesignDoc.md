@@ -11,7 +11,6 @@ geometry: margin=1in
 ## Team Information
 * Team name: Back of the Bus
 * Team members
-  * Elijah Parrish
   * Daria Chaplin
   * Alex Hurley
   * Lillian Kuhn
@@ -44,6 +43,7 @@ to log in and play one another online wherever they are._
 >This application allows users to play a game of checkers.
 
 ### Definition of MVP
+
 > The application will allow different users to sign in and play a game of checkers
 over the web. A user may choose an opponent from a list of available
 players, and the 2 players will be sent to a game of checkers. The game plays
@@ -110,15 +110,17 @@ Controllers are built using the Spark framework and View are built using the Fre
 ![The WebCheckers Web Interface Statechart](state_diagram.png)
 
 
-
-> The flow of the web pages from the user's perspective is as follows: When the user opens the home page
-they first see a simple welcome message and a button to sign in, they will also be presented
+>The flow of the web pages from the user's perspective is as follows: When the user opens the home page
+they first see a simple welcome message and a button to sign in. They will also be presented
 with the number of players who are signed in. When they click to sign in they will be redirected to the Signin
-page where they can post their username. They will then be redirected to home. If they then click 
-the name of another player then both players will be redirected to the game screen 
-where they can play the game of checkers. Once a winner has been decided they will be redirected to the home
-screen.Inside of the game there will be the option to sign out or resign, both of which will result in that player 
-forfeiting the game to the other player, returning them back to the home page._
+page where they can post their username. They will then be redirected to home where, if they
+signed in successfully, they will see a list of other players names. 
+If they then click the name of another player then both players will be 
+redirected to the game screen where they can play the game of checkers.
+Once a winner has been decided they will be redirected to the home
+screen. If either player resigns during the game, both players will be redirected
+to the homepage.
+
 
 
 ### UI Tier
@@ -242,3 +244,6 @@ in particular, we fell slightly short of our initial coverage targets.
     the code coverage meets our targets fairly well. In the model tier, 
     it is mostly the Move object lacking some 
 coverage and we will improve on this drastically in upcoming development.
+![Sequence Diagram](doc1.png)
+![Sequence diagram 2](doc2.png)
+![All others](doc3.png)

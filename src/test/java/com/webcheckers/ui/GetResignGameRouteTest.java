@@ -1,9 +1,5 @@
-
 package com.webcheckers.ui;
-
-import static com.webcheckers.ui.GetGameRoute.CURRENT_PLAYER_ATTR;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
@@ -14,23 +10,23 @@ import com.webcheckers.model.Color;
 import com.webcheckers.model.Game;
 import com.webcheckers.model.Player;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 
 import spark.*;
-
+import static org.mockito.Mockito.*;
 
 /**
- * Test class for GetSignInRoute (UI tier component)
+ * Test class for GetResignGameRoute (UI tier component)
+ * @author Paula Register (per4521)
  */
-
 @Tag("UI-tier")
-public class GetHomeRouteTest {
+public class GetResignGameRouteTest {
+
     /**
      * The component-under-test (CuT).
      */
-    private GetHomeRoute CuT;
+    private GetResignGameRoute CuT;
 
     /**
      * Mock objects
@@ -41,7 +37,8 @@ public class GetHomeRouteTest {
     private TemplateEngine engine;
     private PlayerLobby playerLobby;
     private Player player;
-
+    private GameCenter gameCenter;
+    private GameLobby gameLobby;
     /**
      * Setup new mock objects for each test.
      */
@@ -51,65 +48,54 @@ public class GetHomeRouteTest {
         session = mock(Session.class);
         when(request.session()).thenReturn(session);
         engine = mock(TemplateEngine.class);
-
+        response = mock(Response.class);
         // set up friendly objects
         this.playerLobby = new PlayerLobby();
         player = new Player("player");
         this.playerLobby.addPlayer(player);
-        GameLobby gameLobby = new GameLobby();
-        GameCenter gameCenter = new GameCenter(playerLobby, gameLobby);
+        gameLobby = mock(GameLobby.class);
+        gameCenter = mock(GameCenter.class);
 
         // create a unique CuT for each test
-        CuT = new GetHomeRoute(engine, gameCenter);
+        CuT = new GetResignGameRoute(engine, gameCenter);
     }
-    /*
-     * Test that the GameHomeRoute will show current players only if signed in
+
+    /**
+     * Test that the user can properly resign
      */
     @Test
-    public void showPlayers()
-    {
+    public void resignTest(){
         final TemplateEngineTester testHelper = new TemplateEngineTester();
-
-        //Mock of the 'render' method
         when(engine.render(any(ModelAndView.class))).thenAnswer(testHelper.makeAnswer());
+        Player player = new Player("test");
+        Player opponent = new Player("opponent");
+        GameLobby gameLobby =new GameLobby();
+        gameLobby.addGame(new Game(player, opponent));
+        when(session.attribute(eq(PostSignInRoute.PLAYER))).thenReturn(player);
+        when(gameCenter.getGameLobby()).thenReturn(gameLobby);
 
-        //Invoke the test (ignore the output)
         CuT.handle(request, response);
 
-        //Analyze the content passed into the render method
-        testHelper.assertViewModelExists();
-        testHelper.assertViewModelIsaMap();
-        testHelper.assertViewModelAttributeIsAbsent(CURRENT_PLAYER_ATTR);
     }
 
-    /*
-     * Test that GameHomeRoute will create a new game only if the Opponent is
-     * free to play.
+    /**
+     * Test that the user can properly resign
      */
     @Test
-    public void freeToPlay() {
+    public void resignTestWhite(){
         final TemplateEngineTester testHelper = new TemplateEngineTester();
         when(engine.render(any(ModelAndView.class))).thenAnswer(testHelper.makeAnswer());
-        Player player1 = new Player("user");
-        Player player2 = new Player("opp");
-        player1.assignColor(Color.WHITE);
-        player2.assignColor(Color.WHITE);
+        Player player = new Player("test");
+        Player opponent = new Player("opponent");
+        player.assignColor(Color.WHITE);
+        opponent.assignColor(Color.WHITE);
+        GameLobby gameLobby = new GameLobby();
+        gameLobby.addGame(new Game(player, opponent));
+        when(session.attribute(eq(PostSignInRoute.PLAYER))).thenReturn(player);
+        when(gameCenter.getGameLobby()).thenReturn(gameLobby);
 
-        Game g = new Game(player1, player2);
-        player1.joinGame();
-        player2.joinGame();
-        playerLobby.addPlayer(player1);
-        playerLobby.addPlayer(player2);
-
-        when(request.queryParams(eq("opponent"))).thenReturn(player2.getName());
-        when(session.attribute(eq(PostSignInRoute.PLAYER))).thenReturn(player1);
-
-        //Invoke the test (ignore the output)
         CuT.handle(request, response);
 
-        //Analyze the content passed into the render method
-        testHelper.assertViewModelExists();
-        testHelper.assertViewModelIsaMap();
     }
-
 }
+

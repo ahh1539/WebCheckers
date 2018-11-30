@@ -29,10 +29,6 @@ public class Piece {
         this.type = Type.SINGLE;
     }
 
-    public String toString(){
-        return "piece is " + color + " at index " + index;
-    }
-
     /**
      * Gets the type of the Piece
      * @return
@@ -84,11 +80,15 @@ public class Piece {
         }
         return false;
     }
-
+    @Override
+    public String toString(){
+        return "Piece Object:\tColor: " + color + ", index: " + index + ", Type: " + type + "\n";
+    }
+/*
     public Piece makeKingPiece() {
         this.type = Type.KING;
         return this;
-    }
+    }*/
 
 
 }

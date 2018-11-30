@@ -22,7 +22,7 @@ public class PieceTest {
      * Testing constructor for single red piece
      */
     @Test
-    public void test_red_piece(){
+    public void testRedPiece(){
         final Piece CuT = new Piece(redColor, index);
         assertEquals(Color.RED, CuT.getColor());
         assertEquals(index, CuT.getIndex());
@@ -32,7 +32,7 @@ public class PieceTest {
      * Testing constructor for single white piece
      */
     @Test
-    public void test_white_single(){
+    public void testWhiteSingle(){
         final Piece CuT = new Piece(whiteColor, index);
         assertEquals(Color.WHITE, CuT.getColor());
         assertEquals(index, CuT.getIndex());
@@ -42,7 +42,7 @@ public class PieceTest {
      * Testing the .equals method of Piece to check it outputs True
      */
     @Test
-    public void test_equals_true(){
+    public void testEqualsTrue(){
         final Piece CuT = new Piece(redColor, index);
         final Piece CuT2 = new Piece(redColor, index);
         assertTrue(CuT.equals(CuT2));
@@ -52,9 +52,31 @@ public class PieceTest {
      * Testing the .equals method of Piece to check it outputs False
      */
     @Test
-    public void test_equals_false(){
+    public void testEqualsFalse(){
         final Piece CuT = new Piece(redColor, index);
         final Piece CuT2 = new Piece(whiteColor, 1);
         assertFalse(CuT.equals(CuT2));
+    }
+
+    /**
+     * Testing the toString method of Piece
+     */
+    @Test
+    public void testToString(){
+        final Piece CuT = new Piece(redColor, index);
+        String toString = "Piece Object:\tColor: " + CuT.getColor() + ", index: " + CuT.getIndex()
+                + ", Type: " + CuT.getType() + "\n";
+        assertEquals(CuT.toString(), toString);
+    }
+
+    /**
+     * Testing the makeKing() method
+     */
+    @Test
+    public void testMakeKing(){
+        final Piece CuT = new Piece(redColor, index);
+        assertEquals(CuT.getType(), Piece.Type.SINGLE);
+        final KingPiece CuTKing = CuT.makeKing();
+        assertEquals(CuTKing.getType(), Piece.Type.KING);
     }
 }

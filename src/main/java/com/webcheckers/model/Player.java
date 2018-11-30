@@ -19,7 +19,6 @@ public class Player {
     private boolean hasresigned = false;
     private String thing = "empty";
 
-
     /**
      * Create a Player with the provided username. 0 total games and wins, they are not
      * currently in a game, and color defaults to RED
@@ -133,6 +132,9 @@ public class Player {
         return wins/totalGames;
     }
 
+    /**
+     * Void; when called it changes the status of the player to resigned
+     */
     public void hasResigned(){
 
         if (hasresigned == true){
@@ -143,6 +145,10 @@ public class Player {
         }
     }
 
+    /**
+     *
+     * @return boolean representing whether or not player has resigned
+     */
     public boolean resigned(){
         return hasresigned;
     }

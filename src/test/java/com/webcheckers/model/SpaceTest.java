@@ -94,6 +94,28 @@ public class SpaceTest {
 
     }
 
+    /**
+     * Tests that equals works with non Space objects
+     */
+    @Test
+    @DisplayName("Space equals with non-Space object")
+    public void testEqualsWrongIndex() {
+        final Space CuT = new Space(true, 0);
+        final Player player = new Player("Friendly");
+        assertFalse(CuT.equals(player));
+    }
 
-
+    /**
+     * Tests that replaceWithKing works
+     */
+    @Test
+    @DisplayName("Space replace with king")
+    public void testReplaceWithKing() {
+        final Space CuT = new Space(true, 0);
+        CuT.putRedPiece();
+        assertEquals(CuT.getPiece().getType(), Piece.Type.SINGLE);
+        final KingPiece kingPiece = new KingPiece(Color.RED, 0);
+        CuT.replaceWithKing(kingPiece);
+        assertEquals(CuT.getPiece().getType(), Piece.Type.KING);
+    }
 }

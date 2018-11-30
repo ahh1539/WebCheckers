@@ -1,6 +1,7 @@
 package com.webcheckers.model;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 import java.util.SplittableRandom;
@@ -259,6 +260,9 @@ public class Game {
         }
     }
 
+    public List<Move> getMoves() {
+        return Collections.unmodifiableList(moves);
+    }
 
     /**
      * Completes removal of white captured piece and adds to captured count

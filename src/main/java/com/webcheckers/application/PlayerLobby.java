@@ -60,16 +60,16 @@ public class PlayerLobby {
     public boolean hasPlayer(Player p) {
        return playerLobby.contains(p);
     }
-
-    /**
+/*
+    *//**
      * For debugging purposes, prints out the contents of the playerLobby
-
+     *//*
     public void printPlayerLobby(){
         for(Player p : playerLobby){
             System.out.println(p.getName());
         }
-    }
-     */
+    }*/
+
 
     /**
      * Gets the number of players currently in the player lobby

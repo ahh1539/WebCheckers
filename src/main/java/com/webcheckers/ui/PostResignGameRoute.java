@@ -63,7 +63,7 @@ public class PostResignGameRoute implements Route {
             white.leaveGame();
             white.hasResigned();
         }
-        player.hasResigned();
+        player.resigned();
         player.leaveGame();
         //gameCenter.getGameLobby().removeGame(player);
 
