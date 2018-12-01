@@ -72,7 +72,7 @@ public class PostCheckTurnRouteTest {
         when(engine.render(any(ModelAndView.class))).thenAnswer(testHelper.makeAnswer());
         Player player1 = new Player("user");
         Player player2 = new Player("opp");
-        Game g = new Game(player1, player2);
+        Game g = new Game(player1, player2, player1.getName()+player2.getName());
         when(request.queryParams(eq("opponent"))).thenReturn(player1.toString());
         when(session.attribute(eq(PostSignInRoute.PLAYER))).thenReturn(player2);
         when(gameLobby.getGame(eq(player2))).thenReturn(g);

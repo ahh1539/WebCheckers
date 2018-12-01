@@ -86,7 +86,6 @@ public class PostSubmitTurnRoute implements Route {
 
                     game.checkForWin();
 
-
                 }
                 game.resetTempMoves();
 

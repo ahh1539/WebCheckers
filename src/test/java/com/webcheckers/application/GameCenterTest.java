@@ -20,7 +20,7 @@ public class GameCenterTest {
 
     private PlayerLobby playerLobby = new PlayerLobby();
     private GameLobby gameLobby = new GameLobby();
-    private Game game = new Game(first,second);
+    private Game game = new Game(first,second, first.getName()+second.getName());
 
     private GameCenter gc = new GameCenter(playerLobby,gameLobby);
 

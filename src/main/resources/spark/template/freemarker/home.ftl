@@ -38,6 +38,16 @@
               </#if>
             </#list>
           </#if>
+          <h3> Current Games </h3>
+            <#if games??>
+              <#list games as game>
+                <#if game.id??>
+                  <p><a href="/spectator/game?gameID=${game.id}">${game.id}</a></p>
+                </#if>
+              </#list>
+            </#if>
+
+
       </#if>
 
     </div>

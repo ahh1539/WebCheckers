@@ -4,6 +4,7 @@ package com.webcheckers.ui;
 import com.webcheckers.application.GameCenter;
 import com.webcheckers.application.GameLobby;
 import com.webcheckers.application.PlayerLobby;
+import com.webcheckers.model.Color;
 import com.webcheckers.model.Game;
 import com.webcheckers.model.Player;
 import spark.*;
@@ -68,36 +69,26 @@ public class GetSignOutRoute implements Route {
         GameLobby gameLobby = this.gameCenter.getGameLobby();
         PlayerLobby playerLobby = this.gameCenter.getPlayerLobby();
         // If the player was in a game
-        if (player.resigned() == true){
-            PlayerLobby.removePlayer(player);
-            //TODO add player to vm
-            return templateEngine.render(new ModelAndView(vm, PostResignGameRoute.RESIGN_URL));
-        }
-        if(gameLobby.hasGame(player)){
-            PlayerLobby.removePlayer(player);
+        if (gameLobby.hasGame(player)) {
+            Game game = gameLobby.getGame(player);
+            Player opponent = player.getColor() == Color.RED ? game.getWhitePlayer():game.getRedPlayer();
 
-//            Game game = gameLobby.getGame(player);
-//
-//            // The player loses and the opponent wins
-//            game.setLoser(player);
-//            Player opponent = game.getWhitePlayer();
-//
-//            vm.put(GetHomeRoute.ROUTE_NAME, opponent);
-//
-//            game.setWinner(opponent);
-//
-//            // Both players leave the game
-//            opponent.leaveGame();
-//            player.leaveGame();
-//
-//            // The player leaves the playerLobby
-//            PlayerLobby.removePlayer(player);
-        }
-        else if(playerLobby.hasPlayer(player)){
+            // The player loses and the opponent wins
+            game.setWinner(opponent);
+            response.redirect(WebServer.RESIGN_GAME_URL);
+
+            vm.put(GetHomeRoute.ROUTE_NAME, opponent);
+
+            // Both players leave the game
+            opponent.leaveGame();
+            player.leaveGame();
+            gameLobby.removeGame(player);
+
+            // The player leaves the playerLobby
+            PlayerLobby.removePlayer(player);
+        } else if (playerLobby.hasPlayer(player)) {
             PlayerLobby.removePlayer(player);
         }
-
-        //
 
         vm.put(TITLE_ATTR, TITLE);
         vm.put(GetStartGameRoute.CURRENT_PLAYER_ATTR, null);

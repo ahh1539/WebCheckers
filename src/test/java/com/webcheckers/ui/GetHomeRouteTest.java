@@ -1,7 +1,7 @@
 
 package com.webcheckers.ui;
 
-import static com.webcheckers.ui.GetGameRoute.CURRENT_PLAYER_ATTR;
+import static com.webcheckers.ui.GetStartGameRoute.CURRENT_PLAYER_ATTR;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.mock;
@@ -95,7 +95,6 @@ public class GetHomeRouteTest {
         player1.assignColor(Color.WHITE);
         player2.assignColor(Color.WHITE);
 
-        Game g = new Game(player1, player2);
         player1.joinGame();
         player2.joinGame();
         playerLobby.addPlayer(player1);

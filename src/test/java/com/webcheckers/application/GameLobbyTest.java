@@ -28,8 +28,8 @@ public class GameLobbyTest {
     private Player number3 = new Player("Paula");
     private Player number4 = new Player("Lilian");
 
-    private Game first = new Game(number1, number2);
-    private Game second = new Game(number3, number4);
+    private Game first = new Game(number1, number2, number1.getName()+number2.getName());
+    private Game second = new Game(number3, number4, number3.getName()+number4.getName());
     private GameLobby lobby = new GameLobby();
 
     @Test
@@ -78,7 +78,7 @@ public class GameLobbyTest {
         player1.assignColor(Color.WHITE);
         player.joinGame();
         player1.joinGame();
-        Game first = new Game(player, player1);
+        Game first = new Game(player, player1, player.getName()+player1.getName());
         final GameLobby CuT = new GameLobby();
         assertNull(CuT.getGame(player));
         CuT.addGame(first);
@@ -100,5 +100,15 @@ public class GameLobbyTest {
         assertTrue(CuT.hasGame(number1));
         CuT.removeGame(number1);
         assertFalse(CuT.hasGame(number1));
+    }
+
+    @Test
+    @DisplayName("removeGame")
+    public void testGetGame2(){
+        final GameLobby CuT = new GameLobby();
+        CuT.addGame(first);
+        assertTrue(CuT.hasGame(number1));
+        assertNotNull(CuT.getGame2(number1.getName()+number2.getName()));
+        assertEquals(CuT.getGame2(number1.getName()+number2.getName()).getId(), number1.getName()+number2.getName());
     }
 }

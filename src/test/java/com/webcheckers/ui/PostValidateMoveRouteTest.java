@@ -38,6 +38,7 @@ public class PostValidateMoveRouteTest {
     private PlayerLobby playerLobby;
     private Player player;
     private GameLobby gameLobby;
+    private Gson gson;
 
     /**
      * Setup new mock objects for each test.
@@ -45,8 +46,12 @@ public class PostValidateMoveRouteTest {
     @BeforeEach
     public void setup(){
         request = mock(Request.class);
+        response = mock(Response.class);
         session = mock(Session.class);
+        gson = new Gson();
         when(request.session()).thenReturn(session);
+        when(request.body()).thenReturn("{'start':{'row':2,'cell':1},'end':{'row':3,'cell':2}}");
+
         engine = mock(TemplateEngine.class);
         // set up friendly objects
         this.playerLobby = new PlayerLobby();
@@ -60,25 +65,6 @@ public class PostValidateMoveRouteTest {
     }
 
     /**
-     * Test that move is properly validated.
-     */
-    @Test
-    public void postValidateMoveRouteTest(){
-        final TemplateEngineTester testHelper = new TemplateEngineTester();
-        when(engine.render(any(ModelAndView.class))).thenAnswer(testHelper.makeAnswer());
-        Player player1 = new Player("user");
-        Player player2 = new Player("opp");
-        Gson gson = new Gson();
-        Game g = new Game(player1, player2);
-        when(request.queryParams(eq("opponent"))).thenReturn(player1.toString());
-        when(session.attribute(eq(PostSignInRoute.PLAYER))).thenReturn(player2);
-        when(gameLobby.getGame(eq(player2))).thenReturn(g);
-     //   when(request.body()).thenReturn("test");
-//        when(gson.fromJson(eq("test"), eq(Move.class))).thenReturn(new Move(new Position(0,0),new Position(0,0)));
-
-        CuT.handle(request, response);
-    }
-    /**
      * Test that move is properly validated for the white board.
      */
     @Test
@@ -89,10 +75,32 @@ public class PostValidateMoveRouteTest {
         Player player2 = new Player("opp");
         player1.assignColor(Color.WHITE);
         player2.assignColor(Color.WHITE);
-        Game g = new Game(player1, player2);
+        Game g = new Game(player1, player2, player1.getName()+player2.getName());
+        g.getWhiteBoard().placeWhitePieces();
         when(request.queryParams(eq("opponent"))).thenReturn(player1.toString());
         when(session.attribute(eq(PostSignInRoute.PLAYER))).thenReturn(player2);
         when(gameLobby.getGame(eq(player2))).thenReturn(g);
+
+        CuT.handle(request, response);
+    }
+
+    /**
+     * Test that move is properly validated for the white board.
+     */
+    @Test
+    public void postValidateMoveRouteTestRedBoard(){
+        final TemplateEngineTester testHelper = new TemplateEngineTester();
+        when(engine.render(any(ModelAndView.class))).thenAnswer(testHelper.makeAnswer());
+        Player player1 = new Player("user");
+        Player player2 = new Player("opp");
+        player1.assignColor(Color.RED);
+        player2.assignColor(Color.RED);
+        Game g = new Game(player1, player2, player1.getName()+player2.getName());
+        g.getRedBoard().placeRedPieces();
+        when(request.queryParams(eq("opponent"))).thenReturn(player1.toString());
+        when(session.attribute(eq(PostSignInRoute.PLAYER))).thenReturn(player2);
+        when(gameLobby.getGame(eq(player2))).thenReturn(g);
+
         CuT.handle(request, response);
     }
 }

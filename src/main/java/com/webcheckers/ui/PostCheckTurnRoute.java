@@ -7,13 +7,11 @@ import com.webcheckers.model.Message;
 import com.webcheckers.model.Player;
 import spark.*;
 
-import java.util.HashMap;
-import java.util.Map;
 import java.util.Objects;
 import java.util.logging.Logger;
 
 public class PostCheckTurnRoute implements Route {
-    private static final Logger LOG = Logger.getLogger(GetSignInRoute.class.getName());
+    private static final Logger LOG = Logger.getLogger(PostCheckTurnRoute.class.getName());
 
     private final TemplateEngine templateEngine;
     private final GameCenter gameCenter;
@@ -30,8 +28,7 @@ public class PostCheckTurnRoute implements Route {
      * Create the Spark Route (UI controller) for the
      * {@code GET /} HTTP request.
      *
-     * @param templateEngine
-     *   the HTML template rendering engine
+     * @param templateEngine the HTML template rendering engine
      */
     public PostCheckTurnRoute(final TemplateEngine templateEngine, final GameCenter gameCenter) {
         // validation
@@ -46,7 +43,6 @@ public class PostCheckTurnRoute implements Route {
 
     @Override
     public Object handle(Request request, Response response) {
-        System.out.println("post check turn refresh");
 
         final Session session = request.session();
         Gson gson = new Gson();
@@ -56,14 +52,12 @@ public class PostCheckTurnRoute implements Route {
         Game game = gameCenter.getGameLobby().getGame(player);
 
         // default behavior returns Not My Turn values
-        Message message = new Message(Message.Type.ERROR, "false");
-        LOG.info(message.getText());
-        LOG.info("curr: "+ player + ", active: " + game.getActiveColor());
+        Message message = new Message(Message.Type.error, "false");
 
         // if it is current player's turn, change messages values
-        if(game.getActiveColor() == player.getColor()) {
-            LOG.info("activeColor == player's Color");
-            message = new Message(Message.Type.INFO, "true");
+        if (game.getActiveColor() == player.getColor()) {
+            message = new Message(Message.Type.info, "true");
+            game.changeTurn();
         }
 
         // convert message to JSON for response
