@@ -132,13 +132,6 @@ public class GameTest {
         assertEquals(CuT_copy.getWinner(), redPlayer);
     }
 
-    @Test
-    @DisplayName("SetLoser works")
-    public void testSetLoser(){
-        final Game CuT_copy = new Game(redPlayer, whitePlayer,redPlayer.getName()+whitePlayer.getName());
-        CuT_copy.setLoser(redPlayer);
-        assertEquals(CuT_copy.getWinner(), whitePlayer);
-    }
 
     @Test
     @DisplayName("HasWinner works")
@@ -181,6 +174,7 @@ public class GameTest {
         assertFalse(CuT_copy.hasGame2("FalseTest"));
         assertTrue(CuT_copy.hasGame2(redPlayer.getName()+whitePlayer.getName()));
     }
+/*
 
     @Test
     @DisplayName("changedTurn works")
@@ -188,6 +182,7 @@ public class GameTest {
         final Game CuT_copy = new Game(redPlayer, whitePlayer,redPlayer.getName()+whitePlayer.getName());
         assertFalse(CuT_copy.hasMove(redPlayer));
     }
+*/
 
 
     @Test

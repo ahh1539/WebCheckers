@@ -1,6 +1,5 @@
 package com.webcheckers.model;
 
-import javafx.geometry.Pos;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -506,7 +505,7 @@ public class Game {
 
         // Checks for new king piece
         if(piece.getType().equals(Piece.Type.SINGLE) && endRow.getIndex() == 0) {
-            endSpace.putPiece(piece.makeKingPiece());
+            endSpace.putPiece(piece.makeKing());
         }
 
         // WHITE BOARD
@@ -526,7 +525,7 @@ public class Game {
 
         // Checks for new king piece
         if(piece.getType().equals(Piece.Type.SINGLE) && endRow.getIndex() == NUM_ROWS_COLS) {
-            endSpace.putPiece(piece.makeKingPiece());
+            endSpace.putPiece(piece.makeKing());
         }
 
         return new Message(Message.Type.info, "Well played");
@@ -579,7 +578,7 @@ public class Game {
 
         // Checks for new king piece
         if(piece.getType().equals(Piece.Type.SINGLE) && endRow.getIndex() == 0) {
-            endSpace.putPiece(piece.makeKingPiece());
+            endSpace.putPiece(piece.makeKing());
         }
 
         // RED BOARD
@@ -599,7 +598,7 @@ public class Game {
 
         // Checks for new king piece
         if(piece.getType().equals(Piece.Type.SINGLE) && endRow.getIndex() == NUM_ROWS_COLS) {
-            endSpace.putPiece(piece.makeKingPiece());
+            endSpace.putPiece(piece.makeKing());
         }
 
         return new Message(Message.Type.info, "Well played.");

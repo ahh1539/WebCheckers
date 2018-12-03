@@ -11,7 +11,6 @@ geometry: margin=1in
 ## Team Information
 * Team name: Back of the Bus
 * Team members
-  * Elijah Parrish
   * Daria Chaplin
   * Alex Hurley
   * Lillian Kuhn
@@ -162,7 +161,9 @@ GetHomeRoute.
 
 > When a user signs in, they are directed back to the home screen, 
 and they see a list of possible opponents. They are considered 'waiting for
-a game' until they select an opponent or they are selected as an opponent.
+a game' until they select an opponent or they are selected as an opponent. 
+Additionally, if there is an ongoing game, then a user who is signed in
+has the option to spectate.
 When 2 users enter a game, they take turns submitting moves. Moves 
 are validated and submitted through their respective routes, and the
 player's turn is finished when a move is submitted successfully and 
@@ -242,3 +243,7 @@ in particular, we fell slightly short of our initial coverage targets.
     the code coverage meets our targets fairly well. In the model tier, 
     it is mostly the Move object lacking some 
 coverage and we will improve on this drastically in upcoming development.
+
+### Code Metrics 
+
+>Write about code metrics here!!!! yeet
