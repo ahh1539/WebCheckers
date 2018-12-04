@@ -163,8 +163,10 @@ GetHomeRoute.
 and they see a list of possible opponents. They are considered 'waiting for
 a game' until they select an opponent or they are selected as an opponent. 
 Additionally, if there is an ongoing game, then a user who is signed in
-has the option to spectate.
-When 2 users enter a game, they take turns submitting moves. Moves 
+has the option to spectate a  game. There will be a list of ongoing games
+with the game name being a concatenation of the two players names. The 
+spectator will have the option to exit the game at any point. When 
+2 users enter a game, they take turns submitting moves. Moves 
 are validated and submitted through their respective routes, and the
 player's turn is finished when a move is submitted successfully and 
 reflected back to the user through the checkTurn route which is updated 
@@ -181,14 +183,15 @@ so that you can access all the methods under both from just one Class._
 
 
 ### Model Tier
-> _Our Model tier is the meat of this project. It includes ten 
+> _Our Model tier is the meat of this project. It includes eleven 
  classes. Boardview is what actually displays and puts together the board
  it puts both the spaces and pieces into the gameboard effectively making 
- the board which the player sees. Game requires two players to instantiate 
- Game holds all of the information pertaining to the game, it holds the two 
- players and their colors it is also where a loser and winner are declared.
- KingPiece changes a piece to the status of a king piece, it enables that
- piece to have more functionality over other pieces in the game. Message is 
+ the board which the player sees. Color is an enumeration class that is used
+ when instantiating a color for both Players and Pieces. Game requires two 
+ players to instantiate Game holds all of the information pertaining to the game, 
+ it holds the two players and their colors it is also where a loser and winner 
+ are declared. KingPiece changes a piece to the status of a king piece, it enables
+ that piece to have more functionality over other pieces in the game. Message is 
  used for return types inside of the UI tier when sending Json information. It 
  requires a Type (error or info) and a string identifying what was happening
  Move controls the movement of the various pieces in the gameboard. It has a 
@@ -214,7 +217,16 @@ We switched to a public enumeration in the model package because the
 player's color was essentially the color of pieces they were assigned.
 There should be some abstractions in the Model tier which have not yet
 been flushed out, but would absolutely contribute to the effectiveness
-of the design.
+of the design. There were many architectural improvements done over the 
+course of sprint 3. We used to have 3 routes that all functioned together
+in handling the refreshing and creation of a game: GetGameRoute, GetRequestGameRoute,
+and GetStartGameRoute. This caused some redundancy and was sloppy coding,we 
+decided to condense the functionality of these three routes into a singular 
+route being GetStartGameRoute. By combining the functionality into a single route 
+we were better able to track down various bugs and errors, this was a very large
+restructuring and helped us tremendously. We also revamped our Resign routes by
+deleting PostResignRoute. This route was also rather redundant and served no 
+viable purpose.
 
 ## Testing
 
