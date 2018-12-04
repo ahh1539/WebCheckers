@@ -131,7 +131,14 @@ the signin.ftl page which has a user input box where they can input their userna
 Once the user inputs their username then PostSignInRoute is invoked. PostSignIn
 then requests the user input and checks to see that it meets the conditions. If 
 it passes all of the conditions the player is added to the playerLobby and the 
-page is redirected to GetHomeRoute again. Here the user can see other players, 
+page is redirected to GetHomeRoute again. In the homepage, if the user is signed in
+and there are other players in games, these games will be displayed on a list on the 
+homepage, if the user clicks on the game it invokes GetSpectateGameRoute, which 
+redirects them to the board view as a spectator. The spectator page is refreshed
+every five seconds by the PostSpectateGameRoute, which checks if a player has submitted 
+a turn. Additionally the spectator can exit the game at any time by clicking the exit
+button which invokes the GetLeaveSpectateRoute which simply returns the Spectator back
+to the home page. Additionally at the homepage the user can see other players, 
 and can click on their username to invoke GetRequestGameRoute, which checks if the
 requested player is already in a game or not, if so then it redirects to homepage,
 and returns an error message, otherwise a It calls to GetGameRoute with a hashmap
