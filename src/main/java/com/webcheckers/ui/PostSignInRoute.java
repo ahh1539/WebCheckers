@@ -82,7 +82,7 @@ public class PostSignInRoute implements Route {
         this.templateEngine = templateEngine;
     }
 
-    private ModelAndView error(final Map<String, Object> vm, final String message) {
+    ModelAndView error(final Map<String, Object> vm, final String message) {
         vm.put(MESSAGE_ATTR, message);
         vm.put(MESSAGE_TYPE_ATTR, ERROR_TYPE);
         return new ModelAndView(vm, VIEW_NAME);
