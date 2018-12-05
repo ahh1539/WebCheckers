@@ -66,6 +66,15 @@ public class Game {
         return redPlayer;
     }
 
+    /**
+     * Gets the white Player from the Game
+     * @return
+     *      whitePlayer, the Player {@link Player} assigned to WHITE for this game
+     */
+    public Player getWhitePlayer() {
+        return whitePlayer;
+    }
+
     public String getId(){return id; }
 
     public void changeTurn(){
@@ -81,14 +90,6 @@ public class Game {
         return turn;
     }
 
-    /**
-     * Gets the white Player from the Game
-     * @return
-     *      whitePlayer, the Player {@link Player} assigned to WHITE for this game
-     */
-    public Player getWhitePlayer() {
-        return whitePlayer;
-    }
 
     public Color getPlayerColor(String username){
         if(username.equals(redPlayer.getName())){

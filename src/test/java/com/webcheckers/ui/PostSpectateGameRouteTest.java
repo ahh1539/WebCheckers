@@ -74,7 +74,7 @@ public class PostSpectateGameRouteTest {
         player2.assignColor(Color.RED);
         Game g = new Game(player1, player2, player1.getName()+player2.getName());
         g.getRedBoard().placeRedPieces();
-        player2.setThing(player1.getName()+player2.getName());
+        player2.setGameID(player1.getName()+player2.getName());
         when(session.attribute(eq(PostSignInRoute.PLAYER))).thenReturn(player2);
         when(gameLobby.getGame(eq(player2))).thenReturn(g);
         when(gameLobby.getGame2(eq(player1.getName()+player2.getName()))).thenReturn(g);

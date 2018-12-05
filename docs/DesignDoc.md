@@ -27,8 +27,8 @@ refine their checker playing skills.
 
 
 ### Purpose
-> _The purpose of this project is to provide the players the ability
-to log in and play one another online wherever they are._
+> The purpose of this project is to provide the players the ability
+to log in and play one another online wherever they are.
 
 ### Glossary and Acronyms
 
@@ -98,7 +98,8 @@ some minimal CSS for styling the page.  There is also some JavaScript
 that has been provided to the team by the architect.
 
 >The server-side tiers include the UI Tier that is composed of UI Controllers and Views.
-Controllers are built using the Spark framework and View are built using the FreeMarker framework.  The Application and Model tiers are built using plain-old Java objects (POJOs).
+Controllers are built using the Spark framework and View are built using the FreeMarker framework. 
+ The Application and Model tiers are built using plain-old Java objects (POJOs).
 
 >Details of the components within these tiers are supplied below.
 
@@ -117,14 +118,17 @@ page where they can post their username. They will then be redirected to home. I
 the name of another player then both players will be redirected to the game screen 
 where they can play the game of checkers. Once a winner has been decided they will be redirected to the home
 screen.Inside of the game there will be the option to sign out or resign, both of which will result in that player 
-forfeiting the game to the other player, returning them back to the home page._
+forfeiting the game to the other player, returning them back to the home page. Additionally if there are
+other games going on they will be displayed on the homepage for a signed in user to see. Upon clicking
+on a game in the list the user will be redirected to the spectator page of the game between the two players,
+the user will be able to exit at any time by clicking the exit button._
 
 
 ### UI Tier
 
 
 > It all starts at GetHomeRoute this is the first thing the user will see
-as it displays the homepage.Before even signing in users are able to 
+as it displays the homepage. Before even signing in users are able to 
 see the number of current players. From the homepage the user is given
 the option to signin which will invoke GetSignInRoute. GetSignInRoute displays 
 the signin.ftl page which has a user input box where they can input their username.
@@ -179,18 +183,20 @@ player's turn is finished when a move is submitted successfully and
 reflected back to the user through the checkTurn route which is updated 
 every 5 seconds. 
 
+![UI Tier UML](UITierUML4.png)
 
 ### Application Tier
-> _ Our application tier is made up of three different classes:
+> Our application tier is made up of three different classes:
 GameCenter, GameLobby, and PlayerLobby. GameLobby is where the game objects are 
 stored and we can access the games, searching by player etc. The playerLobby 
 is where the Player objects are stored we can use this to access and store
 players. GameCenter is a unification of both PlayerLobby and GameLobby
-so that you can access all the methods under both from just one Class._
+so that you can access all the methods under both from just one Class.
+![Application Tier UML](ApplicationTierUML4.png)
 
 
 ### Model Tier
-> _Our Model tier is the meat of this project. It includes eleven 
+> Our Model tier is the meat of this project. It includes eleven 
  classes. Boardview is what actually displays and puts together the board
  it puts both the spaces and pieces into the gameboard effectively making 
  the board which the player sees. Color is an enumeration class that is used
@@ -213,7 +219,10 @@ so that you can access all the methods under both from just one Class._
  it stores the row and cell of a certain place. Row makes the row object 
  which is what the gameboard is made out of. The rows are made up of spaces.
  Space represents the smallest measurement unit in the gameboard. It is a single 
- square in the gameboard Spaces store a piece and a color of the specific space._
+ square in the gameboard Spaces store a piece and a color of the specific space.
+
+![Model Tier UML](ModelTierUML4.png)
+
 
 ### Design Improvements
 
