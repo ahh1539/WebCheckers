@@ -183,18 +183,20 @@ player's turn is finished when a move is submitted successfully and
 reflected back to the user through the checkTurn route which is updated 
 every 5 seconds. 
 
+![UI Tier UML](UITierUML4.png)
 
 ### Application Tier
-> _ Our application tier is made up of three different classes:
+> Our application tier is made up of three different classes:
 GameCenter, GameLobby, and PlayerLobby. GameLobby is where the game objects are 
 stored and we can access the games, searching by player etc. The playerLobby 
 is where the Player objects are stored we can use this to access and store
 players. GameCenter is a unification of both PlayerLobby and GameLobby
-so that you can access all the methods under both from just one Class._
+so that you can access all the methods under both from just one Class.
+![Application Tier UML](ApplicationTierUML4.png)
 
 
 ### Model Tier
-> _Our Model tier is the meat of this project. It includes eleven 
+> Our Model tier is the meat of this project. It includes eleven 
  classes. Boardview is what actually displays and puts together the board
  it puts both the spaces and pieces into the gameboard effectively making 
  the board which the player sees. Color is an enumeration class that is used
@@ -217,7 +219,10 @@ so that you can access all the methods under both from just one Class._
  it stores the row and cell of a certain place. Row makes the row object 
  which is what the gameboard is made out of. The rows are made up of spaces.
  Space represents the smallest measurement unit in the gameboard. It is a single 
- square in the gameboard Spaces store a piece and a color of the specific space._
+ square in the gameboard Spaces store a piece and a color of the specific space.
+
+![Model Tier UML](ModelTierUML4.png)
+
 
 ### Design Improvements
 
