@@ -272,6 +272,33 @@ in particular, we fell slightly short of our initial coverage targets.
     it is mostly the Move object lacking some 
 coverage and we will improve on this drastically in upcoming development.
 
+### Sequence Diagrams
+![GetStartGameRoute Sequence Diagram](getstartgamesequence.png)
+>GetstartGameRoute begins with requesting the current player from the session
+it then checks if the player is already in a game and if so then it checks if
+the game has already had a declared winner if true then returns back to homepage 
+else then it retrives the game from gamelobby and returns the most current game 
+settings. otherwise it attempts to make a new game and retrieves the opponent 
+player from the query params then checks if that person is in a game, if so 
+it returns an error message, otherwise it makes a new game with the current player 
+and the opponent. It retrieves the information on the opponent from the queryparams 
+it then returns the game.
+
+
+![PostSignInRoute](PostSignInRoute%20Sequence%20Diagram.png)
+>PostSignInRoute begins by requesting the username of the player from queryparams
+It then checks for white spaces and not alphanumeric enterings, and rejects those
+inputs with an error. it then checks the playerlobbby to see if a player with that
+username already exists, if so it returns an error. If the username passes all of
+those conditionals then a new player is made and added to the playerlobby the current
+player attribute is sent to getstartgameroute and then the page is redirected to the 
+homepage.
+
+
+
+
+
+
 ### Code Metrics 
 
 >In order to calculate class metrics and further analyze our code, we used
