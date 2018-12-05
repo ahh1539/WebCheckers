@@ -117,14 +117,17 @@ page where they can post their username. They will then be redirected to home. I
 the name of another player then both players will be redirected to the game screen 
 where they can play the game of checkers. Once a winner has been decided they will be redirected to the home
 screen.Inside of the game there will be the option to sign out or resign, both of which will result in that player 
-forfeiting the game to the other player, returning them back to the home page._
+forfeiting the game to the other player, returning them back to the home page. Additionally if there are
+other games going on they will be displayed on the homepage for a signed in user to see. Upon clicking
+on a game in the list the user will be redirected to the spectator page of the game between the two players,
+the user will be able to exit at any time by clicking the exit button._
 
 
 ### UI Tier
 
 
 > It all starts at GetHomeRoute this is the first thing the user will see
-as it displays the homepage.Before even signing in users are able to 
+as it displays the homepage. Before even signing in users are able to 
 see the number of current players. From the homepage the user is given
 the option to signin which will invoke GetSignInRoute. GetSignInRoute displays 
 the signin.ftl page which has a user input box where they can input their username.
