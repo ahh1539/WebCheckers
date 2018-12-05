@@ -71,7 +71,7 @@ public class PostSpectateGameRoute implements Route {
         Gson gson = new Gson();
         GameLobby gameLobby = gameCenter.getGameLobby();
         Player spectator = session.attribute(PostSignInRoute.PLAYER);
-        final String id = spectator.getThing();
+        final String id = spectator.getGameID();
         Game game = gameLobby.getGame2(id);
         Message message = new Message(Message.Type.error, "false");
 

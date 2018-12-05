@@ -69,7 +69,7 @@ public class GetSpectateGameRoute implements Route {
         Player spectator = session.attribute(PostSignInRoute.PLAYER);
         spectator.joinGame();
         final String id = request.queryParams("gameID");
-        spectator.setThing(id);
+        spectator.setGameID(id);
         Game game = gameLobby.getGame2(id);
         System.out.println(game);
         vm.put(TITLE_ATTR, TITLE);

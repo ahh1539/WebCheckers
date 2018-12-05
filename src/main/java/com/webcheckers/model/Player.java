@@ -17,7 +17,7 @@ public class Player {
     private boolean inGame;
     private Color color;
     private boolean hasresigned = false;
-    private String thing = "empty";
+    private String gameID = "empty";
 
     /**
      * Create a Player with the provided username. 0 total games and wins, they are not
@@ -32,11 +32,11 @@ public class Player {
         this.inGame = false;
         this.color = Color.RED;
     }
-    public String getThing(){
-        return thing;
+    public String getGameID(){
+        return gameID;
     }
-    public void setThing(String help){
-        thing = help;
+    public void setGameID(String id){
+        gameID = id;
     }
 
     /**
