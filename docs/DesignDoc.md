@@ -159,6 +159,7 @@ GetSignOutRoute is also called upon in which the player is simply removed from t
 playerLobby and effectively removed from the server, then redirected to 
 GetHomeRoute.
 
+<!---
 [link to sequence diagram][1]
 [link to second sequence diagram][2]
 [link to UML Diagram and statechart][3]
@@ -169,6 +170,7 @@ GetHomeRoute.
 > _At appropriate places as part of this narrative provide one or more
 > static models (UML class structure or object diagrams) with some
 > details such as critical attributes and methods._
+--->
 
 > When a user signs in, they are directed back to the home screen, 
 and they see a list of possible opponents. They are considered 'waiting for
@@ -220,9 +222,7 @@ so that you can access all the methods under both from just one Class.
  which is what the gameboard is made out of. The rows are made up of spaces.
  Space represents the smallest measurement unit in the gameboard. It is a single 
  square in the gameboard Spaces store a piece and a color of the specific space.
-
 ![Model Tier UML](ModelTierUML4.png)
-
 
 ### Design Improvements
 
