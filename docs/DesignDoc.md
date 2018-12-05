@@ -265,4 +265,35 @@ coverage and we will improve on this drastically in upcoming development.
 
 ### Code Metrics 
 
->Write about code metrics here!!!! yeet
+>In order to calculate class metrics and further analyze our code, we used
+ the IntelliJ plugin MetricsReloaded. Several findings from this are important
+  to highlight. The cyclomatic complexity metrics pointed out three classes as
+   outliers: BoardView, GetHomeRoute, and GetStartGameRoute.
+
+  ![Class Complexity Histogram](complexity-histogram.png)
+
+>As this histogram shows, the majority of our classes are well within reasonable
+ values of complexity. BoardView, upon further examination, has many execution paths
+  because the for each loops used for board set-up iterate through each space and
+   check for space color repeatedly. The complexity could be decreased by adjusting
+    these loops to be plain for loops that step through every other space. As far as
+     the routes go, these simply need to have some functionality moved elsewhere rather
+      than checking game status through many if blocks.
+
+>Our Javadoc method coverage illuminated a few spots needing improvements as well.
+
+![Javadoc Method Coverage Histogram](javadoc-method-coverage-histogram.png)
+
+>Every class which has 0% javadoc method coverage is a test class. Many of these
+ classes are highly readable on their own. Additionally, the handful of classes with
+  50% or so coverage has comments for accessor and mutator methods. However, it is
+   important to have standard, formal method javadocs for each method for accessibility,
+    so this should be fixed in further updates, including test classes.
+
+>Another valuable set of metrics that we examined was the Martin package metrics. This
+ showed mainly average values. One outlier was the efferent coupling value for the UI
+  package: 85 classes within the UI tier depended on outside classes. This would be an
+   issue with high-level design that could provide difficulty with future maintainability as well
+    as re-usability if left alone. However, with full MVP functionality, we would not
+     recommend over-turning the current overall design of the program. Unless a great deal
+      of further work would need to be completed, the effort would outweigh the benefits.
